@@ -10,8 +10,7 @@ import javax.imageio.ImageIO;
 
 public class SpriteManager {
 
-	// Hashmap for Sprites
-	// Integer : color in the map
+
 	private HashMap<Integer, BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>();
 
 	
