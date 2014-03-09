@@ -18,6 +18,8 @@ public class SpriteManager {
 	
 	
 	
+	
+	
 	public void loadSprite(int color,File filename){
 		BufferedImage temp = null;
 		try {
