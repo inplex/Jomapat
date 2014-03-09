@@ -1,4 +1,3 @@
-//comment
 
 package me.inplex.jomapat;
 
