@@ -8,16 +8,14 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-
 public class SpriteManager {
 
-	//Hashmap for Sprites
-	//Integer : color in the map
-	private HashMap<Integer,BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>(); 
+	// Hashmap for Sprites
+	// Integer : color in the map
+	private HashMap<Integer, BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>();
 
 	
-
-	public void loadSprite(int color,File filename){
+	public void loadSprite(int color, File filename) {
 		BufferedImage temp = null;
 		try {
 			temp = ImageIO.read(filename);
@@ -25,20 +23,13 @@ public class SpriteManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		spriteMap.put(color, temp);	
+		spriteMap.put(color, temp);
 	}
 	
 	
-	
-	
-	public void addSpriteToImage(Graphics g,int color,int x,int y)
-	{
+
+	public void addSpriteToImage(Graphics g, int color, int x, int y) {
 		g.drawImage(spriteMap.get(color), x, y, null);
 	}
-	
-	
-	
-	
-	
 
 }
