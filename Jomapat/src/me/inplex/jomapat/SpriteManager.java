@@ -26,6 +26,7 @@ public class SpriteManager {
 			e.printStackTrace();
 		}
 		spriteMap.put(color, temp);
+		
 	}
 
 }
