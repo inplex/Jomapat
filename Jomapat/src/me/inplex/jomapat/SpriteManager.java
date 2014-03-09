@@ -5,16 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 
 public class SpriteManager {
 
 
-	private HashMap<Integer, BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>();
+	private static HashMap<Integer, BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>();
 
 	
-	public void loadSprite(int color, File filename) {
+	public static void loadSprite(int color, File filename) {
 		BufferedImage temp = null;
 		try {
 			temp = ImageIO.read(filename);
@@ -27,7 +26,7 @@ public class SpriteManager {
 	
 	
 
-	public void addSpriteToImage(Graphics g, int color, int x, int y) {
+	public static void addSpriteToImage(Graphics g, int color, int x, int y) {
 		g.drawImage(spriteMap.get(color), x, y, null);
 	}
 

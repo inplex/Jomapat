@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
 import javax.swing.JFrame;
 
@@ -53,6 +54,7 @@ public class Jomapat extends Canvas implements Runnable {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		frame = new JFrame();
+		SpriteManager.loadSprite(1,new File("res/Assets/Sprites/Dummy.png"));
 	}
 
 	public void resized() {
@@ -118,6 +120,7 @@ public class Jomapat extends Canvas implements Runnable {
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		// draw here!
+		SpriteManager.addSpriteToImage(g,100,10,10);
 		// call RenderEngine
 		g.dispose();
 		bs.show();
