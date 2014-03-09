@@ -14,6 +14,7 @@ public class SpriteManager {
 	//Integer : color in the map
 	private HashMap<Integer,BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>(); 
 
+	
 	public void loadSprite(int color,File filename){
 		BufferedImage temp = null;
 		try {
