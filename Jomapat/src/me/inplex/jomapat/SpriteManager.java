@@ -1,5 +1,6 @@
 package me.inplex.jomapat;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +16,7 @@ public class SpriteManager {
 	private HashMap<Integer,BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>(); 
 
 	
-	
-	
-	
-	
-	
+
 	public void loadSprite(int color,File filename){
 		BufferedImage temp = null;
 		try {
@@ -29,6 +26,14 @@ public class SpriteManager {
 			e.printStackTrace();
 		}
 		spriteMap.put(color, temp);	
+	}
+	
+	
+	
+	
+	public void addSpriteToImage(Graphics g,int color,int x,int y)
+	{
+		g.drawImage(spriteMap.get(color), x, y, null);
 	}
 	
 	
