@@ -34,7 +34,7 @@ public class Jomapat extends Canvas implements Runnable {
 		game.frame.add(game);
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// TODO: Set icon here
+		// TODO: Set icon here -----> Patrick
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setResizable(true);
 		// add input listeners!
@@ -54,7 +54,6 @@ public class Jomapat extends Canvas implements Runnable {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		frame = new JFrame();
-		SpriteManager.loadSprite(1,new File("res/Assets/Sprites/Dummy.png"));
 	}
 
 	public void resized() {
@@ -108,6 +107,8 @@ public class Jomapat extends Canvas implements Runnable {
 		ticks++;
 		// game logic here
 	}
+	
+
 
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
@@ -120,7 +121,7 @@ public class Jomapat extends Canvas implements Runnable {
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		// draw here!
-		SpriteManager.addSpriteToImage(g,1,10,10);
+		Renderer.renderGame();
 		// call RenderEngine
 		g.dispose();
 		bs.show();

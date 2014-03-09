@@ -9,10 +9,8 @@ import javax.imageio.ImageIO;
 
 public class SpriteManager {
 
-
 	private static HashMap<Integer, BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>();
 
-	
 	public static void loadSprite(int color, File filename) {
 		BufferedImage temp = null;
 		try {
@@ -23,8 +21,6 @@ public class SpriteManager {
 		}
 		spriteMap.put(color, temp);
 	}
-	
-	
 
 	public static void addSpriteToImage(Graphics g, int color, int x, int y) {
 		g.drawImage(spriteMap.get(color), x, y, null);
