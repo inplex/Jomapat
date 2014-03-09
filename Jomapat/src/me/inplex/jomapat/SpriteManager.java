@@ -25,7 +25,7 @@ public class SpriteManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		spriteMap.put(color, temp);	//sm
+		spriteMap.put(color, temp);	
 	}
 
 }
