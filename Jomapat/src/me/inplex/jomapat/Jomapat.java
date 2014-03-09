@@ -51,7 +51,7 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public Jomapat() {
 		Dimension size = new Dimension(width, height);
-		setPreferredSize(size);		
+		setPreferredSize(size);
 		frame = new JFrame();
 	}
 
