@@ -1,4 +1,3 @@
-
 package me.inplex.jomapat;
 
 import java.awt.Canvas;
@@ -26,7 +25,7 @@ public class Jomapat extends Canvas implements Runnable {
 	private long ticks;
 
 	public static Jomapat game;
-
+	//
 	public static void main(String[] args) {
 		System.out.println("Starting with " + Runtime.getRuntime().freeMemory() / 1048576 + "MB");
 		game = new Jomapat();

@@ -15,6 +15,8 @@ public class SpriteManager {
 	private HashMap<Integer,BufferedImage> spriteMap = new HashMap<Integer, BufferedImage>(); 
 
 	
+	
+	
 	public void loadSprite(int color,File filename){
 		BufferedImage temp = null;
 		try {
@@ -25,5 +27,10 @@ public class SpriteManager {
 		}
 		spriteMap.put(color, temp);	
 	}
+	
+	
+	
+	
+	
 
 }
