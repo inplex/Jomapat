@@ -120,7 +120,7 @@ public class Jomapat extends Canvas implements Runnable {
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		// draw here!
-		SpriteManager.addSpriteToImage(g,100,10,10);
+		SpriteManager.addSpriteToImage(g,1,10,10);
 		// call RenderEngine
 		g.dispose();
 		bs.show();
