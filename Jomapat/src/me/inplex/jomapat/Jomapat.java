@@ -1,3 +1,5 @@
+//comment
+
 package me.inplex.jomapat;
 
 import java.awt.Canvas;
