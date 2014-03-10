@@ -1,6 +1,6 @@
 package me.inplex.jomapat;
 
-public enum BlockPropFlags {
+public enum BlockProps {
 	PROP_COLLISION,
 	PROP_LIGHT,
 	PROP_KILL,
