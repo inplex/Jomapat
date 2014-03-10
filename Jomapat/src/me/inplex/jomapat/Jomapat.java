@@ -10,7 +10,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Jomapat extends Canvas implements Runnable {
@@ -54,6 +56,12 @@ public class Jomapat extends Canvas implements Runnable {
 		Dimension size = new Dimension(width, height);
 		setPreferredSize(size);
 		frame = new JFrame();
+		try {
+			SpriteManager.loadSprites(ImageIO.read(new File("res//Assets//Sprites//sprites.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+			stop();
+		}
 	}
 
 	public void resized() {
@@ -120,9 +128,7 @@ public class Jomapat extends Canvas implements Runnable {
 		GradientPaint gp = new GradientPaint(getWidth() / 2, 0, new Color(0x8FD0FF), getWidth() / 2, getHeight(), new Color(0x5CA0CC));
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
-		// draw here!
-		Renderer.renderGame();
-		// call RenderEngine
+		Renderer.renderGame(g);
 		g.dispose();
 		bs.show();
 	}
