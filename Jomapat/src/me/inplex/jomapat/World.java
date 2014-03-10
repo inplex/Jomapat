@@ -9,6 +9,8 @@ public class World {
 	private Block[][] blocks;
 	
 	public World(int width, int height) {
+		this.width = width;
+		this.height = height;
 		this.blocks = new Block[width][height];
 		this.generate();
 	}
@@ -39,6 +41,10 @@ public class World {
 	
 	public void setBlock(int x, int y, Block block) {
 		blocks[x][y] = block;
+	}
+	
+	public Block getBlockAt(int x, int y) {
+		return blocks[x][y];
 	}
 	
 	public Block[][] getBlocks() {

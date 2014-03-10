@@ -23,9 +23,9 @@ public class SpriteManager {
 	 * Idle Sprites framewise
 	 */
 
-	public static BufferedImage SPRITE_IDLE_1;
-	public static BufferedImage SPRITE_IDLE_2;
-	public static BufferedImage SPRITE_IDLE_3;
+	public static BufferedImage SPRITE_PLAYER_IDLE_1;
+	public static BufferedImage SPRITE_PLAYER_IDLE_2;
+	public static BufferedImage SPRITE_PLAYER_IDLE_3;
 
 	/*
 	 * Left Walk Sprites
@@ -44,8 +44,8 @@ public class SpriteManager {
 	public static BufferedImage SPRITE_PLAYER_WALK_RIGHT_3;
 
 	/*
-	 * Jump Sprites 1 = Jump Start 2 = Flying In Air Frame 1 3 = Flying in Air
-	 * Frame 2 4 = Landing
+	 * Jump Sprites 1 = Jump Start, 2 = Flying In Air Frame 1, 3 = Flying in Air
+	 * Frame 2, 4 = Landing
 	 */
 
 	public static BufferedImage SPRITE_PLAYER_JUMP_1;
@@ -54,8 +54,8 @@ public class SpriteManager {
 	public static BufferedImage SPRITE_PLAYER_JUMP_4;
 
 	/*
-	 * Sneak Sprites 1 = Sneak Start 2 = While Sneaking Frame 1 3 = While
-	 * Sneaking Frame 2 4 = Stopping Sneak
+	 * Sneak Sprites 1 = Sneak Start, 2 = While Sneaking Frame 1, 3 = While
+	 * Sneaking Frame 2, 4 = Stopping Sneak
 	 */
 
 	public static BufferedImage SPRITE_PLAYER_SNEAK_1;
@@ -80,9 +80,9 @@ public class SpriteManager {
 	public static void loadSprites(BufferedImage spriteSheet) {
 		sheet = spriteSheet;
 
-		SPRITE_IDLE_1 = sheet.getSubimage(0, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
-		SPRITE_IDLE_2 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
-		SPRITE_IDLE_3 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 2, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
+		SPRITE_PLAYER_IDLE_1 = sheet.getSubimage(0, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
+		SPRITE_PLAYER_IDLE_2 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
+		SPRITE_PLAYER_IDLE_3 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 2, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 
 		SPRITE_PLAYER_WALK_LEFT_1 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 3, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 		SPRITE_PLAYER_WALK_LEFT_2 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 4, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);

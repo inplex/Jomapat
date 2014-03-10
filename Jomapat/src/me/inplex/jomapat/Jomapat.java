@@ -26,6 +26,9 @@ public class Jomapat extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private long ticks;
+	
+	private World world;
+	private Player player;
 
 	public static Jomapat game;
 	//
@@ -62,6 +65,9 @@ public class Jomapat extends Canvas implements Runnable {
 			e.printStackTrace();
 			stop();
 		}
+		world = new World(1000, 200);
+		player = new Player(500, 100);
+		setTicks(0);
 	}
 
 	public void resized() {
@@ -112,7 +118,7 @@ public class Jomapat extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		ticks++;
+		setTicks(getTicks() + 1);
 		// game logic here
 	}
 	
@@ -131,6 +137,30 @@ public class Jomapat extends Canvas implements Runnable {
 		Renderer.renderGame(g);
 		g.dispose();
 		bs.show();
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
+	public long getTicks() {
+		return ticks;
+	}
+
+	public void setTicks(long ticks) {
+		this.ticks = ticks;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 }
