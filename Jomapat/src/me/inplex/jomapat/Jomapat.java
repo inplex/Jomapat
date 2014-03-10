@@ -66,7 +66,7 @@ public class Jomapat extends Canvas implements Runnable {
 			stop();
 		}
 		world = new World(1000, 200);
-		player = new Player(500, 100);
+		player = new Player(500, 10);
 		setTicks(0);
 	}
 
