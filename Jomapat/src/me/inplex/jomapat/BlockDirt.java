@@ -9,10 +9,12 @@ public class BlockDirt extends Block {
 	
 	private BufferedImage sprite = null;
 
+	@Override
 	public void load() {
 		try {
 			sprite = ImageIO.read(new File("res/Assets/Sprites/Dummy.png"));
 		} catch (IOException e) {
+			System.out.println("Cannot load sprite");
 		}
 	}
 

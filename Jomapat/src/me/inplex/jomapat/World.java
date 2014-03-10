@@ -12,7 +12,6 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.blocks = new Block[width][height];
-		WorldGenerator.generateWorld(width, height);
 	}
 	
 	

@@ -9,7 +9,10 @@ public abstract class Block {
 	}
 	
 	public abstract byte getId();
-
 	public abstract BufferedImage getImage();
+
+	public void load() {
+
+	}
 	
 }
