@@ -3,7 +3,6 @@ package me.inplex.jomapat;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class BlockDirt extends Block {
@@ -31,8 +30,6 @@ public class BlockDirt extends Block {
 		switch (prop) {
 		case PROP_COLLISION:
 			return true;
-		case PROP_LIGHT:
-			return false;
 		}
 		return false;
 	}

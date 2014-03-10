@@ -12,16 +12,9 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.blocks = new Block[width][height];
-		this.generate();
+		WorldGenerator.generateWorld(width, height);
 	}
 	
-	private void generate() {
-		for(int x = 0; x < width; x++) {
-			blocks[x][2] = new BlockGrass();
-			blocks[x][1] = new BlockDirt();
-			blocks[x][0] = new BlockStone();
-		}
-	}
 	
 	public int getWidth() {
 		return width;
