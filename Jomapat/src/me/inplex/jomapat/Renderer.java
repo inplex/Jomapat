@@ -26,7 +26,7 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at x|y
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x, y, null);
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x*64, y*64, null);
 			}
 		}
 
