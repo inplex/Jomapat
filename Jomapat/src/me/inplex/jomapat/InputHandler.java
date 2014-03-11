@@ -7,7 +7,11 @@ import java.awt.event.MouseListener;
 
 public class InputHandler implements KeyListener, MouseListener {
 	
-	private boolean[] keysDown = new boolean[100];
+	private boolean[] keysDown;
+	
+	public InputHandler() {
+		keysDown = new boolean[100];
+	}
 	
 	public boolean isKeyDown(int key) {
 		return keysDown[key];
