@@ -37,6 +37,10 @@ public class World {
 	public Block getBlockAt(int x, int y) {
 		return blocks[x][y];
 	}
+	
+	public void removeBlockAt(int x, int y) {
+		blocks[x][y] = null;
+	}
 
 	public Block[][] getBlocks() {
 		return blocks;
