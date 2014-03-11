@@ -19,7 +19,7 @@ public class Renderer {
 
 		// TODO Translate according to the player position
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(-Jomapat.game.getPlayer().getX() + Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 + Jomapat.game.getPlayer().getY() + 50);
+		//g2d.translate(-Jomapat.game.getPlayer().getX() + Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 + Jomapat.game.getPlayer().getY() + 50);
 
 
 		// Render Blocks
@@ -30,7 +30,7 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at x|y
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x*64, Jomapat.game.getWidth() - y*64, null);
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x*SpriteManager.SPRITE_BLOCK_SIZE, y*SpriteManager.SPRITE_BLOCK_SIZE, null);
 			}
 		}
 

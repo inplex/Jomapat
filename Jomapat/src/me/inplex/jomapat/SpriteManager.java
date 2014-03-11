@@ -79,7 +79,7 @@ public class SpriteManager {
 
 	public static void loadSprites(BufferedImage spriteSheet) {
 		sheet = spriteSheet;
-
+/*
 		SPRITE_PLAYER_IDLE_1 = sheet.getSubimage(0, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 		SPRITE_PLAYER_IDLE_2 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 		SPRITE_PLAYER_IDLE_3 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 2, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
@@ -101,7 +101,8 @@ public class SpriteManager {
 		SPRITE_PLAYER_SNEAK_2 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 14, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 		SPRITE_PLAYER_SNEAK_3 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 15, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
 		SPRITE_PLAYER_SNEAK_4 = sheet.getSubimage(SPRITE_PLAYER_SIZE_WIDTH * 16, 0, SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);
-
+*/
+		
 	}
 
 	public static BufferedImage loadImage(int x, int y, int width, int height) {
@@ -109,7 +110,7 @@ public class SpriteManager {
 	}
 
 	public static BufferedImage loadBlockImage(int x, int y) {
-		return loadImage(x, y, SPRITE_BLOCK_SIZE, SPRITE_BLOCK_SIZE);
+		return loadImage(x*SPRITE_BLOCK_SIZE, y*SPRITE_BLOCK_SIZE, SPRITE_BLOCK_SIZE, SPRITE_BLOCK_SIZE);
 	}
 
 }

@@ -60,7 +60,7 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.loadSprites(ImageIO.read(new File("res//Assets//Sprites//sprites.png")));
+			SpriteManager.loadSprites(ImageIO.read(new File("res//Assets//Sprites//tilemap.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();
