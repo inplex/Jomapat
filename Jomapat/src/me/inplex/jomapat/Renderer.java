@@ -18,9 +18,10 @@ public class Renderer {
 		g.drawString("Player (" + Jomapat.game.getPlayer().getX() + "|" + Jomapat.game.getPlayer().getY() + ")", 10, 20);
 
 		// TODO Translate according to the player position
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(-Jomapat.game.getPlayer().getX() + Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 + Jomapat.game.getPlayer().getY() + 50);
+		//Graphics2D g2d = (Graphics2D) g;
+		//g2d.translate(-Jomapat.game.getPlayer().getX() + Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 + Jomapat.game.getPlayer().getY() + 50);
 
+		int playerX;
 		// Render Blocks
 		// TODO Improve this iteration - do not render EVERY Block, only the
 		// visible ones
@@ -29,8 +30,8 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x * SpriteManager.SPRITE_BLOCK_SIZE, y
-						* SpriteManager.SPRITE_BLOCK_SIZE, null);
+				playerX = Jomapat.game.getPlayer().getX();
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE)-playerX,(y* SpriteManager.SPRITE_BLOCK_SIZE), null);
 			}
 		}
 
