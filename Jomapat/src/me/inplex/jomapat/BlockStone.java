@@ -7,7 +7,7 @@ public class BlockStone extends Block {
 	private BufferedImage sprite = null;
 
 	public void load() {
-		this.sprite = SpriteManager.loadBlockImage(0,0);
+		this.sprite = SpriteManager.loadBlockImage(2,0);
 	}
 
 	@Override
