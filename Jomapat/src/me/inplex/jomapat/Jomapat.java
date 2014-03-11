@@ -25,12 +25,13 @@ public class Jomapat extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private long ticks;
-
+	
+	private InputHandler input;
 	private World world;
 	private Player player;
 
 	public static Jomapat game;
-	//
+	
 	public static void main(String[] args) {
 		System.out.println("Starting with " + Runtime.getRuntime().freeMemory() / 1048576 + "MB");
 		game = new Jomapat();
@@ -38,19 +39,19 @@ public class Jomapat extends Canvas implements Runnable {
 		game.frame.add(game);
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// TODO: Set icon here -----> Patrick
+		// TODO: Set icon here
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setResizable(true);
-		// add input listeners!
+		game.addKeyListener(game.input);
+		game.addMouseListener(game.input);
 		game.frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				game.resized();
 			}
 		});
-
 		game.frame.setVisible(true);
-
+		
 		game.start();
 	}
 
@@ -66,7 +67,8 @@ public class Jomapat extends Canvas implements Runnable {
 		}
 		world = WorldGenerator.generateWorld(100, 100);
 		player = new Player(500, 10);
-		setTicks(0);
+		input = new InputHandler();
+		ticks = 0;
 	}
 
 	public void resized() {
@@ -117,8 +119,8 @@ public class Jomapat extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		setTicks(getTicks() + 1);
-		// game logic here
+		ticks++;
+		player.update();
 	}
 
 
@@ -160,6 +162,14 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public InputHandler getInput() {
+		return input;
+	}
+
+	public void setInput(InputHandler input) {
+		this.input = input;
 	}
 
 }
