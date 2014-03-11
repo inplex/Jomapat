@@ -2,6 +2,7 @@ package me.inplex.jomapat;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Renderer {
 
@@ -17,6 +18,9 @@ public class Renderer {
 		g.drawString("Player (" + Jomapat.game.getPlayer().getX() + "|" + Jomapat.game.getPlayer().getY() + ")", 10, 20);
 
 		// TODO Translate according to the player position
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.translate(-Jomapat.game.getPlayer().getX() + Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 + Jomapat.game.getPlayer().getY() + 50);
+
 
 		// Render Blocks
 		// TODO Improve this iteration - do not render EVERY Block, only the
@@ -26,7 +30,7 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at x|y
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x*64, y*64, null);
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), x*64, Jomapat.game.getWidth() - y*64, null);
 			}
 		}
 

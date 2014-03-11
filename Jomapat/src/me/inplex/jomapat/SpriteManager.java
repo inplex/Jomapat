@@ -104,4 +104,12 @@ public class SpriteManager {
 
 	}
 
+	public static BufferedImage loadImage(int x, int y, int width, int height) {
+		return sheet.getSubimage(x, y, width, height);
+	}
+
+	public static BufferedImage loadBlockImage(int x, int y) {
+		return loadImage(x, y, SPRITE_BLOCK_SIZE, SPRITE_BLOCK_SIZE);
+	}
+
 }

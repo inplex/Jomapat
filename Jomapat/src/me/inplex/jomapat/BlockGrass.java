@@ -1,19 +1,12 @@
 package me.inplex.jomapat;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class BlockGrass extends Block {
-	
-	private BufferedImage sprite = null;
 
+	@Override
 	public void load() {
-		try {
-			sprite = ImageIO.read(new File("res/Assets/Sprites/Dummy.png"));
-		} catch (IOException e) {
-		}
+		this.sprite = SpriteManager.loadBlockImage(SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_PLAYER_SIZE_HEIGHT);
 	}
 
 	@Override
@@ -26,12 +19,9 @@ public class BlockGrass extends Block {
 		return sprite;
 	}
 
-	public boolean getProp(BlockProps prop) {
-		switch (prop) {
-		case PROP_COLLISION:
-			return true;
-		}
-		return false;
+	@Override
+	public int getProps() {
+		return PROPS_COLLIDE;
 	}
 
 }
