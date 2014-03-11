@@ -1,6 +1,7 @@
 package me.inplex.jomapat;
 
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class Player {
 	
@@ -10,9 +11,58 @@ public class Player {
 	private Direction direction;
 	private MoveState state;
 	
+	/*
+	 * Idle Sprites framewise
+	 */
+
+	public static BufferedImage SPRITE_IDLE_1;
+	public static BufferedImage SPRITE_IDLE_2;
+	public static BufferedImage SPRITE_IDLE_3;
+
+	/*
+	 * Left Walk Sprites
+	 */
+
+	public static BufferedImage SPRITE_WALK_LEFT_1;
+	public static BufferedImage SPRITE_WALK_LEFT_2;
+	public static BufferedImage SPRITE_WALK_LEFT_3;
+
+	/*
+	 * Right Walk Sprites
+	 */
+
+	public static BufferedImage SPRITE_WALK_RIGHT_1;
+	public static BufferedImage SPRITE_WALK_RIGHT_2;
+	public static BufferedImage SPRITE_WALK_RIGHT_3;
+
+	/*
+	 * Jump Sprites 1 = Jump Start, 2 = Flying In Air Frame 1, 3 = Flying in Air
+	 * Frame 2, 4 = Landing
+	 */
+
+	public static BufferedImage SPRITE_JUMP_1;
+	public static BufferedImage SPRITE_JUMP_2;
+	public static BufferedImage SPRITE_JUMP_3;
+	public static BufferedImage SPRITE_JUMP_4;
+
+	/*
+	 * Sneak Sprites 1 = Sneak Start, 2 = While Sneaking Frame 1, 3 = While
+	 * Sneaking Frame 2, 4 = Stopping Sneak
+	 */
+
+	public static BufferedImage SPRITE_SNEAK_1;
+	public static BufferedImage SPRITE_SNEAK_2;
+	public static BufferedImage SPRITE_SNEAK_3;
+	public static BufferedImage SPRITE_SNEAK_4;
+	
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.loadSprites();
+	}
+	
+	private void loadSprites() {
+		SPRITE_IDLE_1 = SpriteManager.loadPlayerImage(0, 0);
 	}
 
 	private void move(Direction dir, int xVal) {

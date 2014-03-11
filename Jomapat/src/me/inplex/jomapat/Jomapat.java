@@ -63,13 +63,13 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.loadSprites(ImageIO.read(new File("res//Assets//Sprites//tilemap.png")));
+			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();
 		}
 		world = WorldGenerator.generateWorld(100, 100);
-		player = new Player(0, 10);
+		player = new Player(0, 500);
 		input = new InputHandler();
 		ticks = 0;
 	}
