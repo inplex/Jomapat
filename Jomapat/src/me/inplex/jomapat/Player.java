@@ -92,6 +92,16 @@ public class Player {
 			direction = Direction.RIGHT;
 			move(speed);
 		}
+		
+		// Mining
+		// experimental
+		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE) && Jomapat.game.getInput().isKeyDown(KeyEvent.VK_S)) {
+			System.out.println("SPACE");
+			Jomapat.game.getWorld().removeBlockAt(Maths.positionToGrid(x)/SpriteManager.SPRITE_BLOCK_SIZE,
+					Maths.positionToGrid(y+10)/SpriteManager.SPRITE_BLOCK_SIZE+1);
+		}
+
+
 	}
 	
 	public boolean isOnGround() {
