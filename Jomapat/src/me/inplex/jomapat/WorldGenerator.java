@@ -17,7 +17,7 @@ public class WorldGenerator {
 		stone.load();
 		diamond.load();
 
-		int actualStartY = 2;
+		int actualStartY = 4;
 		int rand;
 
 		for (int x=0;x<=width-1;x++){

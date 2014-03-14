@@ -31,13 +31,13 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX,
-						(y * SpriteManager.SPRITE_BLOCK_SIZE) + 300, null);
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE),
+						(y * SpriteManager.SPRITE_BLOCK_SIZE), null);
 			}
 		}
 
 		// Render Player
-		g.drawImage(Player.SPRITE_IDLE_1, Jomapat.game.getPlayer().getX(), Jomapat.game.getWidth() - Jomapat.game.getPlayer().getY(), null);
+		g.drawImage(Player.SPRITE_IDLE_1, Jomapat.game.getPlayer().getX(), Jomapat.game.getPlayer().getY(), null);
 		
 	}
 

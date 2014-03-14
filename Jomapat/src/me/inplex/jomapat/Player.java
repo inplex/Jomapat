@@ -66,7 +66,9 @@ public class Player {
 	}
 
 	private void move(Direction dir, int xVal) {
+		int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
+		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x+64, y+10)==false ? x : oldx;
 		direction = dir;
 	}
 	
@@ -74,7 +76,14 @@ public class Player {
 		move(direction, xVal);
 	}
 	
+	private void handleFalls(){
+		y = Collision.checkCollisionAt(x, y+65)==false ? y+1:y;
+	}
+	
+
+	
 	public void update() {
+		handleFalls();
 		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;
 			move(speed);
