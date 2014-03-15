@@ -35,15 +35,13 @@ public class World {
 	}
 
 	public BlockType getBlockAt(int x, int y) {
+		if(x < 0 || y < 0 || x > width || y > height)
+			return null;
 		return blocks[x][y];
 	}
 	
 	public void removeBlockAt(int x, int y) {
 		blocks[x][y] = null;
-	}
-
-	public BlockType[][] getBlocks() {
-		return blocks;
 	}
 
 }
