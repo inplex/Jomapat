@@ -8,21 +8,7 @@ public class Maths {
 	    Random random = new Random();
 	    return random.nextInt(max - min + 1) + min;
 	  }
-	
-	/*
-	public static int positionToGrid(int pos){
-		int retVal = -1;
-		for (int i=0;i<pos+128;i=i+64){
-			if (i<= pos && pos-i<=63){
-				retVal = i;
-				break;
-			}
-		}
-		return retVal;
-	}
-	*/
-	
-	
+
 	public static int positionToGrid(int pos) {
 	    return (int) (Math.floor(pos / (double)SpriteManager.SPRITE_BLOCK_SIZE) * SpriteManager.SPRITE_BLOCK_SIZE);
 	}
@@ -31,4 +17,9 @@ public class Maths {
 	public static boolean isVisible(int x,int y){
 		return (x>=-64&&y>=0&&x<=Jomapat.game.getWidth()&&y<=Jomapat.game.getHeight()) ? true : false;
 	}
+	
+	public static int distance(int x1,int x2,int y1,int y2){
+		return (int) Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+	}
 }
+
