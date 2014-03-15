@@ -32,7 +32,7 @@ public class Renderer {
 					continue;
 				// Render Block at
 				if (Maths.isVisible(x*SpriteManager.SPRITE_BLOCK_SIZE-playerX , y*SpriteManager.SPRITE_BLOCK_SIZE)){
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE)-playerX,
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getSprite(), (x * SpriteManager.SPRITE_BLOCK_SIZE)-playerX,
 						(y * SpriteManager.SPRITE_BLOCK_SIZE), null);
 				}
 			}

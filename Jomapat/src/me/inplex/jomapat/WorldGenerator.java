@@ -7,16 +7,6 @@ public class WorldGenerator {
 	public static World generateWorld(int width,int height){
 		World world = new World(width, height);
 
-		Block grass = new BlockGrass();
-		Block dirt = new BlockDirt();
-		Block stone = new BlockStone();
-		Block diamond = new BlockDiamond();
-
-		dirt.load();
-		grass.load();
-		stone.load();
-		diamond.load();
-
 		int actualStartY = 4;
 		int rand;
 
@@ -33,16 +23,16 @@ public class WorldGenerator {
 
 
 				if (y==actualStartY ){ //Use Grass or deeper grounds
-					world.setBlock(x,y,grass);
+					world.setBlock(x,y,BlockType.GRASS);
 				}else{
 					if (y<11){ // Use dirt or stone
-						world.setBlock(x,y,dirt);	
+						world.setBlock(x,y,BlockType.DIRT);	
 					}else{
 						if (Maths.randomize(1, 10)==5) //... or maybe diamond...
 						{
-							world.setBlock(x,y,diamond);
+							world.setBlock(x,y,BlockType.DIAMOND);
 						}else{
-							world.setBlock(x,y,stone);	
+							world.setBlock(x,y,BlockType.STONE);	
 						}
 					}
 				}

@@ -6,12 +6,12 @@ public class World {
 	private int height;
 
 	// Block at [x][y]
-	private Block[][] blocks;
+	private BlockType[][] blocks;
 
 	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.blocks = new Block[width][height];
+		this.blocks = new BlockType[width][height];
 	}
 
 	public int getWidth() {
@@ -30,11 +30,11 @@ public class World {
 		this.height = height;
 	}
 
-	public void setBlock(int x, int y, Block block) {
+	public void setBlock(int x, int y, BlockType block) {
 		blocks[x][y] = block;
 	}
 
-	public Block getBlockAt(int x, int y) {
+	public BlockType getBlockAt(int x, int y) {
 		return blocks[x][y];
 	}
 	
@@ -42,7 +42,7 @@ public class World {
 		blocks[x][y] = null;
 	}
 
-	public Block[][] getBlocks() {
+	public BlockType[][] getBlocks() {
 		return blocks;
 	}
 
