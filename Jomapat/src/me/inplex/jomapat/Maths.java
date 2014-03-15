@@ -27,8 +27,8 @@ public class Maths {
 	    return (int) (Math.floor(pos / (double)SpriteManager.SPRITE_BLOCK_SIZE) * SpriteManager.SPRITE_BLOCK_SIZE);
 	}
 	
-	//
-	//public static boolean isVisible(int x,int y){
-	//	return x
-	//}
+	
+	public static boolean isVisible(int x,int y){
+		return (x>=-64&&y>=0&&x<=Jomapat.game.getWidth()&&y<=Jomapat.game.getHeight()) ? true : false;
+	}
 }
