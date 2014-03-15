@@ -8,7 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class WorldSave {
-
+	
+	public static final short WORLDSAVE_VERSION = (short) 1;
 	public static final int PREFIX = 0x57504D4A;
 
 	public static void save(int num) throws IOException {
@@ -23,6 +24,7 @@ public class WorldSave {
 		f.createNewFile();
 		DataOutputStream out = new DataOutputStream(new FileOutputStream(f));
 		out.writeInt(PREFIX);
+		out.writeShort(WORLDSAVE_VERSION);
 		out.writeInt(p.getX());
 		out.writeInt(p.getY());
 		out.writeInt(w.getWidth());
@@ -33,7 +35,7 @@ public class WorldSave {
 			}
 		}
 		out.close();
-		Gui.addMessage("gespeichert");
+		Gui.addMessage("World Saved!");
 	}
 
 	public static void load(int num) throws IOException {
@@ -46,6 +48,12 @@ public class WorldSave {
 		int pre = in.readInt();
 		if (pre != PREFIX) {
 			System.out.println("Invalid World Prefix. Cancelling World Load Process!");
+			in.close();
+			return;
+		}
+		int ver = in.readShort();
+		if (ver != WORLDSAVE_VERSION) {
+			Gui.addMessage("Invalid World Version!");
 			in.close();
 			return;
 		}
@@ -64,6 +72,7 @@ public class WorldSave {
 		Jomapat.game.getPlayer().setY(pY);
 
 		in.close();
+		Gui.addMessage("World Loaded!");
 	}
 
 }

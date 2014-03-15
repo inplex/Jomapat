@@ -69,8 +69,8 @@ public class Jomapat extends Canvas implements Runnable {
 			e.printStackTrace();
 			stop();
 		}
-		world = WorldGenerator.generateWorld(100, 100);
-		player = new Player(0, 128);
+		world = WorldGenerator.generateWorld(100, 500);
+		player = new Player(world.getWidth()/2, 128);
 		input = new InputHandler();
 		ticks = 0;
 	}

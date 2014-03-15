@@ -63,6 +63,7 @@ public class Player {
 
 	private void loadSprites() {
 		SPRITE_IDLE_1 = SpriteManager.loadPlayerImage(0, 0);
+		// TODO load others
 	}
 
 	private void move(Direction dir, int xVal) {
