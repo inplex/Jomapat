@@ -34,6 +34,7 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 		System.out.println("Starting with " + Runtime.getRuntime().freeMemory() / 1048576 + "MB");
+		System.out.println("Data Path is " + Util.getDataPath());
 		game = new Jomapat();
 		game.frame.setTitle(game.title + " | Starting ..");
 		game.frame.setFocusable( true );

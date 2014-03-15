@@ -54,7 +54,7 @@ public class Player {
 	public static BufferedImage SPRITE_SNEAK_2;
 	public static BufferedImage SPRITE_SNEAK_3;
 	public static BufferedImage SPRITE_SNEAK_4;
-
+	
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
