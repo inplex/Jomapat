@@ -41,30 +41,42 @@ public class Renderer {
 						if (b == BlockType.GRASS) {
 							BlockType left = Jomapat.game.getWorld().getBlockAt(x - 1, y);
 							BlockType right = Jomapat.game.getWorld().getBlockAt(x + 1, y);
-							BlockType top = Jomapat.game.getWorld().getBlockAt(x, y + 1);
+							BlockType top = Jomapat.game.getWorld().getBlockAt(x, y - 1);
 
 							int sprite = 0;
-							
-							if (top == null && left == null && right == null) {
-								sprite = 0;
+								
+							if(top == null) {
+								if(left == null) {
+									if(right == null) {
+										sprite = 0;
+									} else if(right != null) {
+										sprite = 2;
+									}
+								} else if(left != null) {
+									if(right == null) {
+										sprite = 3;
+									} else if(right != null) {
+										sprite = 1;
+									}
+								}
+							} else { // top != null
+								if(left == null) {
+									if(right == null) {
+										sprite = 1; // Maybe wrong
+									} else if(right != null) {
+										sprite = 4;
+									}
+								} else if(left != null) {
+									if(right == null) {
+										sprite = 5;
+									} else if(right != null) {
+										sprite = 1; // Maybe wrong
+									}
+								}
 							}
 							
-							
-							if (left == null && right == null) {
-								sprite = 1;
-							}
-							if (left == null && right != null) {
-								sprite = 2;
-							}
-							if (left != null && right == null) {
-								sprite = 3;
-							}
-							if (top == null && left != null && right != null) {
-								sprite = 1;
-							}
-							
-							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
-									null);
+							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE)
+									- playerY, null);
 
 						}
 					}
