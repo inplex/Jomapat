@@ -22,7 +22,7 @@ public class Renderer {
 		// Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 +
 		// Jomapat.game.getPlayer().getY() + 50);
 
-		int playerX = Jomapat.game.getPlayer().getX();
+		int playerX = Jomapat.game.getPlayer().getX()-64;
 		// Render Blocks
 		// TODO Improve this iteration - do not render EVERY Block, only the
 		// visible ones
@@ -31,13 +31,13 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at
-				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE),
+				g.drawImage(Jomapat.game.getWorld().getBlockAt(x, y).getImage(), (x * SpriteManager.SPRITE_BLOCK_SIZE)-playerX,
 						(y * SpriteManager.SPRITE_BLOCK_SIZE), null);
 			}
 		}
 
 		// Render Player
-		g.drawImage(Player.SPRITE_IDLE_1, Jomapat.game.getPlayer().getX(), Jomapat.game.getPlayer().getY(), null);
+		g.drawImage(Player.SPRITE_IDLE_1, 64, Jomapat.game.getPlayer().getY(), null);
 		
 	}
 

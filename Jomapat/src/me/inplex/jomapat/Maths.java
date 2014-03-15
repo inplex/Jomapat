@@ -21,4 +21,8 @@ public class Maths {
 		}
 		return retVal;
 	}
+	//
+	//public static boolean isVisible(int x,int y){
+	//	return x
+	//}
 }

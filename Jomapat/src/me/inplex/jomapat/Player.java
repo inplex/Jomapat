@@ -4,13 +4,13 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Player {
-	
+
 	private int x;
 	private int y;
 	private int speed = 1;
 	private Direction direction;
 	private MoveState state;
-	
+
 	/*
 	 * Idle Sprites framewise
 	 */
@@ -54,13 +54,13 @@ public class Player {
 	public static BufferedImage SPRITE_SNEAK_2;
 	public static BufferedImage SPRITE_SNEAK_3;
 	public static BufferedImage SPRITE_SNEAK_4;
-	
+
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.loadSprites();
 	}
-	
+
 	private void loadSprites() {
 		SPRITE_IDLE_1 = SpriteManager.loadPlayerImage(0, 0);
 	}
@@ -71,17 +71,17 @@ public class Player {
 		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x+64, y+10)==false ? x : oldx;
 		direction = dir;
 	}
-	
+
 	private void move(int xVal) {
 		move(direction, xVal);
 	}
-	
+
 	private void handleFalls(){
 		y = Collision.checkCollisionAt(x, y+65)==false ? y+1:y;
 	}
-	
 
-	
+
+
 	public void update() {
 		handleFalls();
 		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
@@ -92,62 +92,61 @@ public class Player {
 			direction = Direction.RIGHT;
 			move(speed);
 		}
-		
-		// Mining
-		// experimental
-		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE) && Jomapat.game.getInput().isKeyDown(KeyEvent.VK_S)) {
-			System.out.println("SPACE");
-			Jomapat.game.getWorld().removeBlockAt(Maths.positionToGrid(x)/SpriteManager.SPRITE_BLOCK_SIZE,
-					Maths.positionToGrid(y+10)/SpriteManager.SPRITE_BLOCK_SIZE+1);
+
+		//Jump
+
+		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
+			y=y-4;
 		}
 
 
-	}
-	
-	public boolean isOnGround() {
-		/*
-		 * TODO Implement Jumping and return if player is on the ground
-		 */
-		return false;
-	}
-	
-	public boolean isSneaking() {
-		/*
-		 * TODO Implement Sneaking and return if player is sneaking
-		 */
-		return false;
-	}
 
-	public int getX() {
-		return x;
-	}
+		}
 
-	public void setX(int x) {
-		this.x = x;
-	}
+		public boolean isOnGround() {
+			/*
+			 * TODO Implement Jumping and return if player is on the ground
+			 */
+			return false;
+		}
 
-	public int getY() {
-		return y;
-	}
+		public boolean isSneaking() {
+			/*
+			 * TODO Implement Sneaking and return if player is sneaking
+			 */
+			return false;
+		}
 
-	public void setY(int y) {
-		this.y = y;
-	}
+		public int getX() {
+			return x;
+		}
 
-	public Direction getDirection() {
-		return direction;
-	}
+		public void setX(int x) {
+			this.x = x;
+		}
 
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
+		public int getY() {
+			return y;
+		}
 
-	public MoveState getState() {
-		return state;
-	}
+		public void setY(int y) {
+			this.y = y;
+		}
 
-	public void setState(MoveState state) {
-		this.state = state;
-	}
+		public Direction getDirection() {
+			return direction;
+		}
 
-}
+		public void setDirection(Direction direction) {
+			this.direction = direction;
+		}
+
+		public MoveState getState() {
+			return state;
+		}
+
+		public void setState(MoveState state) {
+			this.state = state;
+		}
+
+	}
