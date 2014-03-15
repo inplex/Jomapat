@@ -9,8 +9,7 @@ public class Maths {
 	    return random.nextInt(max - min + 1) + min;
 	  }
 	
-	
-	//TODO optimize this method. really.
+	/*
 	public static int positionToGrid(int pos){
 		int retVal = -1;
 		for (int i=0;i<pos+128;i=i+64){
@@ -21,6 +20,13 @@ public class Maths {
 		}
 		return retVal;
 	}
+	*/
+	
+	
+	public static int positionToGrid(int pos) {
+	    return (int) (Math.floor(pos / (double)SpriteManager.SPRITE_BLOCK_SIZE) * SpriteManager.SPRITE_BLOCK_SIZE);
+	}
+	
 	//
 	//public static boolean isVisible(int x,int y){
 	//	return x
