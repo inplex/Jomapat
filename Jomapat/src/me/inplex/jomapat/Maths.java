@@ -15,7 +15,7 @@ public class Maths {
 	
 	
 	public static boolean isVisible(int x,int y){
-		return (x>=-64&&y>=0&&x<=Jomapat.game.getWidth()&&y<=Jomapat.game.getHeight()) ? true : false;
+		return (x>=-64&&y>=0&&x<Jomapat.game.getWidth()&&y<Jomapat.game.getHeight()) ? true : false;
 	}
 	
 	public static int distance(int x1,int x2,int y1,int y2){
