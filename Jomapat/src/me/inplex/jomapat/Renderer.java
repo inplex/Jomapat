@@ -40,6 +40,7 @@ public class Renderer {
 		// Render Player
 		g.drawImage(Player.SPRITE_IDLE_1, Jomapat.game.getWidth()/2, Jomapat.game.getHeight()/2, null);
 		
+		Gui.renderGui(g);
 	}
 
 }
