@@ -4,17 +4,46 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class InputHandler implements KeyListener, MouseListener {
 	
 	private boolean[] keysDown;
 	
 	public InputHandler() {
-		keysDown = new boolean[100];
+		keysDown = new boolean[120];
 	}
 	
 	public boolean isKeyDown(int key) {
 		return keysDown[key];
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		keysDown[arg0.getKeyCode()] = true;
+		if(arg0.getKeyCode() == KeyEvent.VK_S) {
+			try {
+				WorldSave.save(0);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if(arg0.getKeyCode() == KeyEvent.VK_L) {
+			try {
+				WorldSave.load(0);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		keysDown[arg0.getKeyCode()] = false;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 	}
 	
 	@Override
@@ -39,21 +68,6 @@ public class InputHandler implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		keysDown[arg0.getKeyCode()] = true;
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		keysDown[arg0.getKeyCode()] = false;
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
 		
 	}
 
