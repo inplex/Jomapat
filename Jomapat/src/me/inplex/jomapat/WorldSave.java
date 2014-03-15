@@ -29,7 +29,7 @@ public class WorldSave {
 		out.writeInt(w.getHeight());
 		for (int y = 0; y < w.getHeight(); y++) {
 			for (int x = 0; x < w.getWidth(); x++) {
-				out.writeByte(w.getBlockAt(x, y) == null ? ((byte) 0) : ((byte) w.getBlockAt(x, y).ordinal()));
+				out.writeByte(w.getBlockAt(x, y) == null ? ((byte) 0xFF) : ((byte) w.getBlockAt(x, y).ordinal()));
 			}
 		}
 		out.close();
@@ -55,7 +55,7 @@ public class WorldSave {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				byte id = (byte) in.readByte();
-				if (id != (byte) 0)
+				if (id != (byte) 0xFF)
 					Jomapat.game.getWorld().setBlock(x, y, BlockType.values()[id]);
 			}
 		}

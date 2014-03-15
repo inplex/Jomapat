@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 public enum BlockType {
 	
 //	Name		xT	yT	Hard	coll	dmg
+	
 	GRASS(	 	0, 	0, 	0.1f, 	true, 	false),
 	DIRT(		1, 	0, 	0.1f, 	true, 	false),
 	STONE(		2, 	0, 	0.4f, 	true, 	false),
