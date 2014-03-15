@@ -77,7 +77,7 @@ public class Player {
 	}
 
 	private void handleFalls(){
-		y = Collision.checkCollisionAt(x, y+65)==false ? y+1:y;
+		y = Collision.checkCollisionAt(x, y+65)==false ? y+2:y;
 	}
 
 

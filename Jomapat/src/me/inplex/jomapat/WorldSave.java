@@ -33,6 +33,7 @@ public class WorldSave {
 			}
 		}
 		out.close();
+		Gui.addMessage("gespeichert");
 	}
 
 	public static void load(int num) throws IOException {
