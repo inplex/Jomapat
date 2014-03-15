@@ -3,21 +3,24 @@ package me.inplex.jomapat;
 import java.awt.image.BufferedImage;
 
 public enum BlockType {
+
+// length of xTextures and yTexturs MUST be the same!
+//	Name		xTs					yTs					Hard	coll	dmg
+	GRASS(	 	new int[] { 0, 1, 2, 3, 4, 5 }, 	new int[] { 0, 0, 0, 0, 0, 0 }, 	0.1f, 	true, 	false),
+	DIRT(		new int[] { 6 }, 	new int[] { 0 }, 	0.1f, 	true, 	false),
+	STONE(		new int[] { 7 }, 	new int[] { 0 }, 	0.4f, 	true, 	false),
+	DIAMOND(	new int[] { 8 }, 	new int[] { 0 }, 	0.8f, 	true, 	false);
 	
-//	Name		xT	yT	Hard	coll	dmg
-	
-	GRASS(	 	0, 	0, 	0.1f, 	true, 	false),
-	DIRT(		1, 	0, 	0.1f, 	true, 	false),
-	STONE(		2, 	0, 	0.4f, 	true, 	false),
-	DIAMOND(	3, 	0, 	0.8f, 	true, 	false);
-	
-	private BufferedImage sprite;
+	private BufferedImage[] sprites;
 	private float hardness;
 	private boolean collide;
 	private boolean damage;
 	
-	private BlockType(int xTexture, int yTexture, float hardness, boolean collide, boolean damage) {
-		this.sprite = SpriteManager.loadBlockImage(xTexture, yTexture);
+	private BlockType(int[] xTextures, int[] yTextures, float hardness, boolean collide, boolean damage) {
+		this.sprites = new BufferedImage[xTextures.length];
+		for(int i = 0; i < xTextures.length; i++) {
+			this.sprites[i] = SpriteManager.loadBlockImage(xTextures[i], yTextures[i]);
+		}
 		this.hardness = hardness;
 		this.collide = collide;
 		this.damage = damage;
@@ -35,8 +38,12 @@ public enum BlockType {
 		return damage;
 	}
 
-	public BufferedImage getSprite() {
-		return sprite;
+	public BufferedImage[] getSprites() {
+		return sprites;
+	}
+	
+	public BufferedImage getSprite(int i) {
+		return sprites[i];
 	}
 
 }
