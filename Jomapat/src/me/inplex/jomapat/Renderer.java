@@ -31,7 +31,7 @@ public class Renderer {
 					continue;
 				// Render Block at
 
-				if (Maths.isVisible(x * SpriteManager.SPRITE_BLOCK_SIZE - playerX, y * SpriteManager.SPRITE_BLOCK_SIZE)) {
+				if (Maths.isVisible(x * SpriteManager.SPRITE_BLOCK_SIZE - playerX, y * SpriteManager.SPRITE_BLOCK_SIZE -playerY)) {
 					BlockType b = Jomapat.game.getWorld().getBlockAt(x, y);
 					if (b.getSprites().length == 1) {
 						g.drawImage(b.getSprite(0), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
