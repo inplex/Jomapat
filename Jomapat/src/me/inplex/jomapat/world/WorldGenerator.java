@@ -1,4 +1,6 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.world;
+
+import me.inplex.jomapat.extra.Maths;
 
 public class WorldGenerator {
 	

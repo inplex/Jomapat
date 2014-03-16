@@ -1,4 +1,4 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.world;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,6 +6,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.gfx.Gui;
+import me.inplex.jomapat.player.Player;
 
 public class WorldSave {
 	

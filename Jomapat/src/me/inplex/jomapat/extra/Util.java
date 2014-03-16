@@ -1,4 +1,4 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.extra;
 
 import java.io.File;
 

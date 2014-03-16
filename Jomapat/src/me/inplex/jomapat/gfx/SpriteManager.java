@@ -1,4 +1,4 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.gfx;
 
 import java.awt.image.BufferedImage;
 

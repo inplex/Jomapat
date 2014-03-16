@@ -1,4 +1,8 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.extra;
+
+import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.gfx.SpriteManager;
+import me.inplex.jomapat.world.World;
 
 public class Collision {
 	

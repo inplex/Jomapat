@@ -1,4 +1,5 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.world;
+
 
 public class World {
 

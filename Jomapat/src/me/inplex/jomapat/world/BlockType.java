@@ -1,6 +1,8 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.world;
 
 import java.awt.image.BufferedImage;
+
+import me.inplex.jomapat.gfx.SpriteManager;
 
 public enum BlockType {
 

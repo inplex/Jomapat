@@ -1,7 +1,12 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.gfx;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.extra.Maths;
+import me.inplex.jomapat.player.Player;
+import me.inplex.jomapat.world.BlockType;
 
 public class Renderer {
 

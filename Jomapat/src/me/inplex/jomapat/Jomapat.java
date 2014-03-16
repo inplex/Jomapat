@@ -11,8 +11,17 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import me.inplex.jomapat.extra.InputHandler;
+import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.gfx.Renderer;
+import me.inplex.jomapat.gfx.SpriteManager;
+import me.inplex.jomapat.player.Player;
+import me.inplex.jomapat.world.World;
+import me.inplex.jomapat.world.WorldGenerator;
 
 public class Jomapat extends Canvas implements Runnable {
 

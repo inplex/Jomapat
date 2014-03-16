@@ -1,4 +1,4 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.gfx;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import me.inplex.jomapat.Jomapat;
 
 public class Gui {
 	private static List<String> messages = new ArrayList<String>();

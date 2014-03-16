@@ -1,10 +1,12 @@
-package me.inplex.jomapat;
+package me.inplex.jomapat.extra;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+
+import me.inplex.jomapat.world.WorldSave;
 
 public class InputHandler implements KeyListener, MouseListener {
 	
