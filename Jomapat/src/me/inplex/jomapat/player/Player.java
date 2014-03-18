@@ -91,6 +91,9 @@ public class Player {
 		if (Collision.checkCollisionAt(x+50, y+64)){
 			y = y - speed;
 		}
+		if (Collision.checkCollisionAt(x, y+65)==true||Collision.checkCollisionAt(x, y+64)==true){
+			y = y - speed;
+		}
 	}
 
 
