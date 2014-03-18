@@ -88,7 +88,7 @@ public class Player {
 		if (Collision.checkCollisionAt(x, y)){
 			y = y - speed;
 		}
-		if (Collision.checkCollisionAt(x+64, y+64)){
+		if (Collision.checkCollisionAt(x+50, y+64)){
 			y = y - speed;
 		}
 	}
