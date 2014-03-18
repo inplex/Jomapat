@@ -1,6 +1,7 @@
-package me.inplex.jomapat.extra;
+package me.inplex.jomapat.player;
 
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.gfx.SpriteManager;
 import me.inplex.jomapat.world.World;
 

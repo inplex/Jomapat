@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import me.inplex.jomapat.Jomapat;
-import me.inplex.jomapat.extra.Collision;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.gfx.SpriteManager;
 
@@ -12,7 +11,7 @@ public class Player {
 
 	private int x;
 	private int y;
-	private int speed = 1;
+	private int speed = 3;
 	private Direction direction;
 	private MoveState state;
 
@@ -83,7 +82,15 @@ public class Player {
 	}
 
 	private void handleFalls(){
-		y = Collision.checkCollisionAt(x, y+65)==false ? y+2:y;
+		if (Collision.checkCollisionAt(x, y+65)==false&&Collision.checkCollisionAt(x, y+64)==false){
+			y = y + speed;
+		}
+		if (Collision.checkCollisionAt(x, y)){
+			y = y - speed;
+		}
+		if (Collision.checkCollisionAt(x+64, y+64)){
+			y = y - speed;
+		}
 	}
 
 
@@ -102,7 +109,7 @@ public class Player {
 		//Jump
 
 		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
-			y=y-4;
+			y=y-speed*3;
 		}
 
 

@@ -21,9 +21,24 @@ public class Gui {
 		actMsg = "";
 	}
 
+	private static String replace(String text,String find){
+		String outParam="";
+		for (int i = 0; i < find.length(); i++){
+			outParam += "*";
+		}
+		return text.replaceAll("(?i)"+find, outParam);
+	}
+
+	private static String removeBadWords(String text){
+		text = replace(text,"Arsch");
+		text = replace(text,"Idiot");
+		return text;
+	}
+
 	public static void addMessage(String msg) {
 
 		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+		msg = removeBadWords(msg);
 		messages.add(0, time + " : " + msg);
 	}
 
@@ -55,5 +70,9 @@ public class Gui {
 		}
 
 	}
+	
 
-}
+
+	}
+
+
