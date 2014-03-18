@@ -2,7 +2,6 @@ package me.inplex.jomapat.player;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.gfx.SpriteManager;
