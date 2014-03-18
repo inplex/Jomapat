@@ -1,11 +1,16 @@
 package me.inplex.jomapat.gfx;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class SpriteManager {
 
 	public static BufferedImage blockSheet;
 	public static BufferedImage playerSheet;
+	
 
 	/*
 	 * Size of one Player Sprite
@@ -24,11 +29,21 @@ public class SpriteManager {
 	 * Loads all sprites from the given spritesheet
 	 * 
 	 * @param spriteSheet The BufferedImage containing all sprites
+	 * 
+	 * 
 	 */
 
-	public static void setSheets(BufferedImage blockSpriteSheet, BufferedImage playerSpriteSheet) {
+
+	public static BufferedImage digg = null;
+	public static BufferedImage digg1 = digg.getSubimage(0,0,64,64);
+	public static BufferedImage digg2 = digg.getSubimage(64,0,64,64);
+	public static BufferedImage digg3 = digg.getSubimage(128,0,64,64);
+
+	
+	public static void setSheets(BufferedImage blockSpriteSheet, BufferedImage playerSpriteSheet, BufferedImage diggSpriteSheet ) {
 		blockSheet = blockSpriteSheet;
 		playerSheet = playerSpriteSheet;
+		digg = diggSpriteSheet;
 		/*
 		 * SPRITE_PLAYER_IDLE_1 = sheet.getSubimage(0, 0,
 		 * SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);

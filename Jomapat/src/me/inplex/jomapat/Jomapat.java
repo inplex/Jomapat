@@ -54,6 +54,7 @@ public class Jomapat extends Canvas implements Runnable {
 		game.frame.setLocationRelativeTo(null);
 		game.addKeyListener(game.input);
 		game.addMouseListener(game.input);
+		game.addMouseMotionListener(game.input);
 		
 		game.frame.requestFocusInWindow();
 
@@ -73,7 +74,7 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")));
+			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")),ImageIO.read(new File("res//Assets//Sprites//digg.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();

@@ -15,7 +15,15 @@ public class Renderer {
 	 * 
 	 * @param g the Graphics object to draw on
 	 */
-
+	
+	static int playerX=0;
+	static int playerY=0;
+	public static int getXOffset(){
+		return playerX;
+	}
+	public static int getYOffset(){
+		return playerY;
+	}
 	public static void renderGame(Graphics g) {
 
 		g.setColor(Color.RED);
@@ -27,8 +35,8 @@ public class Renderer {
 		// Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 +
 		// Jomapat.game.getPlayer().getY() + 50);
 
-		int playerX = Jomapat.game.getPlayer().getX() - Jomapat.game.getWidth() / 2;
-		int playerY = Jomapat.game.getPlayer().getY() - Jomapat.game.getHeight() / 2;
+		playerX = Jomapat.game.getPlayer().getX() - Jomapat.game.getWidth() / 2;
+		playerY = Jomapat.game.getPlayer().getY() - Jomapat.game.getHeight() / 2;
 		// Render Blocks
 		for (int x = 0; x < Jomapat.game.getWorld().getWidth(); x++) {
 			for (int y = 0; y < Jomapat.game.getWorld().getHeight(); y++) {

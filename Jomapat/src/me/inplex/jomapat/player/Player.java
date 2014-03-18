@@ -1,9 +1,14 @@
 package me.inplex.jomapat.player;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
+import me.inplex.jomapat.extra.InputHandler;
+import me.inplex.jomapat.extra.Maths;
+import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
 
 public class Player {
@@ -13,6 +18,8 @@ public class Player {
 	private int speed = 3;
 	private Direction direction;
 	private MoveState state;
+	
+	private int mouseX=0,mouseY=0;
 
 	/*
 	 * Idle Sprites framewise
@@ -98,6 +105,19 @@ public class Player {
 
 
 	public void update() {
+		
+
+		mouseX = Jomapat.game.getInput().getMousePosX();
+		mouseY = Jomapat.game.getInput().getMousePosY();
+		
+		if (Jomapat.game.getInput().isMouseDown()){
+			if (Maths.distance(Maths.positionToGrid(mouseX+Renderer.getXOffset()), x, Maths.positionToGrid(mouseY+Renderer.getYOffset()), y)<100){
+			//Jomapat.game.getWorld().removeBlockAt(Maths.positionToGrid(mouseX+Renderer.getXOffset())/64, Maths.positionToGrid(mouseY+Renderer.getYOffset())/64);
+				
+			}
+		}
+		
+		
 		handleFalls();
 		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;

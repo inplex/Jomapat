@@ -1,14 +1,16 @@
 package me.inplex.jomapat.extra;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 
 import me.inplex.jomapat.world.WorldSave;
 
-public class InputHandler implements KeyListener, MouseListener {
+public class InputHandler implements KeyListener, MouseListener, MouseMotionListener {
 	
 	private boolean[] keysDown;
 	
@@ -48,6 +50,8 @@ public class InputHandler implements KeyListener, MouseListener {
 		
 	}
 	
+	boolean mouseDown;
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
@@ -65,12 +69,47 @@ public class InputHandler implements KeyListener, MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+		mouseDown = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		mouseDown = false;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		
 		
 	}
+
+	int mouseX,mouseY;
+	
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		
+		mouseX=arg0.getX();
+		mouseY=arg0.getY();
+		
+	}
+	
+	
+	public int getMousePosX(){
+		return mouseX;
+	}
+	public int getMousePosY(){
+		return mouseY;
+	}
+	
+	public boolean isMouseDown(){
+		return mouseDown;
+	}
+	
+	
+
+	
+	
+
+	
 
 }
