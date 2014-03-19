@@ -74,7 +74,7 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")),ImageIO.read(new File("res//Assets//Sprites//digg.png")));
+			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();
@@ -116,12 +116,13 @@ public class Jomapat extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
+			render();
 			while (delta >= 1) {
 				update();
 				updates++;
 				delta--;
 			}
-			render();
+			
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;

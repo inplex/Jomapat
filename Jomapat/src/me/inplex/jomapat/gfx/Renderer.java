@@ -88,12 +88,16 @@ public class Renderer {
 								}
 							}
 							
-							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE)
-									- playerY, null);
+							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE)- playerY, null);
+							
 
 						}
 					}
+					if (Jomapat.game.getPlayer().actualBlockX==x&&Jomapat.game.getPlayer().actualBlockY==y){
+						g.drawImage(Jomapat.game.getPlayer().actDiggGraphics,(x*SpriteManager.SPRITE_BLOCK_SIZE)-playerX, (y*SpriteManager.SPRITE_BLOCK_SIZE)-playerY,null);
+					}
 				}
+				
 			}
 		}
 

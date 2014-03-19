@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SpriteManager {
+public class SpriteManager{
 
 	public static BufferedImage blockSheet;
 	public static BufferedImage playerSheet;
@@ -33,17 +33,23 @@ public class SpriteManager {
 	 * 
 	 */
 
-
-	public static BufferedImage digg = null;
-	public static BufferedImage digg1 = digg.getSubimage(0,0,64,64);
-	public static BufferedImage digg2 = digg.getSubimage(64,0,64,64);
-	public static BufferedImage digg3 = digg.getSubimage(128,0,64,64);
-
+	public static BufferedImage digg1;
+	public static BufferedImage digg2;
+	public static BufferedImage digg3;
 	
-	public static void setSheets(BufferedImage blockSpriteSheet, BufferedImage playerSpriteSheet, BufferedImage diggSpriteSheet ) {
+	public static void setSheets(BufferedImage blockSpriteSheet, BufferedImage playerSpriteSheet ){
 		blockSheet = blockSpriteSheet;
 		playerSheet = playerSpriteSheet;
-		digg = diggSpriteSheet;
+
+		BufferedImage digg = null;
+		try {
+			digg = ImageIO.read(new File("res//Assets//Sprites//digg.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		digg1 = digg.getSubimage(0,0,64,64);
+		digg2 = digg.getSubimage(64,0,64,64);
+		digg3 = digg.getSubimage(128,0,64,64);
 		/*
 		 * SPRITE_PLAYER_IDLE_1 = sheet.getSubimage(0, 0,
 		 * SPRITE_PLAYER_SIZE_WIDTH, SPRITE_PLAYER_SIZE_HEIGHT);

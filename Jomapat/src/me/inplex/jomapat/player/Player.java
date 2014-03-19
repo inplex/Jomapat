@@ -20,6 +20,9 @@ public class Player {
 	private MoveState state;
 	
 	private int mouseX=0,mouseY=0;
+	private int oldBlockX = 0,oldBlockY = 0;
+	public int  actualBlockX=0,actualBlockY=0,actualBlockDigg=0;
+	public BufferedImage actDiggGraphics = null;
 
 	/*
 	 * Idle Sprites framewise
@@ -111,11 +114,27 @@ public class Player {
 		mouseY = Jomapat.game.getInput().getMousePosY();
 		
 		if (Jomapat.game.getInput().isMouseDown()){
-			if (Maths.distance(Maths.positionToGrid(mouseX+Renderer.getXOffset()), x, Maths.positionToGrid(mouseY+Renderer.getYOffset()), y)<100){
-			//Jomapat.game.getWorld().removeBlockAt(Maths.positionToGrid(mouseX+Renderer.getXOffset())/64, Maths.positionToGrid(mouseY+Renderer.getYOffset())/64);
-				
+			actualBlockX = Maths.positionToGrid(mouseX+Renderer.getXOffset())/64;
+			actualBlockY = Maths.positionToGrid(mouseY+Renderer.getYOffset())/64;
+			
+
+			
+			if (actualBlockX!=oldBlockX||actualBlockY!=oldBlockY){
+				actualBlockDigg = 0;
+				actDiggGraphics=null;
 			}
+			
+			oldBlockX = actualBlockX;
+			oldBlockY = actualBlockY;
+			actualBlockDigg++;
+			
+			if (actualBlockDigg>20 &&actualBlockDigg<100){actDiggGraphics=SpriteManager.digg1;}
+			if (actualBlockDigg>100&&actualBlockDigg<200){actDiggGraphics=SpriteManager.digg2;}
+			if (actualBlockDigg>200&&actualBlockDigg<300){actDiggGraphics=SpriteManager.digg3;}
+			if (actualBlockDigg>300)                     {Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);}
+
 		}
+		
 		
 		
 		handleFalls();
