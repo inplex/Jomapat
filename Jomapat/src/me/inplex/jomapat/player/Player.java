@@ -92,9 +92,6 @@ public class Player {
 		if (Collision.checkCollisionAt(x, y+65)==false&&Collision.checkCollisionAt(x, y+64)==false){
 			y = y + speed;
 		}
-		if (Collision.checkCollisionAt(x, y)){
-			y = y - speed;
-		}
 		if (Collision.checkCollisionAt(x+50, y+64)){
 			y = y - speed;
 		}
@@ -114,7 +111,6 @@ public class Player {
 		if (Jomapat.game.getInput().isMouseDown()){
 			actualBlockX = Maths.positionToGrid(mouseX+Renderer.getXOffset())/64;
 			actualBlockY = Maths.positionToGrid(mouseY+Renderer.getYOffset())/64;
-			
 
 			
 			if (actualBlockX!=oldBlockX||actualBlockY!=oldBlockY){
