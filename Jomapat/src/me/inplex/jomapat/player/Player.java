@@ -1,12 +1,10 @@
 package me.inplex.jomapat.player;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
-import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
@@ -126,8 +124,9 @@ public class Player {
 			
 			oldBlockX = actualBlockX;
 			oldBlockY = actualBlockY;
-			actualBlockDigg++;
+			int dmg = (Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) ? (int)((1.0f-(Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY).getHardness()))*10) : 0;
 			
+			actualBlockDigg+=dmg;
 			if (actualBlockDigg>20 &&actualBlockDigg<100){actDiggGraphics=SpriteManager.digg1;}
 			if (actualBlockDigg>100&&actualBlockDigg<200){actDiggGraphics=SpriteManager.digg2;}
 			if (actualBlockDigg>200&&actualBlockDigg<300){actDiggGraphics=SpriteManager.digg3;}
