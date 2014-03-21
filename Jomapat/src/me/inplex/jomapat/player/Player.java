@@ -21,6 +21,8 @@ public class Player {
 	private int oldBlockX = 0,oldBlockY = 0;
 	public int  actualBlockX=0,actualBlockY=0,actualBlockDigg=0;
 	public BufferedImage actDiggGraphics = null;
+	
+	private int playerHitboxW=50,playerHitboxH=64;
 
 	/*
 	 * Idle Sprites framewise
@@ -80,7 +82,7 @@ public class Player {
 	private void move(Direction dir, int xVal) {
 		int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
-		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x+64, y+10)==false ? x : oldx;
+		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x+playerHitboxW, y+playerHitboxH)==false ? x : oldx;
 		direction = dir;
 	}
 
@@ -89,13 +91,13 @@ public class Player {
 	}
 
 	private void handleFalls(){
-		if (Collision.checkCollisionAt(x, y+65)==false&&Collision.checkCollisionAt(x, y+64)==false){
+		if (Collision.checkCollisionAt(x, y+playerHitboxH)==false&&Collision.checkCollisionAt(x, y+playerHitboxH)==false){
 			y = y + speed;
 		}
-		if (Collision.checkCollisionAt(x+50, y+64)){
+		if (Collision.checkCollisionAt(x+playerHitboxW, y+playerHitboxH)){
 			y = y - speed;
 		}
-		if (Collision.checkCollisionAt(x, y+65)==true||Collision.checkCollisionAt(x, y+64)==true){
+		if (Collision.checkCollisionAt(x, y+playerHitboxH)==true||Collision.checkCollisionAt(x, y+playerHitboxH)==true){
 			y = y - speed;
 		}
 	}

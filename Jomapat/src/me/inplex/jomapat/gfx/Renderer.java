@@ -2,7 +2,6 @@ package me.inplex.jomapat.gfx;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.player.Player;
@@ -18,6 +17,7 @@ public class Renderer {
 	
 	static int playerX=0;
 	static int playerY=0;
+	
 	public static int getXOffset(){
 		return playerX;
 	}
