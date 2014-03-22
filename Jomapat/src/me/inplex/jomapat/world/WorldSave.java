@@ -17,7 +17,7 @@ import me.inplex.jomapat.player.Player;
 
 public class WorldSave {
 
-	public static final short WORLDSAVE_VERSION = (short) 1;
+	public static final short WORLDSAVE_VERSION = (short) 2;
 	public static final int PREFIX = 0x57504D4A;
 
 	public static void save(int num) throws IOException {
