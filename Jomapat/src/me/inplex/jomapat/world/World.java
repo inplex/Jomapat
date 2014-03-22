@@ -14,6 +14,11 @@ public class World {
 		this.height = height;
 		this.blocks = new BlockType[width][height];
 	}
+	
+	public void update() {
+		// update blocks near the Player
+		// e.g. water flow if implemented
+	}
 
 	public int getWidth() {
 		return width;

@@ -56,18 +56,14 @@ public class Jomapat extends Canvas implements Runnable {
 		game.addKeyListener(game.input);
 		game.addMouseListener(game.input);
 		game.addMouseMotionListener(game.input);
-
 		game.requestFocus();
-
 		game.frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				game.resized();
 			}
 		});
-
 		game.frame.setVisible(true);
-
 		game.start();
 	}
 
@@ -141,6 +137,7 @@ public class Jomapat extends Canvas implements Runnable {
 	public void update() {
 		ticks++;
 		player.update();
+		world.update();
 		ParticleManager.update();
 	}
 

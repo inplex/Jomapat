@@ -7,7 +7,6 @@ import java.util.Random;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.extra.Maths;
-import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Particle;
 import me.inplex.jomapat.gfx.ParticleBehaviour;
 import me.inplex.jomapat.gfx.ParticleManager;
