@@ -18,6 +18,8 @@ public class Renderer {
 	static int playerX=0;
 	static int playerY=0;
 	
+	private static final int renderDist = 15 ;
+	
 	public static int getXOffset(){
 		return playerX;
 	}
@@ -38,8 +40,8 @@ public class Renderer {
 		playerX = Jomapat.game.getPlayer().getX() - Jomapat.game.getWidth() / 2;
 		playerY = Jomapat.game.getPlayer().getY() - Jomapat.game.getHeight() / 2;
 		// Render Blocks
-		for (int x = Maths.positionToGrid(Jomapat.game.getPlayer().getX())/64-50; x < Maths.positionToGrid(Jomapat.game.getPlayer().getX())/64+50; x++) {
-			for (int y = 0; y < Jomapat.game.getHeight(); y++) {
+		for (int x = Maths.positionToGrid(Jomapat.game.getPlayer().getX())/64-renderDist; x < Maths.positionToGrid(Jomapat.game.getPlayer().getX())/64+renderDist; x++) {
+			for (int y = Maths.positionToGrid(Jomapat.game.getPlayer().getY())/64-renderDist; y < Maths.positionToGrid(Jomapat.game.getPlayer().getY())/64+renderDist; y++) {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
 				// Render Block at
