@@ -1,6 +1,7 @@
 package me.inplex.jomapat.gfx;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.InputHandler;
+import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.world.BlockType;
 
 public class Gui {
 	private static List<String> messages = new ArrayList<String>();
@@ -84,12 +87,22 @@ public class Gui {
 		int width = 600,height=300;
 		g.setColor(new Color(100,100,100,160));
 		g.fillRect(0, 0, Jomapat.game.getWidth(), Jomapat.game.getHeight());
-		g.setColor(new Color(0xEEEEEE));
+		g.setColor(new Color(0x999999));
 		g.drawRect(Jomapat.game.getWidth()/2-width/2-1, Jomapat.game.getHeight()/2-height/2-1, width+1, height+1);
-		g.setColor(new Color(0xBBBBBB));
+		g.setColor(new Color(0x888888 ));
 		g.fillRect(Jomapat.game.getWidth()/2-width/2, Jomapat.game.getHeight()/2-height/2, width, height);
         g.setColor(new Color(0x000000));
         g.drawString("X",Jomapat.game.getWidth()/2-width/2-1+width-10,Jomapat.game.getHeight()/2-height/2+13);
+        
+        g.setFont(new Font("courier",Font.BOLD,12));
+        g.setColor(new Color(0xFFFFFF));
+        
+        for (int i=0;i<BlockType.values().length;i++){
+        g.drawImage(Util.getScaledImage(BlockType.values()[i].getSprite(0),32,32),Jomapat.game.getWidth()/2-width/2+10+i*40,Jomapat.game.getHeight()/2-height/2+30,null);
+        g.drawString(""+Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]), Jomapat.game.getWidth()/2-width/2+10+i*40, Jomapat.game.getHeight()/2-height/2+30+10);
+        }
+        
+        
 			
 		if (Jomapat.game.getInput().isMouseDown()) {
 			int mouseX = Jomapat.game.getInput().getMousePosX();
