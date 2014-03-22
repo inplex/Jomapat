@@ -151,6 +151,14 @@ public class Player {
 				if (actualBlockDigg > 300) {
 					Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
 				}
+
+				if (new Random().nextInt(3) == 1) {
+					BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
+					if (bt != null) {
+						ParticleManager.addParticle(new Particle(actualBlockX * 64+32, actualBlockY * 64+32, 1, 1, 30, ParticleBehaviour.RANDOM, Util.getScaledImage(bt.getSprite(new Random().nextInt(bt.getSprites().length)), 8, 8)));
+					}
+				}
+
 			} else {
 				actualBlockDigg = -1;
 			}
