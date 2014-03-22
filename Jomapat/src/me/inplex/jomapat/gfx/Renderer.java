@@ -115,6 +115,8 @@ public class Renderer {
 		g.setColor(Color.BLACK);
 
 		Gui.renderGui(g);
+		if (Jomapat.game.getInventory().isVisible()==true){
 		Gui.showInventory(g);
+		}
 	}
 }

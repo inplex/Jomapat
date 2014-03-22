@@ -178,6 +178,12 @@ public class Player {
 		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
 			y = y - speed * 3;
 		}
+		
+		//Inventory
+		
+		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_E)) {
+			Jomapat.game.getInventory().show(true);
+		}
 
 	}
 

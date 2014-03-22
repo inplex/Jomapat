@@ -96,7 +96,7 @@ public class Gui {
 			int mouseY = Jomapat.game.getInput().getMousePosY();
 			
 			if (mouseX>=Jomapat.game.getWidth()/2-width/2-1+width-10&&mouseX<=Jomapat.game.getWidth()/2-width/2-1+width&&mouseY<=Jomapat.game.getHeight()/2-height/2+13&&mouseY<=Jomapat.game.getHeight()/2-height/2+23){
-				
+				Jomapat.game.getInventory().show(false);
 			}
 		}
 		
