@@ -21,17 +21,17 @@ public class Gui {
 		actMsg = "";
 	}
 
-	private static String replace(String text,String find){
-		String outParam="";
-		for (int i = 0; i < find.length(); i++){
+	private static String replace(String text, String find) {
+		String outParam = "";
+		for (int i = 0; i < find.length(); i++) {
 			outParam += "*";
 		}
-		return text.replaceAll("(?i)"+find, outParam);
+		return text.replaceAll("(?i)" + find, outParam);
 	}
 
-	private static String removeBadWords(String text){
-		text = replace(text,"Arsch");
-		text = replace(text,"Idiot");
+	private static String removeBadWords(String text) {
+		text = replace(text, "Arsch");
+		text = replace(text, "Idiot");
 		return text;
 	}
 
@@ -71,8 +71,12 @@ public class Gui {
 
 	}
 	
-
-
+	public static void showDiggingBar(Graphics g,int x,int y,int state) {
+		g.setColor(new Color(0,0,0,100));
+		g.fillRect(x, y, 70,3);
+		g.setColor(new Color(0x00FFAA));
+		g.fillRect(x, y, state, 3);
 	}
+	
 
-
+}

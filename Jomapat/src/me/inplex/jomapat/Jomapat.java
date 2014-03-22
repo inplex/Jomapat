@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.gfx.ParticleManager;
 import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
 import me.inplex.jomapat.player.Player;
@@ -46,7 +47,7 @@ public class Jomapat extends Canvas implements Runnable {
 		System.out.println("Data Path is " + Util.getDataPath());
 		game = new Jomapat();
 		game.frame.setTitle(game.title + " | Starting ..");
-		game.frame.setFocusable( true );
+		game.frame.setFocusable(true);
 		game.frame.add(game);
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,8 +56,8 @@ public class Jomapat extends Canvas implements Runnable {
 		game.addKeyListener(game.input);
 		game.addMouseListener(game.input);
 		game.addMouseMotionListener(game.input);
-		
-		game.frame.requestFocusInWindow();
+
+		game.requestFocus();
 
 		game.frame.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -64,6 +65,7 @@ public class Jomapat extends Canvas implements Runnable {
 				game.resized();
 			}
 		});
+
 		game.frame.setVisible(true);
 
 		game.start();
@@ -79,14 +81,17 @@ public class Jomapat extends Canvas implements Runnable {
 			e.printStackTrace();
 			stop();
 		}
+		ParticleManager.load();
 		world = WorldGenerator.generateWorld(1000, 500);
-		player = new Player(world.getWidth()/2, 128);
+		player = new Player(world.getWidth() / 2, 128);
 		input = new InputHandler();
 		ticks = 0;
 	}
 
 	public void resized() {
-		// handle resize here!
+		this.width = game.getWidth();
+		this.height = game.getHeight();
+		Renderer.renderDist = width / 64 / 2 + 2;
 	}
 
 	public synchronized void start() {
@@ -122,7 +127,7 @@ public class Jomapat extends Canvas implements Runnable {
 				updates++;
 				delta--;
 			}
-			
+
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
@@ -136,9 +141,8 @@ public class Jomapat extends Canvas implements Runnable {
 	public void update() {
 		ticks++;
 		player.update();
+		ParticleManager.update();
 	}
-
-
 
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();

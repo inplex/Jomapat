@@ -2,12 +2,18 @@ package me.inplex.jomapat.player;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.extra.Maths;
+import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.gfx.Particle;
+import me.inplex.jomapat.gfx.ParticleBehaviour;
+import me.inplex.jomapat.gfx.ParticleManager;
 import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
+import me.inplex.jomapat.world.BlockType;
 
 public class Player {
 
@@ -16,13 +22,14 @@ public class Player {
 	private int speed = 3;
 	private Direction direction;
 	private MoveState state;
-	
-	private int mouseX=0,mouseY=0;
-	private int oldBlockX = 0,oldBlockY = 0;
-	public int  actualBlockX=0,actualBlockY=0,actualBlockDigg=0;
+
+	private int mouseX = 0, mouseY = 0;
+	private int oldBlockX = 0, oldBlockY = 0;
+	public int actualBlockX = 0, actualBlockY = 0, actualBlockDigg = 0;
+	public int actualBlockRawX = 0, actualBlockRawY = 0;
 	public BufferedImage actDiggGraphics = null;
-	
-	private int playerHitboxW=50,playerHitboxH=64;
+
+	private int playerHitboxW = 50, playerHitboxH = 64;
 
 	/*
 	 * Idle Sprites framewise
@@ -67,7 +74,7 @@ public class Player {
 	public static BufferedImage SPRITE_SNEAK_2;
 	public static BufferedImage SPRITE_SNEAK_3;
 	public static BufferedImage SPRITE_SNEAK_4;
-	
+
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -82,122 +89,135 @@ public class Player {
 	private void move(Direction dir, int xVal) {
 		int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
-		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x+playerHitboxW, y+playerHitboxH)==false ? x : oldx;
+		x = Collision.checkCollisionAt(dir == Direction.LEFT ? x : x + playerHitboxW, y + playerHitboxH) == false ? x : oldx;
 		direction = dir;
+		if (new Random().nextInt(10) == 1) {
+			int btx = Maths.positionToGrid(x) / 64;
+			int bty = Maths.positionToGrid(y) / 64 + 2;
+			BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
+			if (bt != null)
+				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, 15, ParticleBehaviour.ACCELERATE_FASTER, Util.getScaledImage(bt.getSprite(new Random().nextInt(bt.getSprites().length)), 8, 8)));
+		}
 	}
 
 	private void move(int xVal) {
 		move(direction, xVal);
 	}
 
-	private void handleFalls(){
-		if (Collision.checkCollisionAt(x, y+playerHitboxH)==false&&Collision.checkCollisionAt(x, y+playerHitboxH)==false){
+	private void handleFalls() {
+		if (Collision.checkCollisionAt(x, y + playerHitboxH) == false && Collision.checkCollisionAt(x, y + playerHitboxH) == false) {
 			y = y + speed;
 		}
-		if (Collision.checkCollisionAt(x+playerHitboxW, y+playerHitboxH)){
+		if (Collision.checkCollisionAt(x + playerHitboxW, y + playerHitboxH)) {
 			y = y - speed;
 		}
-		if (Collision.checkCollisionAt(x, y+playerHitboxH)==true||Collision.checkCollisionAt(x, y+playerHitboxH)==true){
+		if (Collision.checkCollisionAt(x, y + playerHitboxH) == true || Collision.checkCollisionAt(x, y + playerHitboxH) == true) {
 			y = y - speed;
 		}
 	}
 
-
-
 	public void update() {
-		
 
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
-		
-		if (Jomapat.game.getInput().isMouseDown()){
-			actualBlockX = Maths.positionToGrid(mouseX+Renderer.getXOffset())/64;
-			actualBlockY = Maths.positionToGrid(mouseY+Renderer.getYOffset())/64;
 
-			
-			if (actualBlockX!=oldBlockX||actualBlockY!=oldBlockY){
-				actualBlockDigg = 0;
-				actDiggGraphics=null;
+		if (Jomapat.game.getInput().isMouseDown()) {
+
+			actualBlockX = Maths.positionToGrid(mouseX + Renderer.getXOffset()) / 64;
+			actualBlockY = Maths.positionToGrid(mouseY + Renderer.getYOffset()) / 64;
+			actualBlockRawX = Maths.positionToGrid(mouseX) / 64;
+			actualBlockRawY = Maths.positionToGrid(mouseY) / 64;
+
+			if (Maths.distance(mouseX, Jomapat.game.getWidth() / 2, mouseY, Jomapat.game.getHeight() / 2) < 200) {
+				if (actualBlockX != oldBlockX || actualBlockY != oldBlockY) {
+					actualBlockDigg = 0;
+					actDiggGraphics = null;
+				}
+
+				oldBlockX = actualBlockX;
+				oldBlockY = actualBlockY;
+				int dmg = (Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) ? (int) ((1.0f - (Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY).getHardness())) * 10) : 0;
+
+				actualBlockDigg += dmg;
+				if (actualBlockDigg > 20 && actualBlockDigg < 100) {
+					actDiggGraphics = SpriteManager.digg1;
+				}
+				if (actualBlockDigg > 100 && actualBlockDigg < 200) {
+					actDiggGraphics = SpriteManager.digg2;
+				}
+				if (actualBlockDigg > 200 && actualBlockDigg < 300) {
+					actDiggGraphics = SpriteManager.digg3;
+				}
+				if (actualBlockDigg > 300) {
+					Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
+				}
+			} else {
+				actualBlockDigg = -1;
 			}
-			
-			oldBlockX = actualBlockX;
-			oldBlockY = actualBlockY;
-			int dmg = (Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) ? (int)((1.0f-(Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY).getHardness()))*10) : 0;
-			
-			actualBlockDigg+=dmg;
-			if (actualBlockDigg>20 &&actualBlockDigg<100){actDiggGraphics=SpriteManager.digg1;}
-			if (actualBlockDigg>100&&actualBlockDigg<200){actDiggGraphics=SpriteManager.digg2;}
-			if (actualBlockDigg>200&&actualBlockDigg<300){actDiggGraphics=SpriteManager.digg3;}
-			if (actualBlockDigg>300)                     {Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);}
-
 		}
-		
-		
-		
+
 		handleFalls();
-		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
+		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;
 			move(speed);
 		}
-		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
+		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
 			direction = Direction.RIGHT;
 			move(speed);
 		}
 
-		//Jump
+		// Jump
 
-		if(Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
-			y=y-speed*3;
-		}
-
-
-
-		}
-
-		public boolean isOnGround() {
-			/*
-			 * TODO Implement Jumping and return if player is on the ground
-			 */
-			return false;
-		}
-
-		public boolean isSneaking() {
-			/*
-			 * TODO Implement Sneaking and return if player is sneaking
-			 */
-			return false;
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
-
-		public Direction getDirection() {
-			return direction;
-		}
-
-		public void setDirection(Direction direction) {
-			this.direction = direction;
-		}
-
-		public MoveState getState() {
-			return state;
-		}
-
-		public void setState(MoveState state) {
-			this.state = state;
+		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
+			y = y - speed * 3;
 		}
 
 	}
+
+	public boolean isOnGround() {
+		/*
+		 * TODO Implement Jumping and return if player is on the ground
+		 */
+		return false;
+	}
+
+	public boolean isSneaking() {
+		/*
+		 * TODO Implement Sneaking and return if player is sneaking
+		 */
+		return false;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+	public MoveState getState() {
+		return state;
+	}
+
+	public void setState(MoveState state) {
+		this.state = state;
+	}
+
+}
