@@ -98,11 +98,17 @@ public class Gui {
 		for (int i = 0; i < BlockType.values().length; i++) {
 			g.drawImage(Util.getScaledImage(BlockType.values()[i].getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
 					Jomapat.game.getHeight() / 2 - height / 2 + 30, null);
+			g.setColor(Color.WHITE);
 			g.drawString("" + Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i
 					* 40, Jomapat.game.getHeight() / 2 - height / 2 + 30 + 10);
+			if(Jomapat.game.getInventory().getSelected() == i) {
+				g.setColor(Color.RED);
+				g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
+						Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
+			}
 		}
 
-		if (Jomapat.game.getInput().isMouseDown()) {
+		if (Jomapat.game.getInput().isMouseLeftDown()) {
 			int mouseX = Jomapat.game.getInput().getMousePosX();
 			int mouseY = Jomapat.game.getInput().getMousePosY();
 

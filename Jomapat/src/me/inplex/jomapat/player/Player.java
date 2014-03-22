@@ -120,7 +120,7 @@ public class Player {
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
 
-		if (Jomapat.game.getInput().isMouseDown()) {
+		if (Jomapat.game.getInput().isMouseLeftDown()) {
 
 			actualBlockX = Maths.positionToGrid(mouseX + Renderer.getXOffset()) / 64;
 			actualBlockY = Maths.positionToGrid(mouseY + Renderer.getYOffset()) / 64;
@@ -162,6 +162,19 @@ public class Player {
 			} else {
 				actualBlockDigg = -1;
 			}
+			
+		} else if (Jomapat.game.getInput().isMouseRightDown()) {
+			int bx = Maths.positionToGrid(mouseX + Renderer.getXOffset()) / 64;
+			int by = Maths.positionToGrid(mouseY + Renderer.getYOffset()) / 64;
+			
+			if(Jomapat.game.getWorld().getBlockAt(bx, by) == null) {
+				// Build Block
+				if(Jomapat.game.getInventory().getBlockAmount(BlockType.values()[Jomapat.game.getInventory().getSelected()]) > 0) {
+					Jomapat.game.getWorld().setBlock(bx, by, BlockType.values()[Jomapat.game.getInventory().getSelected()]);
+					Jomapat.game.getInventory().removeBlock(BlockType.values()[Jomapat.game.getInventory().getSelected()]);
+				}
+			}
+			
 		}
 
 		handleFalls();
@@ -178,12 +191,6 @@ public class Player {
 
 		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
 			y = y - speed * 3;
-		}
-		
-		//Inventory
-		
-		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_E)) {
-			Jomapat.game.getInventory().show(true);
 		}
 
 	}

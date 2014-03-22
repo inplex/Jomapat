@@ -63,6 +63,7 @@ public class Jomapat extends Canvas implements Runnable {
 		game.addKeyListener(game.input);
 		game.addMouseListener(game.input);
 		game.addMouseMotionListener(game.input);
+		game.addMouseWheelListener(game.input);
 		game.requestFocus();
 		game.frame.addComponentListener(new ComponentAdapter() {
 			@Override
