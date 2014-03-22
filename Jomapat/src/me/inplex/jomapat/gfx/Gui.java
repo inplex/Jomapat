@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.extra.InputHandler;
 
 public class Gui {
 	private static List<String> messages = new ArrayList<String>();
@@ -46,13 +47,13 @@ public class Gui {
 
 	public static void renderGui(Graphics g) {
 		if (actMsg != "") {
-			g.setColor(new Color(0x000000, 0, 0, 100));
+			g.setColor(new Color(0x000000, 0, 0,250));
 			g.fillRect(10, 10, 200, 30);
 			g.setColor(new Color(0xFFFFFF));
 			g.drawString(actMsg, 20, 30);
 		}
 
-		g.setColor(new Color(0x000000, 0, 0, 100));
+		g.setColor(new Color(0x000000, 0, 0, 200));
 		g.fillRect(10, Jomapat.game.getHeight() - 200, 300, 190);
 		g.setColor(new Color(0xFFFFFF));
 		int acty = Jomapat.game.getHeight() - 190;
@@ -76,6 +77,29 @@ public class Gui {
 		g.fillRect(x, y, 70,3);
 		g.setColor(new Color(0x00FFAA));
 		g.fillRect(x, y, state, 3);
+	}
+	
+	
+	public static void showInventory(Graphics g){
+		int width = 600,height=300;
+		g.setColor(new Color(100,100,100,160));
+		g.fillRect(0, 0, Jomapat.game.getWidth(), Jomapat.game.getHeight());
+		g.setColor(new Color(0xEEEEEE));
+		g.drawRect(Jomapat.game.getWidth()/2-width/2-1, Jomapat.game.getHeight()/2-height/2-1, width+1, height+1);
+		g.setColor(new Color(0xBBBBBB));
+		g.fillRect(Jomapat.game.getWidth()/2-width/2, Jomapat.game.getHeight()/2-height/2, width, height);
+        g.setColor(new Color(0x000000));
+        g.drawString("X",Jomapat.game.getWidth()/2-width/2-1+width-10,Jomapat.game.getHeight()/2-height/2+13);
+			
+		if (Jomapat.game.getInput().isMouseDown()) {
+			int mouseX = Jomapat.game.getInput().getMousePosX();
+			int mouseY = Jomapat.game.getInput().getMousePosY();
+			
+			if (mouseX>=Jomapat.game.getWidth()/2-width/2-1+width-10&&mouseX<=Jomapat.game.getWidth()/2-width/2-1+width&&mouseY<=Jomapat.game.getHeight()/2-height/2+13&&mouseY<=Jomapat.game.getHeight()/2-height/2+23){
+				
+			}
+		}
+		
 	}
 	
 

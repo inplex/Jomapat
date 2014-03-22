@@ -19,7 +19,7 @@ public class Renderer {
 	static int playerX = 0;
 	static int playerY = 0;
 
-	public static int renderDist = 3;
+	public static int renderDist =15 ;
 
 	public static int getXOffset() {
 		return playerX;
@@ -115,5 +115,6 @@ public class Renderer {
 		g.setColor(Color.BLACK);
 
 		Gui.renderGui(g);
+		Gui.showInventory(g);
 	}
 }

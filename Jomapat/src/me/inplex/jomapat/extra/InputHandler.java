@@ -99,9 +99,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	public int getMousePosY(){
 		return mouseY;
 	}
-	
 	public boolean isMouseDown(){
 		return mouseDown;
 	}	
+
 
 }

@@ -20,6 +20,7 @@ import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.ParticleManager;
 import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
+import me.inplex.jomapat.player.Inventory;
 import me.inplex.jomapat.player.Player;
 import me.inplex.jomapat.world.World;
 import me.inplex.jomapat.world.WorldGenerator;
@@ -39,6 +40,12 @@ public class Jomapat extends Canvas implements Runnable {
 	private InputHandler input;
 	private World world;
 	private Player player;
+	private Inventory inventory;
+
+	public float skyR = 0.2f;
+	public float skyG = 0.6f;
+	public float skyB = 1.0f;
+	public boolean timeDown = true;
 
 	public static Jomapat game;
 
@@ -81,6 +88,7 @@ public class Jomapat extends Canvas implements Runnable {
 		world = WorldGenerator.generateWorld(1000, 500);
 		player = new Player(world.getWidth() / 2, 128);
 		input = new InputHandler();
+		inventory = new Inventory();
 		ticks = 0;
 	}
 
@@ -136,6 +144,35 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public void update() {
 		ticks++;
+
+		if (ticks % 2500 == 0) {
+			if (timeDown)
+				timeDown = false;
+			else if (!timeDown)
+				timeDown = true;
+		}
+		if (timeDown) {
+			skyR += 0.0001f;
+			skyG += 0.0001f;
+			skyB += 0.0001f;
+		} else {
+			skyR -= 0.0001f;
+			skyG -= 0.0001f;
+			skyB -= 0.0001f;
+		}
+		if(skyR > 1.0f)
+			skyR = 1.0f;
+		if(skyG > 1.0f)
+			skyG = 1.0f;
+		if(skyB > 1.0f)
+			skyB = 1.0f;
+
+		if(skyR < 0.0f)
+			skyR = 0.0f;
+		if(skyG < 0.0f)
+			skyG = 0.0f;
+		if(skyB < 0.0f)
+			skyB = 0.0f;
 		player.update();
 		world.update();
 		ParticleManager.update();
@@ -148,7 +185,7 @@ public class Jomapat extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		GradientPaint gp = new GradientPaint(getWidth() / 2, 0, new Color(0x8FD0FF), getWidth() / 2, getHeight(), new Color(0x5CA0CC));
+		GradientPaint gp = new GradientPaint(getWidth() / 2, 0, new Color(skyR, skyG, skyB, 1.0f), getWidth() / 2, getHeight(), new Color(skyR, skyG, skyB, 1.0f));
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		Renderer.renderGame(g);
@@ -158,6 +195,10 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public World getWorld() {
 		return world;
+	}
+	
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	public void setWorld(World world) {
