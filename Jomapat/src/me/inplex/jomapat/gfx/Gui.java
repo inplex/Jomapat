@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import me.inplex.jomapat.Jomapat;
-import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.world.BlockType;
 
