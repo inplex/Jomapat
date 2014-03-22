@@ -9,12 +9,12 @@ public enum BlockType {
 
 // length of xTextures and yTexturs MUST be the same!
 //	Name			xTs					yTs					Hard	coll	dmg
-	GRASS	(	 	new int[] { 0, 1, 2, 3, 4, 5 }, 	new int[] { 0, 0, 0, 0, 0, 0 }, 	0.1f, 	true, 	false),
-	DIRT	(		new int[] { 6 }, 	new int[] { 0 }, 	0.1f, 	true, 	false),
-	STONE	(		new int[] { 7 }, 	new int[] { 0 }, 	0.4f, 	true, 	false),
-	DIAMOND	(	new int[] { 8 }, 	new int[] { 0 }, 	0.8f, 	true, 	false),
-	WOOD	(		new int[] { 0 }, 	new int[] { 1 }, 	0.35f, 	true, 	false),
-	LEAF	(		new int[] { 1 }, 	new int[] { 1 }, 	0.2f, 	true, 	false);
+	GRASS	(	 	new int[] { 0, 1, 2, 3, 4, 5 }, new int[] { 0, 0, 0, 0, 0, 0 }, 0.1f, 	true, 	false),
+	DIRT	(		new int[] { 6 }, 				new int[] { 0 }, 				0.1f, 	true, 	false),
+	STONE	(		new int[] { 7 }, 				new int[] { 0 }, 				0.4f, 	true, 	false),
+	DIAMOND	(		new int[] { 8 }, 				new int[] { 0 }, 				0.8f, 	true, 	false),
+	WOOD	(		new int[] { 0 }, 				new int[] { 1 }, 				0.3f, 	true, 	false),
+	LEAF	(		new int[] { 1 }, 				new int[] { 1 }, 				0.1f, 	true, 	false);
 	
 	private BufferedImage[] sprites;
 	private BufferedImage[] particles;

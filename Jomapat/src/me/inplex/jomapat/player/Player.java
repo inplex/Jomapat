@@ -148,7 +148,7 @@ public class Player {
 				if (actualBlockDigg > 200 && actualBlockDigg < 300) {
 					actDiggGraphics = SpriteManager.digg3;
 				}
-				if (actualBlockDigg > 300) {
+				if (actualBlockDigg > 300 && Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) {
 					Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
 				}
 

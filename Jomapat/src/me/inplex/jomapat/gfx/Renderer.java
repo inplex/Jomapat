@@ -47,8 +47,6 @@ public class Renderer {
 			for (int y = Maths.positionToGrid(Jomapat.game.getPlayer().getY()) / 64 - renderDist; y < Maths.positionToGrid(Jomapat.game.getPlayer().getY()) / 64 + renderDist; y++) {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
 					continue;
-				// Render Block at
-
 				if (Maths.isVisible(x * SpriteManager.SPRITE_BLOCK_SIZE - playerX, y * SpriteManager.SPRITE_BLOCK_SIZE - playerY)) {
 					BlockType b = Jomapat.game.getWorld().getBlockAt(x, y);
 					if (b.getSprites().length == 1) {
