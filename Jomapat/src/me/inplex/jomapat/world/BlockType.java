@@ -2,6 +2,7 @@ package me.inplex.jomapat.world;
 
 import java.awt.image.BufferedImage;
 
+import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.SpriteManager;
 
 public enum BlockType {
@@ -16,14 +17,19 @@ public enum BlockType {
 	LEAF	(		new int[] { 1 }, 	new int[] { 1 }, 	0.2f, 	true, 	false);
 	
 	private BufferedImage[] sprites;
+	private BufferedImage[] particles;
 	private float hardness;
 	private boolean collide;
 	private boolean damage;
 	
 	private BlockType(int[] xTextures, int[] yTextures, float hardness, boolean collide, boolean damage) {
 		this.sprites = new BufferedImage[xTextures.length];
+		this.particles = new BufferedImage[xTextures.length];
 		for(int i = 0; i < xTextures.length; i++) {
 			this.sprites[i] = SpriteManager.loadBlockImage(xTextures[i], yTextures[i]);
+		}
+		for(int i = 0; i < xTextures.length; i++) {
+			this.particles[i] = Util.getScaledImage(sprites[i], 8, 8);
 		}
 		this.hardness = hardness;
 		this.collide = collide;
@@ -48,6 +54,14 @@ public enum BlockType {
 	
 	public BufferedImage getSprite(int i) {
 		return sprites[i];
+	}
+	
+	public BufferedImage[] getParticles() {
+		return particles;
+	}
+	
+	public BufferedImage getParticle(int i) {
+		return particles[i];
 	}
 
 }

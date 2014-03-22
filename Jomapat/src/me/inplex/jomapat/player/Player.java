@@ -96,7 +96,7 @@ public class Player {
 			int bty = Maths.positionToGrid(y) / 64 + 2;
 			BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
 			if (bt != null)
-				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, 15, ParticleBehaviour.ACCELERATE_FASTER, Util.getScaledImage(bt.getSprite(new Random().nextInt(bt.getSprites().length)), 8, 8)));
+				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, 15, ParticleBehaviour.ACCELERATE_FASTER, bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
 		}
 	}
 
@@ -155,7 +155,7 @@ public class Player {
 				if (new Random().nextInt(3) == 1) {
 					BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
 					if (bt != null) {
-						ParticleManager.addParticle(new Particle(actualBlockX * 64+32, actualBlockY * 64+32, 1, 1, 30, ParticleBehaviour.RANDOM, Util.getScaledImage(bt.getSprite(new Random().nextInt(bt.getSprites().length)), 8, 8)));
+						ParticleManager.addParticle(new Particle(actualBlockX * 64+32, actualBlockY * 64+32, 1, 1, 30, ParticleBehaviour.RANDOM, bt.getParticle(new Random().nextInt(bt.getParticles().length))));
 					}
 				}
 
