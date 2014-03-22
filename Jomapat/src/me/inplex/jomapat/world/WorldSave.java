@@ -1,11 +1,15 @@
 package me.inplex.jomapat.world;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.DataFormatException;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Util;
@@ -13,7 +17,7 @@ import me.inplex.jomapat.gfx.Gui;
 import me.inplex.jomapat.player.Player;
 
 public class WorldSave {
-	
+
 	public static final short WORLDSAVE_VERSION = (short) 1;
 	public static final int PREFIX = 0x57504D4A;
 
@@ -27,7 +31,8 @@ public class WorldSave {
 		if (f.exists())
 			f.delete();
 		f.createNewFile();
-		DataOutputStream out = new DataOutputStream(new FileOutputStream(f));
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(baos);
 		out.writeInt(PREFIX);
 		out.writeShort(WORLDSAVE_VERSION);
 		out.writeInt(p.getX());
@@ -40,6 +45,12 @@ public class WorldSave {
 			}
 		}
 		out.close();
+		byte[] result = baos.toByteArray();
+		result = Util.compress(result);
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(result);
+		fos.flush();
+		fos.close();
 		Gui.addMessage("World Saved!");
 	}
 
@@ -49,7 +60,23 @@ public class WorldSave {
 			System.out.println("Could not find file: " + f.getAbsolutePath());
 			return;
 		}
-		DataInputStream in = new DataInputStream(new FileInputStream(f));
+
+		FileInputStream fis = new FileInputStream(f);
+		byte[] compressed = new byte[(int) f.length()];
+		fis.read(compressed);
+		fis.close();
+		
+		byte[] decompressed = null;
+		try {
+			decompressed = Util.decompress(compressed);
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+			Gui.addMessage("Failed to decompress bytes");
+			return;
+		}
+		
+		// Decompressed
+		DataInputStream in = new DataInputStream(new ByteArrayInputStream(decompressed));
 		int pre = in.readInt();
 		if (pre != PREFIX) {
 			System.out.println("Invalid World Prefix. Cancelling World Load Process!");

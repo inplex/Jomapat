@@ -3,7 +3,12 @@ package me.inplex.jomapat.extra;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 public class Util {
 
@@ -40,6 +45,44 @@ public class Util {
 		g2.drawImage(src, 0, 0, finalw, finalh, null);
 		g2.dispose();
 		return resizedImg;
+	}
+
+	public static byte[] compress(byte[] data) throws IOException {
+		Deflater deflater = new Deflater();
+		deflater.setInput(data);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+
+		deflater.finish();
+		byte[] buffer = new byte[1024];
+		while (!deflater.finished()) {
+			int count = deflater.deflate(buffer);
+			outputStream.write(buffer, 0, count);
+		}
+		outputStream.close();
+		byte[] output = outputStream.toByteArray();
+
+		deflater.end();
+
+		return output;
+	}
+
+	public static byte[] decompress(byte[] data) throws IOException, DataFormatException {
+		Inflater inflater = new Inflater();
+		inflater.setInput(data);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+		byte[] buffer = new byte[1024];
+		while (!inflater.finished()) {
+			int count = inflater.inflate(buffer);
+			outputStream.write(buffer, 0, count);
+		}
+		outputStream.close();
+		byte[] output = outputStream.toByteArray();
+
+		inflater.end();
+
+		return output;
 	}
 
 }
