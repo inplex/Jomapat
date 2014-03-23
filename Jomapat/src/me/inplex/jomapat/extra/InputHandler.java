@@ -46,6 +46,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			} else {
 				Jomapat.game.getInventory().show(true);
 			}
+		}  else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			Jomapat.game.getPlayer().jump();
 		}
 	}
 
@@ -128,7 +130,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
-		if (notches < 0) {
+		if (notches > 0) {
 			Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() + 1);
 			if (Jomapat.game.getInventory().getSelected() > BlockType.values().length-1) {
 				Jomapat.game.getInventory().setSelected(0);

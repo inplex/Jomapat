@@ -16,9 +16,12 @@ import me.inplex.jomapat.world.BlockType;
 
 public class Player {
 
+	public static final int SPEED_NORMAL = 3;
+	public static final int SPEED_SNEAKING = 2;
+	public static final int SPEED_SPRINTING = 4;
+
 	private int x;
 	private int y;
-	private int speed = 3;
 	private Direction direction;
 	private MoveState state;
 
@@ -86,17 +89,19 @@ public class Player {
 	}
 
 	private void move(Direction dir, int xVal) {
-		int oldx = x;
+		final int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
 		x = !collidesWithBlock() ? x : oldx;
 		direction = dir;
-		if (new Random().nextInt(10) == 1) {
+		if (new Random().nextInt(10) == 1 || (isSprinting() && new Random().nextInt(5) == 1)) {
 			int btx = Maths.positionToGrid(x) / 64;
 			int bty = Maths.positionToGrid(y) / 64 + 2;
 			BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
-			if (bt != null)
-				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, 15,
+			if (bt != null) {
+				int lt = isSprinting() ? 10 : 15;
+				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, lt,
 						ParticleBehaviour.ACCELERATE_FASTER, bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
+			}
 		}
 	}
 
@@ -105,6 +110,8 @@ public class Player {
 	}
 
 	int motionY = 0;
+	boolean wasFalling = true;
+	boolean canJumpMore = true;
 
 	public void update() {
 
@@ -173,11 +180,11 @@ public class Player {
 		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;
 			state = MoveState.WALK;
-			move(speed);
+			move(isSprinting() ? SPEED_SPRINTING : SPEED_NORMAL);
 		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
 			direction = Direction.RIGHT;
 			state = MoveState.WALK;
-			move(speed);
+			move(isSprinting() ? SPEED_SPRINTING : SPEED_NORMAL);
 		} else {
 			if (motionY == 0) {
 				state = MoveState.IDLE;
@@ -185,9 +192,10 @@ public class Player {
 		}
 
 		// Jump
-		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
-			jump();
-		}
+		/*
+		 * Moved to InputHandler, because Double Jump would not work otherwise
+		 * if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) { jump(); }
+		 */
 
 		if (!collidesWithBlock()) {
 			final boolean dCollide = collidesWithBlock();
@@ -199,8 +207,21 @@ public class Player {
 				x = dX;
 				y = dY;
 				motionY = 0;
+				if (wasFalling) {
+					// landed after jump
+					int btx = Maths.positionToGrid(x) / 64;
+					int bty = Maths.positionToGrid(y) / 64 + 2;
+					BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
+					if (bt != null) {
+						for (int i = 0; i < new Random().nextInt(30); i++) {
+							ParticleManager.addParticle(new Particle(x + 32 + Maths.randomize(-32, 32), y + 64, Maths.randomize(-2, 2), new Random()
+									.nextInt(1) - 2, 30, ParticleBehaviour.ACCELERATE_SLOWER,
+									bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
+						}
+					}
+					wasFalling = false;
+				}
 			}
-
 		} else {
 			motionY = 0;
 		}
@@ -217,6 +238,16 @@ public class Player {
 		if (collidesWithBlock()) {
 			y -= 5;
 			motionY = 50;
+			wasFalling = true;
+			canJumpMore = true;
+		} else {
+			if (wasFalling == true && canJumpMore == true) {
+				// double jump
+				y -= 5;
+				motionY = 50;
+				wasFalling = true;
+				canJumpMore = false;
+			}
 		}
 		y -= 2;
 	}
@@ -231,17 +262,15 @@ public class Player {
 	 * speed; } }
 	 */
 	public boolean isOnGround() {
-		/*
-		 * TODO Implement Jumping and return if player is on the ground
-		 */
-		return false;
+		return motionY == 0;
 	}
 
 	public boolean isSneaking() {
-		/*
-		 * TODO Implement Sneaking and return if player is sneaking
-		 */
-		return false;
+		return Jomapat.game.getInput().isKeyDown(KeyEvent.VK_CONTROL);
+	}
+
+	public boolean isSprinting() {
+		return Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SHIFT);
 	}
 
 	public int getX() {
