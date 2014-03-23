@@ -1,5 +1,7 @@
 package me.inplex.jomapat.world;
 
+import java.util.Random;
+
 import me.inplex.jomapat.extra.Maths;
 
 public class WorldGenerator {
@@ -46,14 +48,18 @@ public class WorldGenerator {
 				if (y == startY) { // Use Grass or deeper grounds
 					world.setBlock(x, y, BlockType.GRASS);
 				} else {
-					if (y < 50 - startY + Maths.randomize(0, 2)) { // Use dirt
-																	// or stone
+					if (y < 50 - startY + Maths.randomize(0, 2)) {
 						world.setBlock(x, y, BlockType.DIRT);
 					} else {
-						if (Maths.randomize(1, 15) == 5) // ... or maybe
-															// diamond...
-						{
-							world.setBlock(x, y, BlockType.DIAMOND);
+						if (Maths.randomize(1, 15) == 5) {
+							BlockType bt = BlockType.IRON;
+							if (y > width / 10 && new Random().nextInt(3) == 1) {
+								bt = BlockType.GOLD;
+							}
+							if (y > width / 4 && new Random().nextInt(5) == 1) {
+								bt = BlockType.DIAMOND;
+							}
+							world.setBlock(x, y, bt);
 						} else {
 							world.setBlock(x, y, BlockType.STONE);
 						}
