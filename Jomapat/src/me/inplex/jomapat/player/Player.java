@@ -92,6 +92,8 @@ public class Player {
 		final int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
 		x = !collidesWithBlock() ? x : oldx;
+		if(x == oldx)
+			sprintTime = 0;
 		direction = dir;
 		if (new Random().nextInt(10) == 1 || (isSprinting() && new Random().nextInt(5) == 1)) {
 			int btx = Maths.positionToGrid(x) / 64;
@@ -112,8 +114,15 @@ public class Player {
 	int motionY = 0;
 	boolean wasFalling = true;
 	boolean canJumpMore = true;
+	int sprintTime = 0;
 
 	public void update() {
+		
+		if(isSprinting()) {
+			sprintTime++;
+		} else {
+			sprintTime = 0;
+		}
 		
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
@@ -180,11 +189,11 @@ public class Player {
 		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;
 			state = MoveState.WALK;
-			move(isSprinting() ? SPEED_SPRINTING : SPEED_NORMAL);
+			move(isSprinting() ? (SPEED_SPRINTING + sprintTime/100) : SPEED_NORMAL);
 		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
 			direction = Direction.RIGHT;
 			state = MoveState.WALK;
-			move(isSprinting() ? SPEED_SPRINTING : SPEED_NORMAL);
+			move(isSprinting() ? (SPEED_SPRINTING + sprintTime/100) : SPEED_NORMAL);
 		} else {
 			if (motionY == 0) {
 				state = MoveState.IDLE;
