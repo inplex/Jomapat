@@ -87,7 +87,7 @@ public class Jomapat extends Canvas implements Runnable {
 		}
 		ParticleManager.load();
 		world = WorldGenerator.generateWorld(1000, 500);
-		player = new Player(world.getWidth() / 2, 128);
+		player = new Player(world.getWidth()*64 / 2, 128);
 		input = new InputHandler();
 		inventory = new Inventory();
 		ticks = 0;

@@ -114,7 +114,7 @@ public class Player {
 	boolean canJumpMore = true;
 
 	public void update() {
-
+		
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
 
@@ -238,6 +238,10 @@ public class Player {
 		if (collidesWithBlock()) {
 			y -= 5;
 			motionY = 50;
+			if(isSprinting())
+				motionY += 10;
+			if(isSneaking())
+				motionY -= 20;
 			wasFalling = true;
 			canJumpMore = true;
 		} else {
@@ -245,6 +249,10 @@ public class Player {
 				// double jump
 				y -= 5;
 				motionY = 50;
+				if(isSprinting())
+					motionY += 5;
+				if(isSneaking())
+					motionY -= 20;
 				wasFalling = true;
 				canJumpMore = false;
 			}

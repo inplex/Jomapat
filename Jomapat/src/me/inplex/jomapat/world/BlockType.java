@@ -13,8 +13,8 @@ public enum BlockType {
 	DIRT	(		new int[] { 6 }, 				new int[] { 0 }, 				0.1f, 	true, 	false),
 	STONE	(		new int[] { 7 }, 				new int[] { 0 }, 				0.4f, 	true, 	false),
 	DIAMOND	(		new int[] { 8 }, 				new int[] { 0 }, 				0.8f, 	true, 	false),
-	IRON	(		new int[] { 9 }, 				new int[] { 0 }, 				0.8f, 	true, 	false),
-	GOLD	(		new int[] { 10 }, 				new int[] { 0 }, 				0.8f, 	true, 	false),
+	IRON	(		new int[] { 9 }, 				new int[] { 0 }, 				0.5f, 	true, 	false),
+	GOLD	(		new int[] { 10 }, 				new int[] { 0 }, 				0.6f, 	true, 	false),
 	WOOD	(		new int[] { 0 }, 				new int[] { 1 }, 				0.3f, 	true, 	false),
 	LEAF	(		new int[] { 1 }, 				new int[] { 1 }, 				0.1f, 	true, 	false);
 	
