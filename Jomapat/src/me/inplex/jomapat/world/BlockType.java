@@ -8,23 +8,30 @@ import me.inplex.jomapat.gfx.SpriteManager;
 public enum BlockType {
 
 // length of xTextures and yTexturs MUST be the same!
-//	Name			xTs					yTs					Hard	coll	dmg
-	GRASS	(	 	new int[] { 0, 1, 2, 3, 4, 5 }, new int[] { 0, 0, 0, 0, 0, 0 }, 0.1f, 	true, 	false),
-	DIRT	(		new int[] { 6 }, 				new int[] { 0 }, 				0.1f, 	true, 	false),
-	STONE	(		new int[] { 7 }, 				new int[] { 0 }, 				0.4f, 	true, 	false),
-	DIAMOND	(		new int[] { 8 }, 				new int[] { 0 }, 				0.8f, 	true, 	false),
-	IRON	(		new int[] { 9 }, 				new int[] { 0 }, 				0.5f, 	true, 	false),
-	GOLD	(		new int[] { 10 }, 				new int[] { 0 }, 				0.6f, 	true, 	false),
-	WOOD	(		new int[] { 0 }, 				new int[] { 1 }, 				0.3f, 	true, 	false),
-	LEAF	(		new int[] { 1 }, 				new int[] { 1 }, 				0.1f, 	true, 	false);
+//	Name				xTs								yTs								hard	coll	dmg		place
+	
+	// First Row
+	GRASS		(	 	new int[] { 0, 1, 2, 3, 4, 5 }, new int[] { 0, 0, 0, 0, 0, 0 }, 0.1f, 	true, 	false, 	true),
+	DIRT		(		new int[] { 6 }, 				new int[] { 0 }, 				0.1f, 	true, 	false, 	true),
+	STONE		(		new int[] { 7 }, 				new int[] { 0 }, 				0.4f, 	true, 	false, 	true),
+	DIAMOND		(		new int[] { 8 }, 				new int[] { 0 }, 				0.8f, 	true, 	false, 	true),
+	IRON		(		new int[] { 9 }, 				new int[] { 0 }, 				0.5f, 	true, 	false, 	true),
+	GOLD		(		new int[] { 10 }, 				new int[] { 0 }, 				0.6f, 	true, 	false, 	true),
+	// Second Row
+	WOOD		(		new int[] { 0 }, 				new int[] { 1 }, 				0.3f, 	true, 	false, 	true),
+	LEAF		(		new int[] { 1 }, 				new int[] { 1 }, 				0.1f, 	true, 	false, 	true),
+	WOODPLANK	(		new int[] { 2 }, 				new int[] { 1 }, 				0.35f, 	true, 	false, 	true),
+	WOODDOOR	(		new int[] { 3 }, 				new int[] { 1 }, 				0.5f, 	true, 	false, 	true),
+	STONEDOOR	(		new int[] { 4 }, 				new int[] { 1 }, 				0.6f, 	true, 	false, 	true);
 	
 	private BufferedImage[] sprites;
 	private BufferedImage[] particles;
 	private float hardness;
 	private boolean collide;
 	private boolean damage;
+	private boolean placeable;
 	
-	private BlockType(int[] xTextures, int[] yTextures, float hardness, boolean collide, boolean damage) {
+	private BlockType(int[] xTextures, int[] yTextures, float hardness, boolean collide, boolean damage, boolean placeable) {
 		this.sprites = new BufferedImage[xTextures.length];
 		this.particles = new BufferedImage[xTextures.length];
 		for(int i = 0; i < xTextures.length; i++) {
@@ -36,6 +43,7 @@ public enum BlockType {
 		this.hardness = hardness;
 		this.collide = collide;
 		this.damage = damage;
+		this.placeable = placeable;
 	}
 	
 	public float getHardness() {
@@ -64,6 +72,10 @@ public enum BlockType {
 	
 	public BufferedImage getParticle(int i) {
 		return particles[i];
+	}
+
+	public boolean isPlaceable() {
+		return placeable;
 	}
 
 }

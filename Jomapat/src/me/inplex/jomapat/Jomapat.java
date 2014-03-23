@@ -80,14 +80,15 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")), ImageIO.read(new File("res//Assets//Sprites//player.png")));
+			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")),
+					ImageIO.read(new File("res//Assets//Sprites//player.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();
 		}
 		ParticleManager.load();
 		world = WorldGenerator.generateWorld(1000, 500);
-		player = new Player(world.getWidth()*64 / 2, 128);
+		player = new Player(world.getWidth() * 64 / 2, 128);
 		input = new InputHandler();
 		inventory = new Inventory();
 		ticks = 0;
@@ -161,18 +162,18 @@ public class Jomapat extends Canvas implements Runnable {
 			skyG -= 0.0001f;
 			skyB -= 0.0001f;
 		}
-		if(skyR > 1.0f)
+		if (skyR > 1.0f)
 			skyR = 1.0f;
-		if(skyG > 1.0f)
+		if (skyG > 1.0f)
 			skyG = 1.0f;
-		if(skyB > 1.0f)
+		if (skyB > 1.0f)
 			skyB = 1.0f;
 
-		if(skyR < 0.0f)
+		if (skyR < 0.0f)
 			skyR = 0.0f;
-		if(skyG < 0.0f)
+		if (skyG < 0.0f)
 			skyG = 0.0f;
-		if(skyB < 0.0f)
+		if (skyB < 0.0f)
 			skyB = 0.0f;
 		player.update();
 		world.update();
@@ -186,7 +187,8 @@ public class Jomapat extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		GradientPaint gp = new GradientPaint(getWidth() / 2, 0, new Color(skyR, skyG, skyB, 1.0f), getWidth() / 2, getHeight(), new Color(skyR, skyG, skyB, 1.0f));
+		GradientPaint gp = new GradientPaint(getWidth() / 2, 0, new Color(skyR, skyG, skyB, 1.0f), getWidth() / 2, getHeight(), new Color(skyR, skyG,
+				skyB, 1.0f));
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		Renderer.renderGame(g);
@@ -197,7 +199,7 @@ public class Jomapat extends Canvas implements Runnable {
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
