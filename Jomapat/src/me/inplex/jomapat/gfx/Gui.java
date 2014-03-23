@@ -73,6 +73,23 @@ public class Gui {
 		}
 
 	}
+	
+	private static boolean button(Graphics g,int x,int y,int w,int h,String text){
+		int mouseX = Jomapat.game.getInput().getMousePosX();
+		int mouseY = Jomapat.game.getInput().getMousePosY();
+    g.setColor(new Color(0x555555));
+	g.drawRect(x, y, w, h);
+	if (mouseX>x&&mouseY>y&&mouseX<x+w&&mouseY<y+h){
+		if (Jomapat.game.getInput().isMouseLeftDown()){return true;}
+	g.setColor(new Color(0xDDDDDD));
+	}else{
+	g.setColor(new Color(0xBBBBBB));
+	}
+	g.fillRect(x+1, y+1, w-2, h-2);
+	g.setColor(new Color(0));
+	g.drawString(text, x+5, y+14);
+	return false;	
+	}
 
 	public static void showDiggingBar(Graphics g, int x, int y, int state) {
 		g.setColor(new Color(0, 0, 0, 100));
@@ -91,6 +108,8 @@ public class Gui {
 		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2, Jomapat.game.getHeight() / 2 - height / 2, width, height);
 		g.setColor(new Color(0x000000));
 		g.drawString("X", Jomapat.game.getWidth() / 2 - width / 2 - 1 + width - 10, Jomapat.game.getHeight() / 2 - height / 2 + 13);
+		
+		if (button(g,Jomapat.game.getWidth() / 2 - width / 2 +20,Jomapat.game.getHeight() / 2 - height / 2 - 1+250,100,20,"close")){Jomapat.game.getInventory().show(false);}
 
 		g.setFont(new Font("courier", Font.BOLD, 12));
 		g.setColor(new Color(0xFFFFFF));
