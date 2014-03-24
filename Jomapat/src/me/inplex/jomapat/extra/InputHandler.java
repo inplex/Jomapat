@@ -57,6 +57,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 				Jomapat.game.getPlayer().jump();
 			} else if (arg0.getKeyCode() == KeyEvent.VK_C) {
 				Gui.showChat = !Gui.showChat;
+			}else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				Jomapat.game.inMenu = true;
 			}
 		}
 	}

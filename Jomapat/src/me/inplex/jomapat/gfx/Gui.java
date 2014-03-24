@@ -89,7 +89,7 @@ public class Gui {
 	}
 	
 	
-	private static boolean button(Graphics g,int x,int y,int w,int h,String text){
+	public static boolean button(Graphics g,int x,int y,int w,int h,String text){
 		int mouseX = Jomapat.game.getInput().getMousePosX();
 		int mouseY = Jomapat.game.getInput().getMousePosY();
     g.setColor(new Color(0x555555));

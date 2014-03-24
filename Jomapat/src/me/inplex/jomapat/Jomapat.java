@@ -48,7 +48,7 @@ public class Jomapat extends Canvas implements Runnable {
 	public float skyB = 1.0f;
 	public boolean timeDown = true;
 
-	private boolean inMenu;
+	public boolean inMenu;
 
 	public static Jomapat game;
 

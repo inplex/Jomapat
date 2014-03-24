@@ -5,7 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import sun.net.www.URLConnection;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.world.BlockType;
 
@@ -20,8 +24,9 @@ public class Menu {
 
 	}
 
-	public static void render(Graphics g) {
+	public static void render(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
+
 
 		if (screen == 0) {
 			g2d.setColor(Color.WHITE);
@@ -49,6 +54,17 @@ public class Menu {
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(new Font("Serif", Font.BOLD, 64));
 			g.drawString("'Jomapat' is a Game.", 50, 120);
+			g2d.setFont(new Font("courier", Font.BOLD, 20));
+			g.drawString("Programming :", 50, 250);
+			g2d.setFont(new Font("courier",0, 20));
+			g.drawString("Joshua   'inplex'", 50, 300);
+			g.drawString("Matthias 'matthinc'", 50, 330);
+			g2d.setFont(new Font("courier", Font.BOLD, 20));
+			g.drawString("Graphics :", 50, 390);
+			g2d.setFont(new Font("courier",0, 20));
+			g.drawString("Patrick  'om22'", 50, 440);
+			g.drawString("www.github.com/inplex/jomapat", 50, 500);
+			g2d.setFont(new Font("arial", 0, 12));
 		}
 	}
 
@@ -58,9 +74,9 @@ public class Menu {
 
 	public static void onPress(int key) {
 		if (screen == 0) {
-			if(key == KeyEvent.VK_S) {
+			if(key == KeyEvent.VK_S||key == KeyEvent.VK_DOWN) {
 				selection = (selection+1 > maxSelection) ? maxSelection : selection+1;
-			} else if(key == KeyEvent.VK_W) {
+			} else if(key == KeyEvent.VK_W||key == KeyEvent.VK_UP) {
 				selection = (selection-1 < 0) ? maxSelection : selection-1;
 			} else if(key == KeyEvent.VK_ENTER) {
 				if(selection == 0) { // Start
