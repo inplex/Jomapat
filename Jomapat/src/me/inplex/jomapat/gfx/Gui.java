@@ -15,6 +15,7 @@ import me.inplex.jomapat.world.BlockType;
 public class Gui {
 	private static List<String> messages = new ArrayList<String>();
 	private static String actMsg = "";
+	public static boolean showChat = false;
 
 	public static void showPopupMessage(String message) {
 		actMsg = message;
@@ -48,14 +49,14 @@ public class Gui {
 	static String toDelete = "";
 
 	public static void renderGui(Graphics g) {
+		if (showChat==true){
 		if (actMsg != "") {
-			g.setColor(new Color(0x000000, 0, 0, 250));
+			g.setColor(new Color(0, 0, 0, 250));
 			g.fillRect(10, 10, 200, 30);
 			g.setColor(new Color(0xFFFFFF));
 			g.drawString(actMsg, 20, 30);
 		}
-
-		g.setColor(new Color(0x000000, 0, 0, 200));
+		g.setColor(new Color(0x000000, 0, 0, 50));
 		g.fillRect(10, Jomapat.game.getHeight() - 200, 300, 190);
 		g.setColor(new Color(0xFFFFFF));
 		int acty = Jomapat.game.getHeight() - 190;
@@ -66,13 +67,27 @@ public class Gui {
 			if (acty - Jomapat.game.getHeight() - 190 > 150) {
 				toDelete = msg;
 			}
+			
 		}
 
 		if (toDelete != "") {
 			messages.remove(toDelete);
 		}
+		
+
+		/*
+		g.setColor(new Color(100,100,100,100));
+		g.fillRect(10, 10, 100, 10);
+		g.fillRect(130, 10, 100, 10);
+		g.setColor(new Color(0x00BB00));
+		g.fillRect(10,10, Jomapat.game.getPlayer().stamina, 10);
+		g.setColor(new Color(0xEE0000));
+		g.fillRect(130,10, Jomapat.game.getPlayer().health,  10);
+		*/
 
 	}
+	}
+	
 	
 	private static boolean button(Graphics g,int x,int y,int w,int h,String text){
 		int mouseX = Jomapat.game.getInput().getMousePosX();
@@ -80,7 +95,7 @@ public class Gui {
     g.setColor(new Color(0x555555));
 	g.drawRect(x, y, w, h);
 	if (mouseX>x&&mouseY>y&&mouseX<x+w&&mouseY<y+h){
-		if (Jomapat.game.getInput().isMouseLeftDown()){return true;}
+		if (Jomapat.game.getInput().getMouseSingleClick()){return true;}
 	g.setColor(new Color(0xDDDDDD));
 	}else{
 	g.setColor(new Color(0xBBBBBB));
@@ -100,7 +115,7 @@ public class Gui {
 
 	public static void showInventory(Graphics g) {
 		int width = 600, height = 300;
-		g.setColor(new Color(100, 100, 100, 160));
+		g.setColor(new Color(0, 0, 0, 160));
 		g.fillRect(0, 0, Jomapat.game.getWidth(), Jomapat.game.getHeight());
 		g.setColor(new Color(0x999999));
 		g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 - 1, Jomapat.game.getHeight() / 2 - height / 2 - 1, width + 1, height + 1);
@@ -110,14 +125,33 @@ public class Gui {
 		g.drawString("X", Jomapat.game.getWidth() / 2 - width / 2 - 1 + width - 10, Jomapat.game.getHeight() / 2 - height / 2 + 13);
 		
 		if (button(g,Jomapat.game.getWidth() / 2 - width / 2 +20,Jomapat.game.getHeight() / 2 - height / 2 - 1+250,100,20,"close")){Jomapat.game.getInventory().show(false);}
+		if (button(g,Jomapat.game.getWidth() / 2 - width / 2 +130,Jomapat.game.getHeight() / 2 - height / 2 - 1+250,100,20,"drop")){Jomapat.game.getInventory().removeBlock(BlockType.values()[Jomapat.game.getInventory().getSelected()]);}
 
-		g.setFont(new Font("courier", Font.BOLD, 12));
+
+
+		g.setColor(Color.WHITE);
+		g.drawString("health", Jomapat.game.getWidth() / 2 - width / 2+4, Jomapat.game.getHeight() / 2 - height / 2+4+100+5);
+		g.drawString("stamina", Jomapat.game.getWidth() / 2 - width / 2+4, Jomapat.game.getHeight() / 2 - height / 2+4+130+5);
+		g.setColor(new Color(0x555555));
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100-1, Jomapat.game.getHeight() / 2 - height / 2+4+100-1, 100+2, 10+2);
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100-1, Jomapat.game.getHeight() / 2 - height / 2+4+130-1, 100+2, 10+2);
+		g.setColor(new Color(0x000000));
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100, Jomapat.game.getHeight() / 2 - height / 2+4+100, 100, 10);
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100, Jomapat.game.getHeight() / 2 - height / 2+4+130, 100, 10);
+		g.setColor(new Color(0x00BB00));
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100, Jomapat.game.getHeight() / 2 - height / 2+4+130, Jomapat.game.getPlayer().health, 10);
+		g.setColor(new Color(0xEE0000));
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2+4+100, Jomapat.game.getHeight() / 2 - height / 2+4+100, Jomapat.game.getPlayer().stamina, 10);
+
 		g.setColor(new Color(0xFFFFFF));
-
+		
 		for (int i = 0; i < BlockType.values().length; i++) {
 			g.drawImage(Util.getScaledImage(BlockType.values()[i].getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
 					Jomapat.game.getHeight() / 2 - height / 2 + 30, null);
+			g.setColor(new Color(0,0,0,100));
+			g.fillRect( Jomapat.game.getWidth() / 2 - width / 2 + 10 + i* 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 15, 15);
 			g.setColor(Color.WHITE);
+			g.setFont(new Font("courier",0,12));
 			g.drawString("" + Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i
 					* 40, Jomapat.game.getHeight() / 2 - height / 2 + 30 + 10);
 			if(Jomapat.game.getInventory().getSelected() == i) {
@@ -140,3 +174,4 @@ public class Gui {
 	}
 
 }
+

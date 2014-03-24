@@ -1,5 +1,6 @@
 package me.inplex.jomapat.player;
 
+import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.world.BlockType;
 
 public class Inventory {
@@ -22,10 +23,11 @@ public class Inventory {
 	}
 
 	public void removeBlock(BlockType block) {
-		blockInventory[block.ordinal()]--;
+		blockInventory[block.ordinal()]=blockInventory[block.ordinal()] >=1 ? blockInventory[block.ordinal()]-1:0; ;
 	}
 
 	public void show(boolean show) {
+		Jomapat.game.getInput().getMouseSingleClick();
 		this.show = show;
 	}
 

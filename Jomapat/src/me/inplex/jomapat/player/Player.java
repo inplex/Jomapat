@@ -32,6 +32,22 @@ public class Player {
 	public BufferedImage actDiggGraphics = null;
 
 	private int playerHitboxW = 46, playerHitboxH = 64;
+	
+	
+	
+	
+	
+	// <Player attributes>
+	
+	public int health =  100;
+	public int stamina = 100;
+
+	//TODO add some more
+	
+	
+	// </Player attributes>
+	
+	
 
 	/*
 	 * Idle Sprites framewise

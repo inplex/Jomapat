@@ -10,12 +10,15 @@ import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.gfx.Gui;
 import me.inplex.jomapat.world.BlockType;
 import me.inplex.jomapat.world.WorldSave;
 
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private boolean[] keysDown;
+	
+	public boolean singleClick=false;
 
 	public InputHandler() {
 		keysDown = new boolean[120];
@@ -48,7 +51,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			}
 		}  else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 			Jomapat.game.getPlayer().jump();
-		}
+		}else if (arg0.getKeyCode() == KeyEvent.VK_C) {
+		Gui.showChat= !Gui.showChat;
+	}
 	}
 
 	@Override
@@ -91,6 +96,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	public void mouseReleased(MouseEvent arg0) {
 		if (arg0.getButton() == MouseEvent.BUTTON1) {
 			mouseDownLeft = false;
+			singleClick=true;
 		} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 			mouseDownRight = false;
 		}
@@ -125,6 +131,14 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
 	public boolean isMouseRightDown() {
 		return mouseDownRight;
+	}
+	
+	public boolean getMouseSingleClick(){
+		if (singleClick){
+		singleClick=false;
+		return true;
+		}
+		return false;
 	}
 
 	@Override
