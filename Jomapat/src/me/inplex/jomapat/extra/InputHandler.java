@@ -11,14 +11,15 @@ import java.io.IOException;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.gfx.Gui;
+import me.inplex.jomapat.gfx.Menu;
 import me.inplex.jomapat.world.BlockType;
 import me.inplex.jomapat.world.WorldSave;
 
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private boolean[] keysDown;
-	
-	public boolean singleClick=false;
+
+	public boolean singleClick = false;
 
 	public InputHandler() {
 		keysDown = new boolean[120];
@@ -31,29 +32,33 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		keysDown[arg0.getKeyCode()] = true;
-		if (arg0.getKeyCode() == KeyEvent.VK_S) {
-			try {
-				WorldSave.save(0);
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (Jomapat.game.isInMenu()) {
+			Menu.onPress(arg0.getKeyCode());
+		} else {
+			if (arg0.getKeyCode() == KeyEvent.VK_S) {
+				try {
+					WorldSave.save(0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (arg0.getKeyCode() == KeyEvent.VK_L) {
+				try {
+					WorldSave.load(0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (arg0.getKeyCode() == KeyEvent.VK_E) {
+				if (Jomapat.game.getInventory().isVisible()) {
+					Jomapat.game.getInventory().show(false);
+				} else {
+					Jomapat.game.getInventory().show(true);
+				}
+			} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+				Jomapat.game.getPlayer().jump();
+			} else if (arg0.getKeyCode() == KeyEvent.VK_C) {
+				Gui.showChat = !Gui.showChat;
 			}
-		} else if (arg0.getKeyCode() == KeyEvent.VK_L) {
-			try {
-				WorldSave.load(0);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else if (arg0.getKeyCode() == KeyEvent.VK_E) {
-			if (Jomapat.game.getInventory().isVisible()) {
-				Jomapat.game.getInventory().show(false);
-			} else {
-				Jomapat.game.getInventory().show(true);
-			}
-		}  else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-			Jomapat.game.getPlayer().jump();
-		}else if (arg0.getKeyCode() == KeyEvent.VK_C) {
-		Gui.showChat= !Gui.showChat;
-	}
+		}
 	}
 
 	@Override
@@ -89,6 +94,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			mouseDownLeft = true;
 		} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 			mouseDownRight = true;
+		}
+		if (Jomapat.game.isInMenu()) {
+			Menu.onClick();
 		}
 	}
 
@@ -132,11 +140,11 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	public boolean isMouseRightDown() {
 		return mouseDownRight;
 	}
-	
-	public boolean getMouseSingleClick(){
-		if (singleClick){
-		singleClick=false;
-		return true;
+
+	public boolean getMouseSingleClick() {
+		if (singleClick) {
+			singleClick = false;
+			return true;
 		}
 		return false;
 	}
@@ -146,13 +154,13 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		int notches = e.getWheelRotation();
 		if (notches > 0) {
 			Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() + 1);
-			if (Jomapat.game.getInventory().getSelected() > BlockType.values().length-1) {
+			if (Jomapat.game.getInventory().getSelected() > BlockType.values().length - 1) {
 				Jomapat.game.getInventory().setSelected(0);
 			}
 		} else {
 			Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() - 1);
 			if (Jomapat.game.getInventory().getSelected() < 0) {
-				Jomapat.game.getInventory().setSelected(BlockType.values().length-1);
+				Jomapat.game.getInventory().setSelected(BlockType.values().length - 1);
 			}
 		}
 	}

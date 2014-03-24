@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.gfx.Menu;
 import me.inplex.jomapat.gfx.ParticleManager;
 import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
@@ -46,6 +47,8 @@ public class Jomapat extends Canvas implements Runnable {
 	public float skyG = 0.6f;
 	public float skyB = 1.0f;
 	public boolean timeDown = true;
+
+	private boolean inMenu;
 
 	public static Jomapat game;
 
@@ -92,6 +95,7 @@ public class Jomapat extends Canvas implements Runnable {
 		input = new InputHandler();
 		inventory = new Inventory();
 		ticks = 0;
+		inMenu = true;
 	}
 
 	public void resized() {
@@ -146,38 +150,41 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public void update() {
 		ticks++;
+		if (!inMenu) {
+			if (ticks % 2500 == 0) {
+				if (timeDown)
+					timeDown = false;
+				else if (!timeDown)
+					timeDown = true;
+			}
+			if (timeDown) {
+				skyR += 0.0001f;
+				skyG += 0.0001f;
+				skyB += 0.0001f;
+			} else {
+				skyR -= 0.0001f;
+				skyG -= 0.0001f;
+				skyB -= 0.0001f;
+			}
+			if (skyR > 1.0f)
+				skyR = 1.0f;
+			if (skyG > 1.0f)
+				skyG = 1.0f;
+			if (skyB > 1.0f)
+				skyB = 1.0f;
 
-		if (ticks % 2500 == 0) {
-			if (timeDown)
-				timeDown = false;
-			else if (!timeDown)
-				timeDown = true;
-		}
-		if (timeDown) {
-			skyR += 0.0001f;
-			skyG += 0.0001f;
-			skyB += 0.0001f;
+			if (skyR < 0.0f)
+				skyR = 0.0f;
+			if (skyG < 0.0f)
+				skyG = 0.0f;
+			if (skyB < 0.0f)
+				skyB = 0.0f;
+			player.update();
+			world.update();
+			ParticleManager.update();
 		} else {
-			skyR -= 0.0001f;
-			skyG -= 0.0001f;
-			skyB -= 0.0001f;
+			Menu.update();
 		}
-		if (skyR > 1.0f)
-			skyR = 1.0f;
-		if (skyG > 1.0f)
-			skyG = 1.0f;
-		if (skyB > 1.0f)
-			skyB = 1.0f;
-
-		if (skyR < 0.0f)
-			skyR = 0.0f;
-		if (skyG < 0.0f)
-			skyG = 0.0f;
-		if (skyB < 0.0f)
-			skyB = 0.0f;
-		player.update();
-		world.update();
-		ParticleManager.update();
 	}
 
 	public void render() {
@@ -191,7 +198,11 @@ public class Jomapat extends Canvas implements Runnable {
 				skyB, 1.0f));
 		((Graphics2D) g).setPaint(gp);
 		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
-		Renderer.renderGame(g);
+		if (!inMenu) {
+			Renderer.renderGame(g);
+		} else {
+			Menu.render(g);
+		}
 		g.dispose();
 		bs.show();
 	}
@@ -230,6 +241,14 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public void setInput(InputHandler input) {
 		this.input = input;
+	}
+
+	public boolean isInMenu() {
+		return inMenu;
+	}
+
+	public void setInMenu(boolean inMenu) {
+		this.inMenu = inMenu;
 	}
 
 }
