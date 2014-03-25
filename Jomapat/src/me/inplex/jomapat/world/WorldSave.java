@@ -95,8 +95,8 @@ public class WorldSave {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				byte id = (byte) in.readByte();
-				if (id != (byte) 0xFF)
-					Jomapat.game.getWorld().setBlock(x, y, BlockType.values()[id]);
+				Jomapat.game.getWorld().setBlock(x, y, id != (byte)0xFF ? BlockType.values()[id] : null);
+					
 			}
 		}
 		Jomapat.game.getPlayer().setX(pX);
