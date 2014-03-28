@@ -35,30 +35,69 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		if (Jomapat.game.isInMenu()) {
 			Menu.onPress(arg0.getKeyCode());
 		} else {
-			if (arg0.getKeyCode() == KeyEvent.VK_S) {
-				try {
-					WorldSave.save(0);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else if (arg0.getKeyCode() == KeyEvent.VK_L) {
-				try {
-					WorldSave.load(0);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else if (arg0.getKeyCode() == KeyEvent.VK_E) {
-				if (Jomapat.game.getInventory().isVisible()) {
-					Jomapat.game.getInventory().show(false);
+			if (Gui.chatTyping) {
+				if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+					if(Gui.chatMessage.length() > 0) {
+						Gui.chatMessage = Gui.chatMessage.substring(0, Gui.chatMessage.length() - 1);
+					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (Gui.chatTyping) {
+						if (!Gui.chatMessage.equals("")) {
+							Gui.typed();
+							Gui.chatTyping = false;
+						} else {
+							Gui.chatTyping = false;
+						}
+					} else {
+						Gui.chatTyping = true;
+						Gui.chatMessage = "";
+					}
 				} else {
-					Jomapat.game.getInventory().show(true);
+					Gui.chatMessage += arg0.getKeyChar();
 				}
-			} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-				Jomapat.game.getPlayer().jump();
-			} else if (arg0.getKeyCode() == KeyEvent.VK_C) {
-				Gui.showChat = !Gui.showChat;
-			}else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				Jomapat.game.inMenu = true;
+			} else {
+				if (arg0.getKeyCode() == KeyEvent.VK_S) {
+					try {
+						WorldSave.save(0);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_L) {
+					try {
+						WorldSave.load(0);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_E) {
+					if (Jomapat.game.getInventory().isVisible()) {
+						Jomapat.game.getInventory().show(false);
+					} else {
+						Jomapat.game.getInventory().show(true);
+					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+					Jomapat.game.getPlayer().jump();
+				} else if (arg0.getKeyCode() == KeyEvent.VK_C) {
+					Gui.showChat = !Gui.showChat;
+				} else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (Gui.chatTyping) {
+						Gui.chatMessage = "";
+						Gui.chatTyping = false;
+					} else {
+						Jomapat.game.inMenu = true;
+					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (Gui.chatTyping) {
+						if (!Gui.chatMessage.equals("")) {
+							Gui.typed();
+							Gui.chatTyping = false;
+						} else {
+							Gui.chatTyping = false;
+						}
+					} else {
+						Gui.chatTyping = true;
+						Gui.chatMessage = "";
+					}
+				}
 			}
 		}
 	}
@@ -106,7 +145,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	public void mouseReleased(MouseEvent arg0) {
 		if (arg0.getButton() == MouseEvent.BUTTON1) {
 			mouseDownLeft = false;
-			singleClick=true;
+			singleClick = true;
 		} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 			mouseDownRight = false;
 		}
