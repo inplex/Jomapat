@@ -17,7 +17,7 @@ import me.inplex.jomapat.player.Player;
 
 public class WorldSave {
 
-	public static final short WORLDSAVE_VERSION = (short) 2;
+	public static final short WORLDSAVE_VERSION = (short) 3;
 	public static final int PREFIX = 0x57504D4A;
 
 	public static void save(int num) throws IOException {
@@ -42,6 +42,9 @@ public class WorldSave {
 			for (int x = 0; x < w.getWidth(); x++) {
 				out.writeByte(w.getBlockAt(x, y) == null ? ((byte) 0xFF) : ((byte) w.getBlockAt(x, y).ordinal()));
 			}
+		}
+		for(int i = 0; i < BlockType.values().length; i++) {
+			out.writeShort(Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]));
 		}
 		out.close();
 		byte[] result = baos.toByteArray();
@@ -96,8 +99,11 @@ public class WorldSave {
 			for (int x = 0; x < width; x++) {
 				byte id = (byte) in.readByte();
 				Jomapat.game.getWorld().setBlock(x, y, id != (byte)0xFF ? BlockType.values()[id] : null);
-					
 			}
+		}
+		for(int i = 0; i < BlockType.values().length; i++) {
+			int amount = (int) in.readShort();
+			Jomapat.game.getInventory().setBlockAmount(BlockType.values()[i], amount);
 		}
 		Jomapat.game.getPlayer().setX(pX);
 		Jomapat.game.getPlayer().setY(pY);

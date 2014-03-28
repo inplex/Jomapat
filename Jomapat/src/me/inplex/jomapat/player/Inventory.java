@@ -9,7 +9,6 @@ public class Inventory {
 	}
 
 	private int[] blockInventory = new int[100];
-	// Not needed yet: private int[] itemInventory = new int[100];
 
 	private boolean show = false;
 	private int selected = 0;
@@ -17,13 +16,17 @@ public class Inventory {
 	public void addBlock(BlockType block) {
 		blockInventory[block.ordinal()]++;
 	}
-
+	
 	public int getBlockAmount(BlockType block) {
 		return blockInventory[block.ordinal()];
 	}
+	
+	public void setBlockAmount(BlockType block, int amount) {
+		blockInventory[block.ordinal()] = amount;
+	}
 
 	public void removeBlock(BlockType block) {
-		blockInventory[block.ordinal()]=blockInventory[block.ordinal()] >=1 ? blockInventory[block.ordinal()]-1:0; ;
+		blockInventory[block.ordinal()] = blockInventory[block.ordinal()] >= 1 ? blockInventory[block.ordinal()] - 1 : 0;
 	}
 
 	public void show(boolean show) {

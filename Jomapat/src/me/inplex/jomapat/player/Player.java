@@ -35,10 +35,10 @@ public class Player {
 	private int playerHitboxW = 30, playerHitboxH = 64;
 
 	// <Player attributes>
-
+	
 	public int health = 100;
 	public int stamina = 100;
-
+	
 	// TODO add some more
 
 	// </Player attributes>
