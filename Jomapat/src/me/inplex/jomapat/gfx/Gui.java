@@ -175,6 +175,7 @@ public class Gui {
 	}
 
 	public static void typed() {
+		addMessage("> " + chatMessage);
 		CommandExecutor.executeRaw(chatMessage);
 		chatMessage = "";
 	}

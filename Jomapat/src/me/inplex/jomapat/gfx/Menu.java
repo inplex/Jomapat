@@ -5,11 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import sun.net.www.URLConnection;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.world.BlockType;
 
