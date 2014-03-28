@@ -7,6 +7,7 @@ import java.util.Random;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.extra.Maths;
+import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Particle;
 import me.inplex.jomapat.gfx.ParticleBehaviour;
 import me.inplex.jomapat.gfx.ParticleManager;
@@ -31,85 +32,80 @@ public class Player {
 	public int actualBlockRawX = 0, actualBlockRawY = 0;
 	public BufferedImage actDiggGraphics = null;
 
-	private int playerHitboxW = 46, playerHitboxH = 64;
-	
-	
-	
-	
-	
+	private int playerHitboxW = 30, playerHitboxH = 64;
+
 	// <Player attributes>
-	
-	public int health =  100;
+
+	public int health = 100;
 	public int stamina = 100;
 
-	//TODO add some more
-	
-	
+	// TODO add some more
+
 	// </Player attributes>
-	
-	
 
-	/*
-	 * Idle Sprites framewise
-	 */
+	public static BufferedImage SPRITE_IDLE[] = new BufferedImage[3];
 
-	public static BufferedImage SPRITE_IDLE_1;
-	public static BufferedImage SPRITE_IDLE_2;
-	public static BufferedImage SPRITE_IDLE_3;
+	public static BufferedImage SPRITE_WALK_LEFT[] = new BufferedImage[3];
 
-	/*
-	 * Left Walk Sprites
-	 */
+	public static BufferedImage SPRITE_WALK_RIGHT[] = new BufferedImage[3];
 
-	public static BufferedImage SPRITE_WALK_LEFT_1;
-	public static BufferedImage SPRITE_WALK_LEFT_2;
-	public static BufferedImage SPRITE_WALK_LEFT_3;
+	public static BufferedImage SPRITE_JUMP[] = new BufferedImage[3];
 
-	/*
-	 * Right Walk Sprites
-	 */
+	public static BufferedImage SPRITE_SNEAK[] = new BufferedImage[3];
 
-	public static BufferedImage SPRITE_WALK_RIGHT_1;
-	public static BufferedImage SPRITE_WALK_RIGHT_2;
-	public static BufferedImage SPRITE_WALK_RIGHT_3;
+	public static BufferedImage SPRITE_SPRINT_LEFT[] = new BufferedImage[3];
+	public static BufferedImage SPRITE_SPRINT_RIGHT[] = new BufferedImage[3];
 
-	/*
-	 * Jump Sprites 1 = Jump Start, 2 = Flying In Air Frame 1, 3 = Flying in Air
-	 * Frame 2, 4 = Landing
-	 */
-
-	public static BufferedImage SPRITE_JUMP_1;
-	public static BufferedImage SPRITE_JUMP_2;
-	public static BufferedImage SPRITE_JUMP_3;
-	public static BufferedImage SPRITE_JUMP_4;
-
-	/*
-	 * Sneak Sprites 1 = Sneak Start, 2 = While Sneaking Frame 1, 3 = While
-	 * Sneaking Frame 2, 4 = Stopping Sneak
-	 */
-
-	public static BufferedImage SPRITE_SNEAK_1;
-	public static BufferedImage SPRITE_SNEAK_2;
-	public static BufferedImage SPRITE_SNEAK_3;
-	public static BufferedImage SPRITE_SNEAK_4;
+	public static int frame = 0;
 
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.loadSprites();
+		this.state = MoveState.IDLE;
+		loadSprites();
 	}
 
-	private void loadSprites() {
-		SPRITE_IDLE_1 = SpriteManager.loadPlayerImage(0, 0);
-		// TODO load others
+	private static void loadSprites() {
+		SPRITE_IDLE[0] = SpriteManager.loadPlayerImage(0, 0);
+		SPRITE_IDLE[1] = SpriteManager.loadPlayerImage(1, 0);
+		SPRITE_IDLE[2] = SpriteManager.loadPlayerImage(2, 0);
+
+		SPRITE_WALK_LEFT[0] = SpriteManager.loadPlayerImage(3, 0);
+		SPRITE_WALK_LEFT[1] = SpriteManager.loadPlayerImage(4, 0);
+		SPRITE_WALK_LEFT[2] = SpriteManager.loadPlayerImage(5, 0);
+
+		SPRITE_WALK_RIGHT[0] = Util.horizontalFlip(SPRITE_WALK_LEFT[0]);
+		SPRITE_WALK_RIGHT[1] = Util.horizontalFlip(SPRITE_WALK_LEFT[1]);
+		SPRITE_WALK_RIGHT[2] = Util.horizontalFlip(SPRITE_WALK_LEFT[2]);
+
+		SPRITE_JUMP[0] = SpriteManager.loadPlayerImage(6, 0);
+		SPRITE_JUMP[1] = SpriteManager.loadPlayerImage(7, 0);
+		SPRITE_JUMP[2] = SpriteManager.loadPlayerImage(8, 0);
+
+		SPRITE_SNEAK[0] = SpriteManager.loadPlayerImage(9, 0);
+		SPRITE_SNEAK[1] = SpriteManager.loadPlayerImage(10, 0);
+		SPRITE_SNEAK[2] = SpriteManager.loadPlayerImage(11, 0);
+
+		SPRITE_SPRINT_LEFT[0] = SpriteManager.loadPlayerImage(12, 0);
+		SPRITE_SPRINT_LEFT[1] = SpriteManager.loadPlayerImage(13, 0);
+		SPRITE_SPRINT_LEFT[2] = SpriteManager.loadPlayerImage(14, 0);
+		
+		SPRITE_SPRINT_RIGHT[0] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[0]);
+		SPRITE_SPRINT_RIGHT[1] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[1]);
+		SPRITE_SPRINT_RIGHT[2] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[2]);
+
 	}
 
 	private void move(Direction dir, int xVal) {
 		final int oldx = x;
 		x = dir == Direction.LEFT ? x - xVal : x + xVal;
 		x = !collidesWithBlock() ? x : oldx;
-		if(x == oldx)
+		if (x == oldx) {
 			sprintTime = 0;
+		} else {
+			// he moved
+			state = MoveState.WALK;
+		}
 		direction = dir;
 		if (new Random().nextInt(10) == 1 || (isSprinting() && new Random().nextInt(5) == 1)) {
 			int btx = Maths.positionToGrid(x) / 64;
@@ -133,13 +129,19 @@ public class Player {
 	int sprintTime = 0;
 
 	public void update() {
-		
-		if(isSprinting()) {
+
+		if (Jomapat.game.getTicks() % 20 == 0)
+			frame++;
+		if (frame > 2) {
+			frame = 0;
+		}
+
+		if (isSprinting()) {
 			sprintTime++;
 		} else {
 			sprintTime = 0;
 		}
-		
+
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
 
@@ -205,23 +207,27 @@ public class Player {
 		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
 			direction = Direction.LEFT;
 			state = MoveState.WALK;
-			move(isSprinting() ? (SPEED_SPRINTING + sprintTime/100) : SPEED_NORMAL);
+			move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
 			direction = Direction.RIGHT;
 			state = MoveState.WALK;
-			move(isSprinting() ? (SPEED_SPRINTING + sprintTime/100) : SPEED_NORMAL);
+			move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 		} else {
-			if (motionY == 0) {
+			if (!jumping) {
 				state = MoveState.IDLE;
+			} else {
+				state = MoveState.JUMP;
 			}
 		}
-
-		// Jump
-		/*
-		 * Moved to InputHandler, because Double Jump would not work otherwise
-		 * if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) { jump(); }
-		 */
-
+		
+		if (jumping) {
+			state = MoveState.JUMP;
+		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SHIFT)) {
+			state = MoveState.SPRINT;
+		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_CONTROL)) {
+			state = MoveState.SNEAK;
+		}
+		
 		if (!collidesWithBlock()) {
 			final boolean dCollide = collidesWithBlock();
 			final int dX = x;
@@ -234,6 +240,7 @@ public class Player {
 				motionY = 0;
 				if (wasFalling) {
 					// landed after jump
+					jumping = false;
 					int btx = Maths.positionToGrid(x) / 64;
 					int bty = Maths.positionToGrid(y) / 64 + 2;
 					BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
@@ -250,6 +257,10 @@ public class Player {
 		} else {
 			motionY = 0;
 		}
+		
+		if (jumping) {
+			state = MoveState.JUMP;
+		}
 
 	}
 
@@ -258,28 +269,34 @@ public class Player {
 				|| Collision.checkCollisionAt(x + playerHitboxW, y + playerHitboxH) || Collision.checkCollisionAt(x, y + playerHitboxH);
 	}
 
+	boolean jumping = false;
+
 	public void jump() {
 		y += 2;
 		if (collidesWithBlock()) {
 			y -= 5;
 			motionY = 50;
-			if(isSprinting())
-				motionY += 10;
-			if(isSneaking())
+			if (isSprinting())
+				motionY += 5;
+			if (isSneaking())
 				motionY -= 20;
 			wasFalling = true;
 			canJumpMore = true;
+			jumping = true;
 		} else {
 			if (wasFalling == true && canJumpMore == true) {
 				// double jump
 				y -= 5;
 				motionY = 50;
-				if(isSprinting())
+				if (isSprinting())
 					motionY += 5;
-				if(isSneaking())
+				if (isSneaking())
 					motionY -= 20;
 				wasFalling = true;
 				canJumpMore = false;
+				jumping = true;
+			} else {
+				jumping = false;
 			}
 		}
 		y -= 2;
@@ -295,7 +312,11 @@ public class Player {
 	 * speed; } }
 	 */
 	public boolean isOnGround() {
-		return motionY == 0;
+		return motionY < -8 || motionY > 0;
+	}
+
+	public boolean isInAir() {
+		return !isOnGround();
 	}
 
 	public boolean isSneaking() {
@@ -304,6 +325,10 @@ public class Player {
 
 	public boolean isSprinting() {
 		return Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SHIFT);
+	}
+
+	public boolean isMoving() {
+		return Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A) || Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D);
 	}
 
 	public int getX() {

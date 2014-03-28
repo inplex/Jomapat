@@ -85,4 +85,14 @@ public class Util {
 		return output;
 	}
 
+	public static BufferedImage horizontalFlip(BufferedImage img) {
+        int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage dimg = new BufferedImage(w, h, img.getType());
+        Graphics2D g = dimg.createGraphics();
+        g.drawImage(img, 0, 0, w, h, w, 0, 0, h, null);
+        g.dispose();
+        return dimg;
+    }
+
 }
