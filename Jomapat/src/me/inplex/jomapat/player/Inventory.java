@@ -17,6 +17,10 @@ public class Inventory {
 		blockInventory[block.ordinal()]++;
 	}
 	
+	public void addBlock(BlockType block, int amount) {
+		blockInventory[block.ordinal()]+=amount;
+	}
+	
 	public int getBlockAmount(BlockType block) {
 		return blockInventory[block.ordinal()];
 	}
