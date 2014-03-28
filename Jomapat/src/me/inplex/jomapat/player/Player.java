@@ -69,23 +69,23 @@ public class Player {
 		SPRITE_IDLE[0] = SpriteManager.loadPlayerImage(0, 0);
 		SPRITE_IDLE[1] = SpriteManager.loadPlayerImage(1, 0);
 		SPRITE_IDLE[2] = SpriteManager.loadPlayerImage(2, 0);
-
+		
 		SPRITE_WALK_LEFT[0] = SpriteManager.loadPlayerImage(3, 0);
 		SPRITE_WALK_LEFT[1] = SpriteManager.loadPlayerImage(4, 0);
 		SPRITE_WALK_LEFT[2] = SpriteManager.loadPlayerImage(5, 0);
-
+		
 		SPRITE_WALK_RIGHT[0] = Util.horizontalFlip(SPRITE_WALK_LEFT[0]);
 		SPRITE_WALK_RIGHT[1] = Util.horizontalFlip(SPRITE_WALK_LEFT[1]);
 		SPRITE_WALK_RIGHT[2] = Util.horizontalFlip(SPRITE_WALK_LEFT[2]);
-
+		
 		SPRITE_JUMP[0] = SpriteManager.loadPlayerImage(6, 0);
 		SPRITE_JUMP[1] = SpriteManager.loadPlayerImage(7, 0);
 		SPRITE_JUMP[2] = SpriteManager.loadPlayerImage(8, 0);
-
+		
 		SPRITE_SNEAK[0] = SpriteManager.loadPlayerImage(9, 0);
 		SPRITE_SNEAK[1] = SpriteManager.loadPlayerImage(10, 0);
 		SPRITE_SNEAK[2] = SpriteManager.loadPlayerImage(11, 0);
-
+		
 		SPRITE_SPRINT_LEFT[0] = SpriteManager.loadPlayerImage(12, 0);
 		SPRITE_SPRINT_LEFT[1] = SpriteManager.loadPlayerImage(13, 0);
 		SPRITE_SPRINT_LEFT[2] = SpriteManager.loadPlayerImage(14, 0);
@@ -93,7 +93,7 @@ public class Player {
 		SPRITE_SPRINT_RIGHT[0] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[0]);
 		SPRITE_SPRINT_RIGHT[1] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[1]);
 		SPRITE_SPRINT_RIGHT[2] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[2]);
-
+		
 	}
 
 	private void move(Direction dir, int xVal) {
@@ -135,13 +135,13 @@ public class Player {
 		if (frame > 2) {
 			frame = 0;
 		}
-
+		
 		if (isSprinting()) {
 			sprintTime++;
 		} else {
 			sprintTime = 0;
 		}
-
+		
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
 
@@ -174,10 +174,12 @@ public class Player {
 					actDiggGraphics = SpriteManager.digg3;
 				}
 				if (actualBlockDigg > 300 && Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) {
-					Jomapat.game.getInventory().addBlock(Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY));
+					final BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
+					Jomapat.game.getInventory().addBlock(bt);
 					Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
+					Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
 				}
-
+				
 				if (new Random().nextInt(3) == 1) {
 					BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
 					if (bt != null) {

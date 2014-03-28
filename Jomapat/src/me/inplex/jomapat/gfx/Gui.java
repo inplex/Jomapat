@@ -15,7 +15,7 @@ import me.inplex.jomapat.world.BlockType;
 public class Gui {
 	private static List<String> messages = new ArrayList<String>();
 	private static String actMsg = "";
-	public static boolean showChat = false;
+	public static boolean showChat = true;
 
 	public static void showPopupMessage(String message) {
 		actMsg = message;
