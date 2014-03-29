@@ -44,7 +44,7 @@ public class WorldSave {
 			}
 		}
 		for(int i = 0; i < BlockType.values().length; i++) {
-			out.writeShort(Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]));
+			out.writeInt(Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]));
 		}
 		out.close();
 		byte[] result = baos.toByteArray();
@@ -102,7 +102,7 @@ public class WorldSave {
 			}
 		}
 		for(int i = 0; i < BlockType.values().length; i++) {
-			int amount = (int) in.readShort();
+			int amount = in.readInt();
 			Jomapat.game.getInventory().setBlockAmount(BlockType.values()[i], amount);
 		}
 		Jomapat.game.getPlayer().setX(pX);

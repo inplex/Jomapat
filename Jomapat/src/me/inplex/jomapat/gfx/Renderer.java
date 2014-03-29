@@ -8,6 +8,7 @@ import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.Direction;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.player.Player;
+import me.inplex.jomapat.player.Recipe;
 import me.inplex.jomapat.world.BlockType;
 
 public class Renderer {
@@ -144,8 +145,11 @@ public class Renderer {
 		g.setColor(Color.BLACK);
 
 		Gui.renderGui(g);
-		if (Jomapat.game.getInventory().isVisible() == true) {
+		if (Jomapat.game.getInventory().isVisible()) {
 			Gui.showInventory(g);
+		}
+		if (Recipe.shown) {
+			Gui.showRecipes(g);
 		}
 	}
 }

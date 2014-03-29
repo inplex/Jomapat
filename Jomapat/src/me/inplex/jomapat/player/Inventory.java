@@ -14,12 +14,15 @@ public class Inventory {
 	private int selected = 0;
 
 	public void addBlock(BlockType block) {
+		// yes, this is needed
 		if(block.ordinal() > BlockType.values().length-1)
 			return;
 		blockInventory[block.ordinal()]++;
 	}
 	
 	public void addBlock(BlockType block, int amount) {
+		if(block.ordinal() > BlockType.values().length-1)
+			return;
 		blockInventory[block.ordinal()]+=amount;
 	}
 	
@@ -33,6 +36,10 @@ public class Inventory {
 
 	public void removeBlock(BlockType block) {
 		blockInventory[block.ordinal()] = blockInventory[block.ordinal()] >= 1 ? blockInventory[block.ordinal()] - 1 : 0;
+	}
+	
+	public void removeBlock(BlockType block, int amount) {
+		blockInventory[block.ordinal()] = blockInventory[block.ordinal()] >= amount ? blockInventory[block.ordinal()] - amount : blockInventory[block.ordinal()];
 	}
 
 	public void show(boolean show) {

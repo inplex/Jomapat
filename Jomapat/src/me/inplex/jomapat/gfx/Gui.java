@@ -11,6 +11,8 @@ import java.util.List;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.CommandExecutor;
 import me.inplex.jomapat.extra.Util;
+import me.inplex.jomapat.player.ItemStack;
+import me.inplex.jomapat.player.Recipe;
 import me.inplex.jomapat.world.BlockType;
 
 public class Gui {
@@ -57,7 +59,7 @@ public class Gui {
 			for (String msg : messages) {
 				acty = acty + 20;
 				g.drawString(msg, 20, acty);
-				if (acty > Jomapat.game.getHeight()-30) {
+				if (acty > Jomapat.game.getHeight() - 30) {
 					toDelete = msg;
 				}
 
@@ -169,6 +171,69 @@ public class Gui {
 			if (mouseX >= Jomapat.game.getWidth() / 2 - width / 2 - 1 + width - 10 && mouseX <= Jomapat.game.getWidth() / 2 - width / 2 - 1 + width
 					&& mouseY <= Jomapat.game.getHeight() / 2 - height / 2 + 13 && mouseY <= Jomapat.game.getHeight() / 2 - height / 2 + 23) {
 				Jomapat.game.getInventory().show(false);
+			}
+		}
+
+	}
+
+	public static void showRecipes(Graphics g) {
+		int width = 600, height = 300;
+		g.setColor(new Color(0, 0, 0, 160));
+		g.fillRect(0, 0, Jomapat.game.getWidth(), Jomapat.game.getHeight());
+		g.setColor(new Color(0x999999));
+		g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 - 1, Jomapat.game.getHeight() / 2 - height / 2 - 1, width + 1, height + 1);
+		g.setColor(new Color(0x888888));
+		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2, Jomapat.game.getHeight() / 2 - height / 2, width, height);
+		g.setColor(new Color(0x000000));
+		g.drawString("X", Jomapat.game.getWidth() / 2 - width / 2 - 1 + width - 10, Jomapat.game.getHeight() / 2 - height / 2 + 13);
+
+		if (button(g, Jomapat.game.getWidth() / 2 - width / 2 + 20, Jomapat.game.getHeight() / 2 - height / 2 - 1 + 250, 100, 20, "close")) {
+			Jomapat.game.getInventory().show(false);
+		}
+
+		if (button(g, Jomapat.game.getWidth() / 2 - width / 2 + 130, Jomapat.game.getHeight() / 2 - height / 2 - 1 + 250, 100, 20, "craft")) {
+			Recipe.craft(Recipe.values()[Recipe.selected]);
+		}
+
+		for (int i = 0; i < Recipe.values().length; i++) {
+			Recipe r = Recipe.values()[i];
+
+			g.drawImage(Util.getScaledImage(r.getOutput().getBlock().getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
+					Jomapat.game.getHeight() / 2 - height / 2 + 30, null);
+			g.setColor(new Color(0, 0, 0, 100));
+			g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 15, 15);
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("courier", 0, 12));
+			g.drawString("" + r.getOutput().getAmount(), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height
+					/ 2 + 30 + 10);
+			if (!Recipe.canCraft(r)) {
+				g.setColor(new Color(0, 0, 0, 0xBB));
+				g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
+			}
+			if (Recipe.getSelected() == i) {
+				g.setColor(Color.RED);
+				g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
+			}
+
+			g.setColor(Color.WHITE);
+			g.drawString("=", Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40 + 12, Jomapat.game.getHeight() / 2 - height / 2 + 30 + 48);
+			int yOffset = 60;
+			for (int j = 0; j < r.getIngredients().length; j++) {
+				ItemStack is = r.getIngredients()[j];
+				g.drawImage(Util.getScaledImage(is.getBlock().getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
+						Jomapat.game.getHeight() / 2 - height / 2 + 30 + yOffset, null);
+				g.setColor(new Color(0, 0, 0, 100));
+				g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30 + yOffset, 15, 15);
+				g.setColor(Color.WHITE);
+				g.setFont(new Font("courier", 0, 12));
+				boolean hasEnough = true;
+				if(Jomapat.game.getInventory().getBlockAmount(is.getBlock()) < is.getAmount()) {
+					hasEnough = false;
+				}
+				g.setColor(hasEnough ? Color.GREEN : Color.RED);
+				g.drawString("" + is.getAmount(), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 40 + yOffset);
+				
+				yOffset += 40;
 			}
 		}
 

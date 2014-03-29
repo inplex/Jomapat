@@ -12,6 +12,7 @@ import java.io.IOException;
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.gfx.Gui;
 import me.inplex.jomapat.gfx.Menu;
+import me.inplex.jomapat.player.Recipe;
 import me.inplex.jomapat.world.BlockType;
 import me.inplex.jomapat.world.WorldSave;
 
@@ -37,7 +38,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		} else {
 			if (Gui.chatTyping) {
 				if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-					if(Gui.chatMessage.length() > 0) {
+					if (Gui.chatMessage.length() > 0) {
 						Gui.chatMessage = Gui.chatMessage.substring(0, Gui.chatMessage.length() - 1);
 					}
 				} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -74,6 +75,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 					} else {
 						Jomapat.game.getInventory().show(true);
 					}
+				} else if (arg0.getKeyCode() == KeyEvent.VK_R) {
+					Recipe.shown = !Recipe.shown;
 				} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 					Jomapat.game.getPlayer().jump();
 				} else if (arg0.getKeyCode() == KeyEvent.VK_C) {
@@ -193,15 +196,29 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
-		if (notches > 0) {
-			Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() + 1);
-			if (Jomapat.game.getInventory().getSelected() > BlockType.values().length - 1) {
-				Jomapat.game.getInventory().setSelected(0);
+		if (Jomapat.game.getInventory().isVisible()) {
+			if (notches > 0) {
+				Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() + 1);
+				if (Jomapat.game.getInventory().getSelected() > BlockType.values().length - 1) {
+					Jomapat.game.getInventory().setSelected(0);
+				}
+			} else {
+				Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() - 1);
+				if (Jomapat.game.getInventory().getSelected() < 0) {
+					Jomapat.game.getInventory().setSelected(BlockType.values().length - 1);
+				}
 			}
-		} else {
-			Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() - 1);
-			if (Jomapat.game.getInventory().getSelected() < 0) {
-				Jomapat.game.getInventory().setSelected(BlockType.values().length - 1);
+		} else if(Recipe.shown) {
+			if (notches > 0) {
+				Recipe.setSelected(Recipe.getSelected() + 1);
+				if (Recipe.getSelected() > Recipe.values().length - 1) {
+					Recipe.setSelected(0);
+				}
+			} else {
+				Recipe.setSelected(Recipe.getSelected() - 1);
+				if (Recipe.getSelected() < 0) {
+					Recipe.setSelected(Recipe.values().length - 1);
+				}
 			}
 		}
 	}

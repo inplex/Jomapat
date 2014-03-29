@@ -22,7 +22,10 @@ public enum BlockType {
 	LEAF		(		new int[] { 1 }, 				new int[] { 1 }, 				0.1f, 	true, 	false, 	true),
 	WOODPLANK	(		new int[] { 2 }, 				new int[] { 1 }, 				0.35f, 	true, 	false, 	true),
 	WOODDOOR	(		new int[] { 3 }, 				new int[] { 1 }, 				0.5f, 	true, 	false, 	true),
-	STONEDOOR	(		new int[] { 4 }, 				new int[] { 1 }, 				0.6f, 	true, 	false, 	true);
+	STONEDOOR	(		new int[] { 4 }, 				new int[] { 1 }, 				0.6f, 	true, 	false, 	true),
+	IRONBLOCK	(		new int[] { 5 }, 				new int[] { 1 }, 				0.7f, 	true, 	false, 	true),
+	GOLDBLOCK	(		new int[] { 6 }, 				new int[] { 1 }, 				0.8f, 	true, 	false, 	true),
+	DIAMONDBLOCK(		new int[] { 7 }, 				new int[] { 1 }, 				0.9f, 	true, 	false, 	true);
 	
 	private BufferedImage[] sprites;
 	private BufferedImage[] particles;
