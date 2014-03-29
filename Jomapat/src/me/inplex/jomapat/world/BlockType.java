@@ -25,7 +25,8 @@ public enum BlockType {
 	STONEDOOR	(		new int[] { 4 }, 				new int[] { 1 }, 				0.6f, 	true, 	false, 	true),
 	IRONBLOCK	(		new int[] { 5 }, 				new int[] { 1 }, 				0.7f, 	true, 	false, 	true),
 	GOLDBLOCK	(		new int[] { 6 }, 				new int[] { 1 }, 				0.8f, 	true, 	false, 	true),
-	DIAMONDBLOCK(		new int[] { 7 }, 				new int[] { 1 }, 				0.9f, 	true, 	false, 	true);
+	DIAMONDBLOCK(		new int[] { 7 }, 				new int[] { 1 }, 				0.9f, 	true, 	false, 	true),
+	TNT			(		new int[] { 8 }, 				new int[] { 1 }, 				0.3f, 	true, 	false, 	true);
 	
 	private BufferedImage[] sprites;
 	private BufferedImage[] particles;

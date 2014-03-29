@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.gfx.Particle;
 import me.inplex.jomapat.gfx.ParticleBehaviour;
 import me.inplex.jomapat.gfx.ParticleManager;
@@ -26,6 +27,7 @@ public class World {
 
 	// for example leaf blocks
 	ArrayList<Point> blocksToRemove = new ArrayList<Point>();
+	ArrayList<Point> blocksToExplode = new ArrayList<Point>();
 
 	public void update() {
 		if (Jomapat.game.getTicks() % 120 == 0) {
@@ -38,6 +40,46 @@ public class World {
 				removeBlockAt(blocksToRemove.get(0).x, blocksToRemove.get(0).y);
 				blocksToRemove.remove(0);
 			}
+		}
+		for (int i = 0; i < 5; i++) {
+			if (blocksToExplode.size() > i) {
+				createExplosion(blocksToExplode.get(i).x, blocksToExplode.get(i).y);
+				if (new Random().nextInt(2) == 1) {
+					int x = blocksToExplode.get(i).x + Maths.randomize(-2, 2);
+					int y = blocksToExplode.get(i).y + Maths.randomize(-2, 2);
+					if (getBlockAt(x, y) != BlockType.TNT) {
+						removeBlockAt(x, y);
+					}
+				}
+				blocksToExplode.remove(i);
+			}
+		}
+	}
+
+	public void detonateTnt(int x, int y) {
+		for (int by = y - 4; by < y + 4; by++) {
+			for (int bx = x - 4; bx < x + 4; bx++) {
+				blocksToExplode.add(new Point(bx, by));
+			}
+		}
+		Collections.shuffle(blocksToExplode);
+	}
+
+	public void createExplosion(int x, int y) {
+		int r = Maths.randomize(2, 5);
+		for (int by = y - r; by < y + r; by++) {
+			for (int bx = x - r; bx < x + r; bx++) {
+				if (getBlockAt(x, y) == BlockType.TNT) {
+					blocksToExplode.add(new Point(bx, by));
+				}
+			}
+		}
+
+		if (getBlockAt(x, y) != null) {
+			removeBlockAt(x, y);
+		}
+		for (int i = 0; i < new Random().nextInt(9) + 1; i++) {
+			ParticleManager.addParticle(new Particle(x * 64 + 32, y * 64 + 32, 1, 1, 30, ParticleBehaviour.RANDOM, BlockType.TNT.getParticle(0)));
 		}
 	}
 
@@ -79,6 +121,8 @@ public class World {
 	}
 
 	public void setBlock(int x, int y, BlockType block) {
+		if (x < 0 || y < 0 || x >= width || y >= height)
+			return;
 		blocks[x][y] = block;
 	}
 

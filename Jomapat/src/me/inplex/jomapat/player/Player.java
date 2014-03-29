@@ -192,6 +192,9 @@ public class Player {
 						Jomapat.game.getInventory().addBlock(bt);
 						Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
 						Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
+						if (bt == BlockType.TNT) {
+							Jomapat.game.getWorld().detonateTnt(actualBlockX, actualBlockY);
+						}
 					}
 					if (new Random().nextInt(3) == 1) {
 						BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
