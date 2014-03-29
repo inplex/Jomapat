@@ -3,8 +3,12 @@ package me.inplex.jomapat.world;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.gfx.Particle;
+import me.inplex.jomapat.gfx.ParticleBehaviour;
+import me.inplex.jomapat.gfx.ParticleManager;
 
 public class World {
 
@@ -27,6 +31,10 @@ public class World {
 		if (Jomapat.game.getTicks() % 120 == 0) {
 			if (blocksToRemove.size() > 0) {
 				Jomapat.game.getInventory().addBlock(getBlockAt(blocksToRemove.get(0).x, blocksToRemove.get(0).y));
+				for (int i = 0; i < new Random().nextInt(20) + 10; i++) {
+					ParticleManager.addParticle(new Particle(blocksToRemove.get(0).x * 64 + 32, blocksToRemove.get(0).y * 64 + 32, 1, 1, 45,
+							ParticleBehaviour.RANDOM, BlockType.LEAF.getParticle(0)));
+				}
 				removeBlockAt(blocksToRemove.get(0).x, blocksToRemove.get(0).y);
 				blocksToRemove.remove(0);
 			}

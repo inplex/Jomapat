@@ -34,11 +34,13 @@ public class Player {
 
 	private int playerHitboxW = 30, playerHitboxH = 64;
 
+	public static boolean noclip = false;
+
 	// <Player attributes>
-	
+
 	public int health = 100;
 	public int stamina = 100;
-	
+
 	// TODO add some more
 
 	// </Player attributes>
@@ -69,53 +71,57 @@ public class Player {
 		SPRITE_IDLE[0] = SpriteManager.loadPlayerImage(0, 0);
 		SPRITE_IDLE[1] = SpriteManager.loadPlayerImage(1, 0);
 		SPRITE_IDLE[2] = SpriteManager.loadPlayerImage(2, 0);
-		
+
 		SPRITE_WALK_LEFT[0] = SpriteManager.loadPlayerImage(3, 0);
 		SPRITE_WALK_LEFT[1] = SpriteManager.loadPlayerImage(4, 0);
 		SPRITE_WALK_LEFT[2] = SpriteManager.loadPlayerImage(5, 0);
-		
+
 		SPRITE_WALK_RIGHT[0] = Util.horizontalFlip(SPRITE_WALK_LEFT[0]);
 		SPRITE_WALK_RIGHT[1] = Util.horizontalFlip(SPRITE_WALK_LEFT[1]);
 		SPRITE_WALK_RIGHT[2] = Util.horizontalFlip(SPRITE_WALK_LEFT[2]);
-		
+
 		SPRITE_JUMP[0] = SpriteManager.loadPlayerImage(6, 0);
 		SPRITE_JUMP[1] = SpriteManager.loadPlayerImage(7, 0);
 		SPRITE_JUMP[2] = SpriteManager.loadPlayerImage(8, 0);
-		
+
 		SPRITE_SNEAK[0] = SpriteManager.loadPlayerImage(9, 0);
 		SPRITE_SNEAK[1] = SpriteManager.loadPlayerImage(10, 0);
 		SPRITE_SNEAK[2] = SpriteManager.loadPlayerImage(11, 0);
-		
+
 		SPRITE_SPRINT_LEFT[0] = SpriteManager.loadPlayerImage(12, 0);
 		SPRITE_SPRINT_LEFT[1] = SpriteManager.loadPlayerImage(13, 0);
 		SPRITE_SPRINT_LEFT[2] = SpriteManager.loadPlayerImage(14, 0);
-		
+
 		SPRITE_SPRINT_RIGHT[0] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[0]);
 		SPRITE_SPRINT_RIGHT[1] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[1]);
 		SPRITE_SPRINT_RIGHT[2] = Util.horizontalFlip(SPRITE_SPRINT_LEFT[2]);
-		
+
 	}
 
 	private void move(Direction dir, int xVal) {
-		final int oldx = x;
-		x = dir == Direction.LEFT ? x - xVal : x + xVal;
-		x = !collidesWithBlock() ? x : oldx;
-		if (x == oldx) {
-			sprintTime = 0;
-		} else {
-			// he moved
-			state = MoveState.WALK;
-		}
-		direction = dir;
-		if (new Random().nextInt(10) == 1 || (isSprinting() && new Random().nextInt(5) == 1)) {
-			int btx = Maths.positionToGrid(x) / 64;
-			int bty = Maths.positionToGrid(y) / 64 + 2;
-			BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
-			if (bt != null) {
-				int lt = isSprinting() ? 10 : 15;
-				ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, lt,
-						ParticleBehaviour.ACCELERATE_FASTER, bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
+		if (!noclip) {
+			final int oldx = x;
+			x = dir == Direction.LEFT ? x - xVal : x + xVal;
+			x = !collidesWithBlock() ? x : oldx;
+			if (x == oldx) {
+				sprintTime = 0;
+			} else {
+				// he moved
+				state = MoveState.WALK;
 			}
+			direction = dir;
+			if (new Random().nextInt(10) == 1 || (isSprinting() && new Random().nextInt(5) == 1)) {
+				int btx = Maths.positionToGrid(x) / 64;
+				int bty = Maths.positionToGrid(y) / 64 + 2;
+				BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
+				if (bt != null) {
+					int lt = isSprinting() ? 10 : 15;
+					ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, lt,
+							ParticleBehaviour.ACCELERATE_FASTER, bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
+				}
+			}
+		} else {
+			x = dir == Direction.LEFT ? x - xVal : x + xVal;
 		}
 	}
 
@@ -135,13 +141,13 @@ public class Player {
 		if (frame > 2) {
 			frame = 0;
 		}
-		
+
 		if (isSprinting()) {
 			sprintTime++;
 		} else {
 			sprintTime = 0;
 		}
-		
+
 		mouseX = Jomapat.game.getInput().getMousePosX();
 		mouseY = Jomapat.game.getInput().getMousePosY();
 
@@ -163,28 +169,36 @@ public class Player {
 				int dmg = (Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) ? (int) ((1.0f - (Jomapat.game.getWorld()
 						.getBlockAt(actualBlockX, actualBlockY).getHardness())) * 10) : 0;
 
-				actualBlockDigg += dmg;
-				if (actualBlockDigg > 20 && actualBlockDigg < 100) {
-					actDiggGraphics = SpriteManager.digg1;
-				}
-				if (actualBlockDigg > 100 && actualBlockDigg < 200) {
-					actDiggGraphics = SpriteManager.digg2;
-				}
-				if (actualBlockDigg > 200 && actualBlockDigg < 300) {
-					actDiggGraphics = SpriteManager.digg3;
-				}
-				if (actualBlockDigg > 300 && Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) {
+				if (noclip) {
 					final BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
-					Jomapat.game.getInventory().addBlock(bt);
-					Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
-					Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
-				}
-				
-				if (new Random().nextInt(3) == 1) {
-					BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
 					if (bt != null) {
-						ParticleManager.addParticle(new Particle(actualBlockX * 64 + 32, actualBlockY * 64 + 32, 1, 1, 30, ParticleBehaviour.RANDOM,
-								bt.getParticle(new Random().nextInt(bt.getParticles().length))));
+						Jomapat.game.getInventory().addBlock(bt);
+						Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
+						Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
+					}
+				} else {
+					actualBlockDigg += dmg;
+					if (actualBlockDigg > 20 && actualBlockDigg < 100) {
+						actDiggGraphics = SpriteManager.digg1;
+					}
+					if (actualBlockDigg > 100 && actualBlockDigg < 200) {
+						actDiggGraphics = SpriteManager.digg2;
+					}
+					if (actualBlockDigg > 200 && actualBlockDigg < 300) {
+						actDiggGraphics = SpriteManager.digg3;
+					}
+					if (actualBlockDigg > 300 && Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) {
+						final BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
+						Jomapat.game.getInventory().addBlock(bt);
+						Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
+						Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
+					}
+					if (new Random().nextInt(3) == 1) {
+						BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
+						if (bt != null) {
+							ParticleManager.addParticle(new Particle(actualBlockX * 64 + 32, actualBlockY * 64 + 32, 1, 1, 30,
+									ParticleBehaviour.RANDOM, bt.getParticle(new Random().nextInt(bt.getParticles().length))));
+						}
 					}
 				}
 
@@ -206,62 +220,81 @@ public class Player {
 
 		}
 
-		if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
-			direction = Direction.LEFT;
-			state = MoveState.WALK;
-			move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
-		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
-			direction = Direction.RIGHT;
-			state = MoveState.WALK;
-			move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
-		} else {
-			if (!jumping) {
-				state = MoveState.IDLE;
+		if (!noclip) {
+			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
+				direction = Direction.LEFT;
+				state = MoveState.WALK;
+				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
+			} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
+				direction = Direction.RIGHT;
+				state = MoveState.WALK;
+				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 			} else {
-				state = MoveState.JUMP;
-			}
-		}
-		
-		if (jumping) {
-			state = MoveState.JUMP;
-		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SHIFT)) {
-			state = MoveState.SPRINT;
-		} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_CONTROL)) {
-			state = MoveState.SNEAK;
-		}
-		
-		if (!collidesWithBlock()) {
-			final boolean dCollide = collidesWithBlock();
-			final int dX = x;
-			final int dY = y;
-			y -= motionY / 7;
-			motionY -= 2;
-			if (!dCollide && collidesWithBlock()) {
-				x = dX;
-				y = dY;
-				motionY = 0;
-				if (wasFalling) {
-					// landed after jump
-					jumping = false;
-					int btx = Maths.positionToGrid(x) / 64;
-					int bty = Maths.positionToGrid(y) / 64 + 2;
-					BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
-					if (bt != null) {
-						for (int i = 0; i < new Random().nextInt(30); i++) {
-							ParticleManager.addParticle(new Particle(x + 32 + Maths.randomize(-32, 32), y + 64, Maths.randomize(-2, 2), new Random()
-									.nextInt(1) - 2, 30, ParticleBehaviour.ACCELERATE_SLOWER,
-									bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
-						}
-					}
-					wasFalling = false;
+				if (!jumping) {
+					state = MoveState.IDLE;
+				} else {
+					state = MoveState.JUMP;
 				}
 			}
+
+			if (jumping) {
+				state = MoveState.JUMP;
+			} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SHIFT)) {
+				state = MoveState.SPRINT;
+			} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_CONTROL)) {
+				state = MoveState.SNEAK;
+			}
+
+			if (!collidesWithBlock()) {
+				final boolean dCollide = collidesWithBlock();
+				final int dX = x;
+				final int dY = y;
+				y -= motionY / 7;
+				motionY -= 2;
+				if (!dCollide && collidesWithBlock()) {
+					x = dX;
+					y = dY;
+					motionY = 0;
+					if (wasFalling) {
+						// landed after jump
+						jumping = false;
+						int btx = Maths.positionToGrid(x) / 64;
+						int bty = Maths.positionToGrid(y) / 64 + 2;
+						BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
+						if (bt != null) {
+							for (int i = 0; i < new Random().nextInt(30); i++) {
+								ParticleManager.addParticle(new Particle(x + 32 + Maths.randomize(-32, 32), y + 64, Maths.randomize(-2, 2),
+										new Random().nextInt(1) - 2, 30, ParticleBehaviour.ACCELERATE_SLOWER, bt.getParticle((new Random().nextInt(bt
+												.getSprites().length)))));
+							}
+						}
+						wasFalling = false;
+					}
+				}
+			} else {
+				motionY = 0;
+			}
+
+			if (jumping) {
+				state = MoveState.JUMP;
+			}
 		} else {
-			motionY = 0;
-		}
-		
-		if (jumping) {
-			state = MoveState.JUMP;
+			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
+				direction = Direction.LEFT;
+				state = MoveState.WALK;
+				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
+			}
+			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
+				direction = Direction.RIGHT;
+				state = MoveState.WALK;
+				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
+			}
+			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
+				y -= SPEED_NORMAL;
+			}
+			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_CONTROL)) {
+				y += SPEED_NORMAL;
+			}
 		}
 
 	}

@@ -14,6 +14,8 @@ public class Inventory {
 	private int selected = 0;
 
 	public void addBlock(BlockType block) {
+		if(block.ordinal() > BlockType.values().length-1)
+			return;
 		blockInventory[block.ordinal()]++;
 	}
 	

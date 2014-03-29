@@ -2,6 +2,7 @@ package me.inplex.jomapat.extra;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.gfx.Gui;
+import me.inplex.jomapat.player.Player;
 import me.inplex.jomapat.world.BlockType;
 
 public class CommandExecutor {
@@ -91,6 +92,8 @@ public class CommandExecutor {
 				Jomapat.game.getPlayer().setY(y);
 			}
 			// TODO: More Commands here
+		} else if (cmd.equalsIgnoreCase("noclip")) {
+			Player.noclip = !Player.noclip;
 		} else {
 			Gui.addMessage("Command not found. Type 'help' for a list.");
 		}

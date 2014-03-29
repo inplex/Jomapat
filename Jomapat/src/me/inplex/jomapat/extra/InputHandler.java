@@ -56,7 +56,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 					Gui.chatMessage += arg0.getKeyChar();
 				}
 			} else {
-				if (arg0.getKeyCode() == KeyEvent.VK_S) {
+				if (arg0.getKeyCode() == KeyEvent.VK_K) {
 					try {
 						WorldSave.save(0);
 					} catch (IOException e) {
