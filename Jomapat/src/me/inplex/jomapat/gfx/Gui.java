@@ -207,7 +207,7 @@ public class Gui {
 			g.drawString("" + r.getOutput().getAmount(), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height
 					/ 2 + 30 + 10);
 			if (!Recipe.canCraft(r)) {
-				g.setColor(new Color(0, 0, 0, 0xBB));
+				g.setColor(new Color(0, 0, 0, 0x55));
 				g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
 			}
 			if (Recipe.getSelected() == i) {
