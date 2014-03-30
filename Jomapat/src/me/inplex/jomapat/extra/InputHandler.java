@@ -196,19 +196,12 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
-		if (Jomapat.game.getInventory().isVisible()) {
-			if (notches > 0) {
-				Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() + 1);
-				if (Jomapat.game.getInventory().getSelected() > BlockType.values().length - 1) {
-					Jomapat.game.getInventory().setSelected(0);
-				}
-			} else {
-				Jomapat.game.getInventory().setSelected(Jomapat.game.getInventory().getSelected() - 1);
-				if (Jomapat.game.getInventory().getSelected() < 0) {
-					Jomapat.game.getInventory().setSelected(BlockType.values().length - 1);
-				}
-			}
-		} else if(Recipe.shown) {
+		
+		Gui.selectedBlock = Gui.selectedBlock + notches;
+		if (Gui.selectedBlock>3){Gui.selectedBlock=1;}
+		if (Gui.selectedBlock<1){Gui.selectedBlock=3;}
+			
+		if(Recipe.shown) {
 			if (notches > 0) {
 				Recipe.setSelected(Recipe.getSelected() + 1);
 				if (Recipe.getSelected() > Recipe.values().length - 1) {

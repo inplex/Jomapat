@@ -32,6 +32,8 @@ public class Gui {
 	static BlockType slot1=null;
 	static BlockType slot2=null;
 	static BlockType slot3=null;
+	
+	public static int selectedBlock = 1;
 
 	public static void showPopupMessage(String message) {
 		actMsg = message;
@@ -193,12 +195,45 @@ public class Gui {
 	}
 	
 	public static void showBlockSelection(Graphics g){
-		int xStart = Jomapat.game.getWidth() / 2 -  100;
+		int xStart = Jomapat.game.getWidth() / 2 -  68;
 		int yStart = Jomapat.game.getHeight()-40;
 		
 		g.setColor(new Color(0,0,0,200));
-		g.fillRect(xStart, yStart, 200, 40);
+		g.fillRect(xStart, yStart, 132, 40);
 		
+		g.setColor(new Color(0xFFFFFF));
+		g.setFont(new Font("arial", Font.BOLD, 12));
+		
+		
+		if (slot1!=null){
+			g.drawImage(Util.getScaledImage(slot1.getSprite(0),32,32), xStart+10, yStart+5, null);
+			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot1), xStart+10, yStart+15);
+			if (selectedBlock==1){
+				g.drawRect(xStart+10, yStart+5, 32, 32);
+				Jomapat.game.getInventory().setSelected(slot1.ordinal());
+			}
+		}
+		
+		
+		if (slot2!=null){
+			g.drawImage(Util.getScaledImage(slot2.getSprite(0),32,32), xStart+52, yStart+5, null);
+			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot2), xStart+52, yStart+15);
+			if (selectedBlock==2){
+				g.drawRect(xStart+52, yStart+5, 32, 32);
+				Jomapat.game.getInventory().setSelected(slot2.ordinal());
+			}
+		}
+		
+		
+		if (slot3!=null){
+			g.drawImage(Util.getScaledImage(slot3.getSprite(0),32,32), xStart+94, yStart+5, null);
+			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot3), xStart+94, yStart+15);
+			if (selectedBlock==3){
+				g.drawRect(xStart+94, yStart+5, 32, 32);
+				Jomapat.game.getInventory().setSelected(slot3.ordinal());
+			}
+		}
+	
 	}
 
 	public static void showRecipes(Graphics g) {
