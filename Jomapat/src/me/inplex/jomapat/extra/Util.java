@@ -94,5 +94,9 @@ public class Util {
         g.dispose();
         return dimg;
     }
+	
+	public static boolean ptInRect(int px,int py,int x,int y,int w,int h){
+       return (px>x&&py>y&&px<x+w&&py<y+h) ? true : false;
+	}
 
 }

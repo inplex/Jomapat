@@ -31,6 +31,8 @@ public class SpriteManager {
 	 * 
 	 * 
 	 */
+	
+	
 
 	public static BufferedImage digg1;
 	public static BufferedImage digg2;

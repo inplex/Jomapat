@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -47,6 +48,8 @@ public class Jomapat extends Canvas implements Runnable {
 	public float skyG = 0.6f;
 	public float skyB = 1.0f;
 	public boolean timeDown = true;
+	
+	public BufferedImage invent;
 
 	public boolean inMenu;
 
@@ -85,6 +88,7 @@ public class Jomapat extends Canvas implements Runnable {
 		try {
 			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")),
 					ImageIO.read(new File("res//Assets//Sprites//player.png")));
+		invent  = ImageIO.read(new File("res//Assets//Sprites//inventory.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();

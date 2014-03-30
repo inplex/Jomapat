@@ -151,5 +151,7 @@ public class Renderer {
 		if (Recipe.shown) {
 			Gui.showRecipes(g);
 		}
+		
+		Gui.showBlockSelection(g);
 	}
 }
