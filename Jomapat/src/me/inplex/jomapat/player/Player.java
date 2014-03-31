@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import me.inplex.jomapat.Jomapat;
-import me.inplex.jomapat.extra.Direction;
+import me.inplex.jomapat.extra.Direction2;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Particle;
@@ -23,7 +23,7 @@ public class Player {
 
 	private int x;
 	private int y;
-	private Direction direction;
+	private Direction2 direction;
 	private MoveState state;
 
 	private int mouseX = 0, mouseY = 0;
@@ -98,10 +98,10 @@ public class Player {
 
 	}
 
-	private void move(Direction dir, int xVal) {
+	private void move(Direction2 dir, int xVal) {
 		if (!noclip) {
 			final int oldx = x;
-			x = dir == Direction.LEFT ? x - xVal : x + xVal;
+			x = dir == Direction2.LEFT ? x - xVal : x + xVal;
 			x = !collidesWithBlock() ? x : oldx;
 			if (x == oldx) {
 				sprintTime = 0;
@@ -116,12 +116,12 @@ public class Player {
 				BlockType bt = Jomapat.game.getWorld().getBlockAt(btx, bty);
 				if (bt != null) {
 					int lt = isSprinting() ? 10 : 15;
-					ParticleManager.addParticle(new Particle(dir == Direction.RIGHT ? x : x + 64, y + 64, dir == Direction.RIGHT ? -1 : 1, -1, lt,
+					ParticleManager.addParticle(new Particle(dir == Direction2.RIGHT ? x : x + 64, y + 64, dir == Direction2.RIGHT ? -1 : 1, -1, lt,
 							ParticleBehaviour.ACCELERATE_FASTER, bt.getParticle((new Random().nextInt(bt.getSprites().length)))));
 				}
 			}
 		} else {
-			x = dir == Direction.LEFT ? x - xVal : x + xVal;
+			x = dir == Direction2.LEFT ? x - xVal : x + xVal;
 		}
 	}
 
@@ -225,11 +225,11 @@ public class Player {
 
 		if (!noclip) {
 			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
-				direction = Direction.LEFT;
+				direction = Direction2.LEFT;
 				state = MoveState.WALK;
 				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 			} else if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
-				direction = Direction.RIGHT;
+				direction = Direction2.RIGHT;
 				state = MoveState.WALK;
 				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 			} else {
@@ -283,12 +283,12 @@ public class Player {
 			}
 		} else {
 			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_A)) {
-				direction = Direction.LEFT;
+				direction = Direction2.LEFT;
 				state = MoveState.WALK;
 				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 			}
 			if (Jomapat.game.getInput().isKeyDown(KeyEvent.VK_D)) {
-				direction = Direction.RIGHT;
+				direction = Direction2.RIGHT;
 				state = MoveState.WALK;
 				move(isSprinting() ? (SPEED_SPRINTING + sprintTime / 100) : SPEED_NORMAL);
 			}
@@ -385,11 +385,11 @@ public class Player {
 		this.y = y;
 	}
 
-	public Direction getDirection() {
+	public Direction2 getDirection() {
 		return direction;
 	}
 
-	public void setDirection(Direction direction) {
+	public void setDirection(Direction2 direction) {
 		this.direction = direction;
 	}
 

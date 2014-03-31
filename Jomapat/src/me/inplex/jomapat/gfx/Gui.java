@@ -3,15 +3,10 @@ package me.inplex.jomapat.gfx;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.extra.CommandExecutor;
@@ -26,7 +21,6 @@ public class Gui {
 	public static boolean showChat = false;
 	public static boolean chatTyping = false;
 	public static String chatMessage = "";
-	private BufferedImage invent;
 	
 	static BlockType pick = null;
 	static BlockType slot1=null;
@@ -135,7 +129,7 @@ public class Gui {
 		int imageY = 50;
 
 		//Draw Inventory Graphics
-		g.drawImage(Jomapat.game.invent, xStart, yStart, null);
+		g.drawImage(SpriteManager.inventorySheet, xStart, yStart, null);
 		
 		for (int i=0;i<BlockType.values().length;i++){
 			g.drawImage(Util.getScaledImage(BlockType.values()[i].getSprite(0),32,32),xStart+imageX,yStart+imageY,null);

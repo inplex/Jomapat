@@ -2,6 +2,8 @@ package me.inplex.jomapat.world;
 
 import java.util.Random;
 
+import me.inplex.enemy.Enemy;
+import me.inplex.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.Maths;
 
 public class WorldGenerator {
@@ -69,6 +71,9 @@ public class WorldGenerator {
 			}
 			if (x > 4 && startY > 8 && x < world.getWidth() - 2 && Maths.randomize(1, 6) == 1) {
 				tree(world, x, startY - 1);
+			}
+			if (Maths.randomize(0, 50) == 1) {
+				EnemyRenderer.enemies.add(new Enemy(x*64, (startY-5)*64));
 			}
 
 		}

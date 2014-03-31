@@ -4,16 +4,22 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnemyRenderer {
-	
-	public static List<Enemy> enemies = new ArrayList<Enemy>();
-	
-	
-	public static void renderEnemies(Graphics g){
-		for (Enemy i : enemies){
+import me.inplex.jomapat.gfx.Renderer;
 
-			//render enemies here
+public class EnemyRenderer {
+
+	public static List<Enemy> enemies = new ArrayList<Enemy>();
+
+	public static void update() {
+		for (Enemy e : enemies) {
+			e.update();
 		}
 	}
-	
+
+	public static void renderEnemies(Graphics g) {
+		for (Enemy e : enemies) {
+			g.drawImage(Enemy.SPRITE_IDLE[0], e.getX() - Renderer.getXOffset(), e.getY() - Renderer.getYOffset(), null);
+		}
+	}
+
 }

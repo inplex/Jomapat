@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import me.inplex.enemy.EnemyRenderer;
 import me.inplex.jomapat.Jomapat;
-import me.inplex.jomapat.extra.Direction;
+import me.inplex.jomapat.extra.Direction2;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.player.Player;
 import me.inplex.jomapat.player.Recipe;
@@ -124,10 +125,10 @@ public class Renderer {
 				img = Player.SPRITE_SNEAK[Player.frame];
 				break;
 			case SPRINT:
-				img = (Jomapat.game.getPlayer().getDirection() == Direction.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame] : Player.SPRITE_SPRINT_LEFT[Player.frame];
+				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame] : Player.SPRITE_SPRINT_LEFT[Player.frame];
 				break;
 			case WALK:
-				img = (Jomapat.game.getPlayer().getDirection() == Direction.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame] : Player.SPRITE_WALK_LEFT[Player.frame];
+				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame] : Player.SPRITE_WALK_LEFT[Player.frame];
 				break;
 			default:
 				break;
@@ -135,6 +136,8 @@ public class Renderer {
 		
 		// Render Player
 		g.drawImage(img, Jomapat.game.getWidth() / 2, Jomapat.game.getHeight() / 2, null);
+		
+		EnemyRenderer.renderEnemies(g);
 
 		if (Jomapat.game.getPlayer().actualBlockDigg != 0 && Jomapat.game.getPlayer().actualBlockDigg < 300
 				&& Jomapat.game.getPlayer().actualBlockDigg != -1) {

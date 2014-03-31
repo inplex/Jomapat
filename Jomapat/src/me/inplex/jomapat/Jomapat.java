@@ -9,13 +9,14 @@ import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import me.inplex.enemy.Enemy;
+import me.inplex.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Menu;
@@ -48,8 +49,6 @@ public class Jomapat extends Canvas implements Runnable {
 	public float skyG = 0.6f;
 	public float skyB = 1.0f;
 	public boolean timeDown = true;
-	
-	public BufferedImage invent;
 
 	public boolean inMenu;
 
@@ -86,9 +85,13 @@ public class Jomapat extends Canvas implements Runnable {
 		setPreferredSize(size);
 		frame = new JFrame();
 		try {
-			SpriteManager.setSheets(ImageIO.read(new File("res//Assets//Sprites//blocks.png")),
-					ImageIO.read(new File("res//Assets//Sprites//player.png")));
-		invent  = ImageIO.read(new File("res//Assets//Sprites//inventory.png"));
+			SpriteManager.setSheets(
+					ImageIO.read(new File("res//Assets//Sprites//blocks.png")), 	// Blocks
+					ImageIO.read(new File("res//Assets//Sprites//player.png")), 	// Player
+					ImageIO.read(new File("res//Assets//Sprites//enemy.png")),		// Enemy
+					ImageIO.read(new File("res//Assets//Sprites//digg.png")),		// Digg
+					ImageIO.read(new File("res//Assets//Sprites//inventory.png")));	// Inventory
+			Enemy.loadSprites();
 		} catch (IOException e) {
 			e.printStackTrace();
 			stop();
@@ -186,6 +189,7 @@ public class Jomapat extends Canvas implements Runnable {
 			player.update();
 			world.update();
 			ParticleManager.update();
+			EnemyRenderer.update();
 		} else {
 			Menu.update();
 		}
