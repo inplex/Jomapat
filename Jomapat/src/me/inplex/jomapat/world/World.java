@@ -133,6 +133,8 @@ public class World {
 	}
 
 	public void removeBlockAt(int x, int y) {
+		if (x < 0 || y < 0 || x >= width || y >= height)
+			return;
 		blocks[x][y] = null;
 	}
 
