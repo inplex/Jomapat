@@ -9,6 +9,7 @@ public class SpriteManager {
 	public static BufferedImage enemySheet;
 	public static BufferedImage diggSheet;
 	public static BufferedImage inventorySheet;
+	public static BufferedImage blockBarSprite;
 
 	/*
 	 * Size of one Player Sprite
@@ -36,12 +37,13 @@ public class SpriteManager {
 	public static BufferedImage digg3;
 
 	public static void setSheets(BufferedImage blockSpriteSheet, BufferedImage playerSpriteSheet, BufferedImage enemySpriteSheet,
-			BufferedImage diggSpriteSheet, BufferedImage inventorySpriteSheet) {
+			BufferedImage diggSpriteSheet, BufferedImage inventorySpriteSheet, BufferedImage blockBarSheet) {
 		blockSheet = blockSpriteSheet;
 		playerSheet = playerSpriteSheet;
 		enemySheet = enemySpriteSheet;
 		diggSheet = diggSpriteSheet;
 		inventorySheet = inventorySpriteSheet;
+		blockBarSprite = blockBarSheet;
 		
 		digg1 = diggSheet.getSubimage(0, 0, 64, 64);
 		digg2 = diggSheet.getSubimage(64, 0, 64, 64);

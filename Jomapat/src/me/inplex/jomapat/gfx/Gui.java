@@ -193,7 +193,7 @@ public class Gui {
 		int yStart = Jomapat.game.getHeight()-40;
 		
 		g.setColor(new Color(0,0,0,200));
-		g.fillRect(xStart, yStart, 132, 40);
+		g.drawImage(SpriteManager.blockBarSprite,xStart, yStart,null);
 		
 		g.setColor(new Color(0xFFFFFF));
 		g.setFont(new Font("arial", Font.BOLD, 12));

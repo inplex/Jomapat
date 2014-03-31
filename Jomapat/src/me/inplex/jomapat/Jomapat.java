@@ -90,7 +90,8 @@ public class Jomapat extends Canvas implements Runnable {
 					ImageIO.read(new File("res//Assets//Sprites//player.png")), 	// Player
 					ImageIO.read(new File("res//Assets//Sprites//enemy.png")),		// Enemy
 					ImageIO.read(new File("res//Assets//Sprites//digg.png")),		// Digg
-					ImageIO.read(new File("res//Assets//Sprites//inventory.png")));	// Inventory
+					ImageIO.read(new File("res//Assets//Sprites//inventory.png")),	// Inventory
+			        ImageIO.read(new File("res//Assets//Sprites//blockbar.png")));	// Block selection bar
 			Enemy.loadSprites();
 		} catch (IOException e) {
 			e.printStackTrace();
