@@ -13,7 +13,6 @@ import me.inplex.jomapat.Jomapat;
 import me.inplex.jomapat.gfx.Gui;
 import me.inplex.jomapat.gfx.Menu;
 import me.inplex.jomapat.player.Recipe;
-import me.inplex.jomapat.world.BlockType;
 import me.inplex.jomapat.world.WorldSave;
 
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
