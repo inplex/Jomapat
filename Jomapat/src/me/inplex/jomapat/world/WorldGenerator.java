@@ -2,8 +2,8 @@ package me.inplex.jomapat.world;
 
 import java.util.Random;
 
-import me.inplex.enemy.Enemy;
-import me.inplex.enemy.EnemyRenderer;
+import me.inplex.jomapat.enemy.Enemy;
+import me.inplex.jomapat.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.Maths;
 
 public class WorldGenerator {

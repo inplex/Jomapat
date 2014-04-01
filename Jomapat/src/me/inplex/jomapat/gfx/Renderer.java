@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import me.inplex.enemy.EnemyRenderer;
 import me.inplex.jomapat.Jomapat;
+import me.inplex.jomapat.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.Direction2;
 import me.inplex.jomapat.extra.Maths;
 import me.inplex.jomapat.player.Player;

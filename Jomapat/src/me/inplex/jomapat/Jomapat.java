@@ -15,8 +15,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import me.inplex.enemy.Enemy;
-import me.inplex.enemy.EnemyRenderer;
+import me.inplex.jomapat.enemy.Enemy;
+import me.inplex.jomapat.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.InputHandler;
 import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Menu;

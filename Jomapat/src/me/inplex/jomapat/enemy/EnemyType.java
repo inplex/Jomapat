@@ -1,4 +1,4 @@
-package me.inplex.enemy;
+package me.inplex.jomapat.enemy;
 import java.awt.image.BufferedImage;
 
 public enum EnemyType {
