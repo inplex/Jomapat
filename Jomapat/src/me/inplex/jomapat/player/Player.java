@@ -189,7 +189,7 @@ public class Player {
 					}
 					if (actualBlockDigg > 300 && Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY) != null) {
 						final BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
-						Jomapat.game.getInventory().addBlock(bt);
+						if (bt!=BlockType.TNT){Jomapat.game.getInventory().addBlock(bt);}
 						Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
 						Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
 						if (bt == BlockType.TNT) {

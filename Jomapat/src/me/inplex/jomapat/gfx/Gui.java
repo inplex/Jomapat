@@ -28,6 +28,8 @@ public class Gui {
 	static BlockType slot3=null;
 	
 	public static int selectedBlock = 1;
+	
+	private static Recipe selectedRecipe = null;
 
 	public static void showPopupMessage(String message) {
 		actMsg = message;
@@ -231,67 +233,67 @@ public class Gui {
 	}
 
 	public static void showRecipes(Graphics g) {
-		int width = 600, height = 300;
-		g.setColor(new Color(0, 0, 0, 160));
-		g.fillRect(0, 0, Jomapat.game.getWidth(), Jomapat.game.getHeight());
-		g.setColor(new Color(0x999999));
-		g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 - 1, Jomapat.game.getHeight() / 2 - height / 2 - 1, width + 1, height + 1);
-		g.setColor(new Color(0x888888));
-		g.fillRect(Jomapat.game.getWidth() / 2 - width / 2, Jomapat.game.getHeight() / 2 - height / 2, width, height);
-		g.setColor(new Color(0x000000));
-		g.drawString("X", Jomapat.game.getWidth() / 2 - width / 2 - 1 + width - 10, Jomapat.game.getHeight() / 2 - height / 2 + 13);
+		int xStart = Jomapat.game.getWidth() / 2 -  640 /2;
+		int yStart = Jomapat.game.getHeight() / 2 - 480 /2;
+		int mouseX = Jomapat.game.getInput().getMousePosX();
+		int mouseY = Jomapat.game.getInput().getMousePosY();
+		int imageX = 15,imageY = 270;
 
-		if (button(g, Jomapat.game.getWidth() / 2 - width / 2 + 20, Jomapat.game.getHeight() / 2 - height / 2 - 1 + 250, 100, 20, "close")) {
-			Jomapat.game.getInventory().show(false);
+		
+		g.drawImage(SpriteManager.craftSheet,xStart,yStart,null);
+		
+		
+		//List craftable Recipes
+		
+		for (int i=0;i<Recipe.values().length;i++){
+			g.drawImage(Util.getScaledImage(Recipe.values()[i].getOutput().getBlock().getSprites()[0],32,32),xStart+15+i*40,yStart+45,null);
+			
+			g.setColor(new Color(0));
+			g.fillRect(xStart+15+i*40,yStart+45,15,15);
+			
+			g.setColor(new Color(Recipe.values()[i].canCraft(Recipe.values()[i])==false ? 0xFF0000 : 0x00FF00));
+			g.setFont(new Font("arial", Font.BOLD, 12));
+			g.drawString(""+Recipe.values()[i].getOutput().getAmount(), xStart+15+i*40+2,yStart+45+12);
+			if (Jomapat.game.getInput().isMouseLeftDown()&&Util.ptInRect(mouseX, mouseY, xStart+15+i*40, yStart+45, 32, 32)){
+				selectedRecipe = Recipe.values()[i];
+			}
+			
+			if (Recipe.values()[i]==selectedRecipe){
+				g.setColor(new Color(0x0000FF));
+				g.drawRect(xStart+15+i*40, yStart+45, 32, 32);
+				g.drawRect(xStart+15+i*40+1, yStart+45+1, 30, 30);
+			}
 		}
-
-		if (button(g, Jomapat.game.getWidth() / 2 - width / 2 + 130, Jomapat.game.getHeight() / 2 - height / 2 - 1 + 250, 100, 20, "craft")) {
-			Recipe.craft(Recipe.values()[Recipe.selected]);
+		
+		
+		//List ingredients
+		
+		if (selectedRecipe!=null){
+		
+		for (int i=0;i<selectedRecipe.getIngredients().length;i++){
+			g.drawImage(Util.getScaledImage(selectedRecipe.getIngredients()[i].getBlock().getSprite(0),32,32),xStart+imageX,yStart+imageY,null);
+			g.setColor(new Color(0xFFFFFF));
+			g.setFont(new Font("arial", Font.BOLD, 12));
+			g.drawString(""+selectedRecipe.getIngredients()[i].getAmount(), xStart+imageX,yStart+imageY+10);
+			
+			
+			imageX = imageX + 40;
+			if (imageX>600){
+				imageX = 20;
+				imageY = imageY+40;
+			}
 		}
-
-		for (int i = 0; i < Recipe.values().length; i++) {
-			Recipe r = Recipe.values()[i];
-
-			g.drawImage(Util.getScaledImage(r.getOutput().getBlock().getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
-					Jomapat.game.getHeight() / 2 - height / 2 + 30, null);
-			g.setColor(new Color(0, 0, 0, 100));
-			g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 15, 15);
-			g.setColor(Color.WHITE);
-			g.setFont(new Font("courier", 0, 12));
-			g.drawString("" + r.getOutput().getAmount(), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height
-					/ 2 + 30 + 10);
-			if (!Recipe.canCraft(r)) {
-				g.setColor(new Color(0, 0, 0, 0x55));
-				g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
-			}
-			if (Recipe.getSelected() == i) {
-				g.setColor(Color.RED);
-				g.drawRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30, 32, 32);
-			}
-
-			g.setColor(Color.WHITE);
-			g.drawString("=", Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40 + 12, Jomapat.game.getHeight() / 2 - height / 2 + 30 + 48);
-			int yOffset = 60;
-			for (int j = 0; j < r.getIngredients().length; j++) {
-				ItemStack is = r.getIngredients()[j];
-				g.drawImage(Util.getScaledImage(is.getBlock().getSprite(0), 32, 32), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40,
-						Jomapat.game.getHeight() / 2 - height / 2 + 30 + yOffset, null);
-				g.setColor(new Color(0, 0, 0, 100));
-				g.fillRect(Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 30 + yOffset, 15, 15);
-				g.setColor(Color.WHITE);
-				g.setFont(new Font("courier", 0, 12));
-				boolean hasEnough = true;
-				if(Jomapat.game.getInventory().getBlockAmount(is.getBlock()) < is.getAmount()) {
-					hasEnough = false;
-				}
-				g.setColor(hasEnough ? Color.GREEN : Color.RED);
-				g.drawString("" + is.getAmount(), Jomapat.game.getWidth() / 2 - width / 2 + 10 + i * 40, Jomapat.game.getHeight() / 2 - height / 2 + 40 + yOffset);
-				
-				yOffset += 40;
-			}
+		}
+		
+		//Craft
+		
+		if (Jomapat.game.getInput().getMouseSingleClick()&&Util.ptInRect(mouseX,mouseY,xStart+10,yStart+430,160,30)&&selectedRecipe!=null){
+			Recipe.craft(selectedRecipe);
 		}
 
 	}
+	
+
 
 	public static void typed() {
 		addMessage("> " + chatMessage);

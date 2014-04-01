@@ -110,7 +110,7 @@ public class Renderer {
 		}
 
 		for (Particle p : ParticleManager.getParticles()) {
-			g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
+			//g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
 		}
 		
 		BufferedImage img = null;

@@ -5,12 +5,13 @@ import me.inplex.jomapat.world.BlockType;
 
 public enum Recipe {
 
-	WOODPLANK		(new ItemStack[] { new ItemStack(BlockType.WOOD, 1) }, 			new ItemStack(BlockType.WOODPLANK, 4)), //
-	WOODDOOR		(new ItemStack[] { new ItemStack(BlockType.WOODPLANK, 12) }, 	new ItemStack(BlockType.WOODDOOR, 1)), //
-	STONEDOOR		(new ItemStack[] { new ItemStack(BlockType.STONE, 24) },		new ItemStack(BlockType.STONEDOOR, 1)), //
-	IRONBLOCK		(new ItemStack[] { new ItemStack(BlockType.IRON, 16) }, 		new ItemStack(BlockType.IRONBLOCK, 1)), //
-	GOLDBLOCK		(new ItemStack[] { new ItemStack(BlockType.GOLD, 16) }, 		new ItemStack(BlockType.GOLDBLOCK, 1)), //
-	DIAMONDBLOCK	(new ItemStack[] { new ItemStack(BlockType.DIAMOND, 16) }, 		new ItemStack(BlockType.DIAMONDBLOCK, 1)); //
+	WOODPLANK		(new ItemStack[] { new ItemStack(BlockType.WOOD, 1) }, 													new ItemStack(BlockType.WOODPLANK, 4)), //
+	WOODDOOR		(new ItemStack[] { new ItemStack(BlockType.WOODPLANK, 12) }, 											new ItemStack(BlockType.WOODDOOR, 1)), //
+	STONEDOOR		(new ItemStack[] { new ItemStack(BlockType.STONE, 24) },												new ItemStack(BlockType.STONEDOOR, 1)), //
+	IRONBLOCK		(new ItemStack[] { new ItemStack(BlockType.IRON, 16) }, 												new ItemStack(BlockType.IRONBLOCK, 1)), //
+	GOLDBLOCK		(new ItemStack[] { new ItemStack(BlockType.GOLD, 16) }, 												new ItemStack(BlockType.GOLDBLOCK, 1)), //
+	DIAMONDBLOCK	(new ItemStack[] { new ItemStack(BlockType.DIAMOND, 16) }, 												new ItemStack(BlockType.DIAMONDBLOCK, 1)),//
+	TNT		        (new ItemStack[] { new ItemStack(BlockType.WOOD, 2),new ItemStack(BlockType.DIRT, 2) }, 				new ItemStack(BlockType.TNT, 1)); //
 
 	private ItemStack[] ingredients;
 	private ItemStack output;
@@ -46,8 +47,10 @@ public enum Recipe {
 	}
 
 	public static void craft(Recipe r) {
-		if (!canCraft(r))
+		if (!canCraft(r)){
 			return;
+		}
+			
 		for (int i = 0; i < r.getIngredients().length; i++) {
 			Jomapat.game.getInventory().removeBlock(r.getIngredients()[i].getBlock(), r.getIngredients()[i].getAmount());
 		}
