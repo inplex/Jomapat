@@ -15,6 +15,8 @@ public class Inventory {
 
 	public void addBlock(BlockType block) {
 		// yes, this is needed
+		if(block == null)
+			return;
 		if(block.ordinal() > BlockType.values().length-1)
 			return;
 		blockInventory[block.ordinal()]++;

@@ -108,10 +108,6 @@ public class Renderer {
 				}
 			}
 		}
-
-		for (Particle p : ParticleManager.getParticles()) {
-			//g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
-		}
 		
 		BufferedImage img = null;
 		switch(Jomapat.game.getPlayer().getState()) {
@@ -144,9 +140,13 @@ public class Renderer {
 			Gui.showDiggingBar(g, Jomapat.game.getPlayer().actualBlockRawX * 64, Jomapat.game.getPlayer().actualBlockRawY * 64,
 					(int) (Jomapat.game.getPlayer().actualBlockDigg / 4.2857));
 		}
+		
+		for (Particle p : ParticleManager.getParticles()) {
+			g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
+		}
 
 		g.setColor(Color.BLACK);
-
+		
 		Gui.renderGui(g);
 		if (Jomapat.game.getInventory().isVisible()) {
 			Gui.showInventory(g);
