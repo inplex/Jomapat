@@ -250,7 +250,7 @@ public class Gui {
 			g.setColor(new Color(0));
 			g.fillRect(xStart+15+i*40,yStart+45,15,15);
 			
-			g.setColor(new Color(Recipe.values()[i].canCraft(Recipe.values()[i])==false ? 0xFF0000 : 0x00FF00));
+			g.setColor(new Color(Recipe.canCraft(Recipe.values()[i])==false ? 0xFF0000 : 0x00FF00));
 			g.setFont(new Font("arial", Font.BOLD, 12));
 			g.drawString(""+Recipe.values()[i].getOutput().getAmount(), xStart+15+i*40+2,yStart+45+12);
 			if (Jomapat.game.getInput().isMouseLeftDown()&&Util.ptInRect(mouseX, mouseY, xStart+15+i*40, yStart+45, 32, 32)){
