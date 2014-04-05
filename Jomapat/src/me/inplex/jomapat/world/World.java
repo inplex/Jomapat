@@ -32,6 +32,7 @@ public class World {
 
 	// for example leaf blocks
 	ArrayList<Point> blocksToRemove = new ArrayList<Point>();
+	// tnts
 	ArrayList<Point> blocksToExplode = new ArrayList<Point>();
 
 	public void update() {
