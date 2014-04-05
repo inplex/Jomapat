@@ -22,7 +22,6 @@ public class WorldGenerator {
 		world.setBlock(x - 1, y - 6, BlockType.LEAF);
 		world.setBlock(x, y - 6, BlockType.LEAF);
 		world.setBlock(x + 1, y - 6, BlockType.LEAF);
-
 	}
 
 	public static World generateWorld(int width, int height) {

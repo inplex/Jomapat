@@ -17,12 +17,17 @@ public class World {
 	private int height;
 
 	// Block at [x][y]
-	private BlockType[][] blocks;
+	private byte[][] blocks;
 
 	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.blocks = new BlockType[width][height];
+		this.blocks = new byte[width][height];
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				blocks[x][y] = (byte) 0xFF;
+			}
+		}
 	}
 
 	// for example leaf blocks
@@ -123,19 +128,25 @@ public class World {
 	public void setBlock(int x, int y, BlockType block) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return;
-		blocks[x][y] = block;
+		if (block == null || block.ordinal() == 0xFF) {
+			blocks[x][y] = (byte) 0xFF;
+			return;
+		}
+		blocks[x][y] = (byte) block.ordinal();
 	}
 
 	public BlockType getBlockAt(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return null;
-		return blocks[x][y];
+		if (blocks[x][y] == (byte) 0xFF)
+			return null;
+		return BlockType.values()[(int) blocks[x][y]];
 	}
 
 	public void removeBlockAt(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return;
-		blocks[x][y] = null;
+		blocks[x][y] = (byte)0xFF;
 	}
 
 }
