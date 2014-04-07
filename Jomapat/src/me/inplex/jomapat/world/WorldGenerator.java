@@ -76,6 +76,7 @@ public class WorldGenerator {
 			}
 
 		}
+		world.finish();
 		return world;
 	}
 

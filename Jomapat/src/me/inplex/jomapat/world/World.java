@@ -19,15 +19,91 @@ public class World {
 	// Block at [x][y]
 	private byte[][] blocks;
 
+	// Light at [x][y]
+	// Range: 0 - 0xF
+	private byte[][] lights;
+
 	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.blocks = new byte[width][height];
+		this.lights = new byte[width][height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				blocks[x][y] = (byte) 0xFF;
+				lights[x][y] = (byte) 0x6;
 			}
 		}
+	}
+
+	// Light here
+	public void finish() {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				updateLight(x, y);
+			}
+		}
+	}
+
+	public void addLightSource(int x, int y) {
+		setLight(x - 1, y, (byte) (getLightAt(x - 1, y) - 0x9));
+		setLight(x + 1, y, (byte) (getLightAt(x + 1, y) - 0x9));
+		setLight(x, y - 1, (byte) (getLightAt(x, y - 1) - 0x9));
+		setLight(x, y + 1, (byte) (getLightAt(x, y + 1) - 0x9));
+
+		setLight(x - 1, y - 1, (byte) (getLightAt(x - 1, y - 1) - 0x4));
+		setLight(x + 1, y + 1, (byte) (getLightAt(x + 1, y + 1) - 0x4));
+		setLight(x - 1, y - 1, (byte) (getLightAt(x - 1, y - 1) - 0x4));
+		setLight(x + 1, y + 1, (byte) (getLightAt(x + 1, y + 1) - 0x4));
+		updateLight(x, y - 1);
+	}
+
+	public void updateNearLights(int x, int y) {
+		for (int yy = y - 2; yy < y + 2; yy++) {
+			for (int xx = x - 2; xx < x + 2; xx++) {
+				updateLight(xx, yy);
+			}
+		}
+		for(int i = y; i < y+100; i++) {
+			updateLight(x, i);
+		}
+	}
+
+	public void updateLight(int x, int y) {
+		BlockType b = getBlockAt(x, y);
+		boolean air = false;
+		if (b == null) {
+			air = true;
+			byte l = (byte) 0x0;
+			int airCount = 0;
+			for (int i = y; i > 0; i--) {
+				airCount++;
+			}
+			l += airCount / 40;
+			setLight(x, y, l);
+			if (getTopY(x) > y)
+				return;
+		}
+		if (b == BlockType.GRASS && getTopY(x) == y) {
+			addLightSource(x, y);
+		} else if (b == BlockType.GRASS) {
+			setLight(x,y, (byte) (getLightAt(x, y)+3));
+		}
+		byte topLight = getLightAt(x, y - 1);
+		if (Maths.randomize(0, air ? 4 : 1) == 1) {
+			setLight(x, y, (byte) (topLight + 1));
+			return;
+		} else {
+			setLight(x, y, topLight);
+		}
+	}
+
+	public int getTopY(int x) {
+		for (int i = 0; i < height; i++) {
+			if (getBlockAt(x, i) != null)
+				return i;
+		}
+		return -1;
 	}
 
 	// for example leaf blocks
@@ -44,6 +120,7 @@ public class World {
 							ParticleBehaviour.RANDOM, BlockType.LEAF.getParticle(0)));
 				}
 				removeBlockAt(blocksToRemove.get(0).x, blocksToRemove.get(0).y);
+				updateNearLights(blocksToRemove.get(0).x, blocksToRemove.get(0).y);
 				blocksToRemove.remove(0);
 			}
 		}
@@ -55,6 +132,7 @@ public class World {
 					int y = blocksToExplode.get(i).y + Maths.randomize(-2, 2);
 					if (getBlockAt(x, y) != BlockType.TNT) {
 						removeBlockAt(x, y);
+						updateNearLights(x, y);
 					}
 				}
 				blocksToExplode.remove(i);
@@ -147,7 +225,24 @@ public class World {
 	public void removeBlockAt(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return;
-		blocks[x][y] = (byte)0xFF;
+		blocks[x][y] = (byte) 0xFF;
+	}
+
+	public void setLight(int x, int y, byte b) {
+		if (x < 0 || y < 0 || x >= width || y >= height)
+			return;
+		if (b > 0xF)
+			b = 0xF;
+		if (b < 0)
+			b = 0;
+		lights[x][y] = b;
+	}
+
+	public byte getLightAt(int x, int y) {
+		if (x < 0 || y < 0 || x >= width || y >= height) {
+			return -1;
+		}
+		return lights[x][y];
 	}
 
 }

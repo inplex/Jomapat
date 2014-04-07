@@ -191,6 +191,7 @@ public class Player {
 						final BlockType bt = Jomapat.game.getWorld().getBlockAt(actualBlockX, actualBlockY);
 						if (bt!=BlockType.TNT){Jomapat.game.getInventory().addBlock(bt);}
 						Jomapat.game.getWorld().removeBlockAt(actualBlockX, actualBlockY);
+						Jomapat.game.getWorld().updateNearLights(actualBlockX, actualBlockY);
 						Jomapat.game.getWorld().updateNearBlocks(actualBlockX, actualBlockY, bt);
 						if (bt == BlockType.TNT) {
 							Jomapat.game.getWorld().detonateTnt(actualBlockX, actualBlockY);

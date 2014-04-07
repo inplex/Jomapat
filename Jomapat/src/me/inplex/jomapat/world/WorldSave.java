@@ -101,6 +101,7 @@ public class WorldSave {
 				Jomapat.game.getWorld().setBlock(x, y, id != (byte)0xFF ? BlockType.values()[id] : null);
 			}
 		}
+		Jomapat.game.getWorld().finish();
 		for(int i = 0; i < BlockType.values().length; i++) {
 			int amount = in.readInt();
 			Jomapat.game.getInventory().setBlockAmount(BlockType.values()[i], amount);

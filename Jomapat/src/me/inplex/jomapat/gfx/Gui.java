@@ -219,7 +219,6 @@ public class Gui {
 			}
 		}
 		
-		
 		if (slot3!=null){
 			g.drawImage(Util.getScaledImage(slot3.getSprite(0),32,32), xStart+94, yStart+5, null);
 			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot3), xStart+94, yStart+15);

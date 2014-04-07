@@ -37,13 +37,7 @@ public class Renderer {
 
 		g.setColor(Color.RED);
 		g.drawString("Player (" + Jomapat.game.getPlayer().getX() + "|" + Jomapat.game.getPlayer().getY() + ")", 10, 20);
-
-		// TODO Translate according to the player position
-		// Graphics2D g2d = (Graphics2D) g;
-		// g2d.translate(-Jomapat.game.getPlayer().getX() +
-		// Jomapat.game.getWidth() / 2, -Jomapat.game.getHeight() / 2 +
-		// Jomapat.game.getPlayer().getY() + 50);
-
+		
 		playerX = Jomapat.game.getPlayer().getX() - Jomapat.game.getWidth() / 2;
 		playerY = Jomapat.game.getPlayer().getY() - Jomapat.game.getHeight() / 2;
 		// Render Blocks
@@ -51,13 +45,27 @@ public class Renderer {
 				.getX()) / 64 + renderDist; x++) {
 			for (int y = Maths.positionToGrid(Jomapat.game.getPlayer().getY()) / 64 - renderDist; y < Maths.positionToGrid(Jomapat.game.getPlayer()
 					.getY()) / 64 + renderDist; y++) {
-				if (Jomapat.game.getWorld().getBlockAt(x, y) == null)
+				if (Jomapat.game.getWorld().getBlockAt(x, y) == null) {
+					// there's not block, but render light!
+					byte light = Jomapat.game.getWorld().getLightAt(x, y);
+					if (light != -1) {
+						g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
+						g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
+								SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
+					}
 					continue;
+				}
 				if (Maths.isVisible(x * SpriteManager.SPRITE_BLOCK_SIZE - playerX, y * SpriteManager.SPRITE_BLOCK_SIZE - playerY)) {
 					BlockType b = Jomapat.game.getWorld().getBlockAt(x, y);
 					if (b.getSprites().length == 1) {
 						g.drawImage(b.getSprite(0), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
 								null);
+						byte light = Jomapat.game.getWorld().getLightAt(x, y);
+						if (light != -1) {
+							g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
+							g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
+									SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
+						}
 					} else {
 						if (b == BlockType.GRASS) {
 							BlockType left = Jomapat.game.getWorld().getBlockAt(x - 1, y);
@@ -98,63 +106,70 @@ public class Renderer {
 
 							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE)
 									- playerY, null);
-
+							byte light = Jomapat.game.getWorld().getLightAt(x, y);
+							if (light != -1) {
+								g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
+								g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
+										SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
+							}
 						}
-					}
-					if (Jomapat.game.getPlayer().actualBlockX == x && Jomapat.game.getPlayer().actualBlockY == y) {
-						g.drawImage(Jomapat.game.getPlayer().actDiggGraphics, (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX,
-								(y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY, null);
+						if (Jomapat.game.getPlayer().actualBlockX == x && Jomapat.game.getPlayer().actualBlockY == y) {
+							g.drawImage(Jomapat.game.getPlayer().actDiggGraphics, (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX,
+									(y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY, null);
+						}
 					}
 				}
 			}
-		}
-		
-		BufferedImage img = null;
-		switch(Jomapat.game.getPlayer().getState()) {
-			case IDLE:
-				img = Player.SPRITE_IDLE[Player.frame];
-				break;
-			case JUMP:
-				img = Player.SPRITE_JUMP[Player.frame];
-				break;
-			case SNEAK:
-				img = Player.SPRITE_SNEAK[Player.frame];
-				break;
-			case SPRINT:
-				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame] : Player.SPRITE_SPRINT_LEFT[Player.frame];
-				break;
-			case WALK:
-				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame] : Player.SPRITE_WALK_LEFT[Player.frame];
-				break;
-			default:
-				break;
-		}
-		
-		// Render Player
-		g.drawImage(img, Jomapat.game.getWidth() / 2, Jomapat.game.getHeight() / 2, null);
-		
-		EnemyRenderer.renderEnemies(g);
 
-		if (Jomapat.game.getPlayer().actualBlockDigg != 0 && Jomapat.game.getPlayer().actualBlockDigg < 300
-				&& Jomapat.game.getPlayer().actualBlockDigg != -1) {
-			Gui.showDiggingBar(g, Jomapat.game.getPlayer().actualBlockRawX * 64, Jomapat.game.getPlayer().actualBlockRawY * 64,
-					(int) (Jomapat.game.getPlayer().actualBlockDigg / 4.2857));
-		}
-		
-		for (Particle p : ParticleManager.getParticles()) {
-			g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
-		}
+			BufferedImage img = null;
+			switch (Jomapat.game.getPlayer().getState()) {
+				case IDLE:
+					img = Player.SPRITE_IDLE[Player.frame];
+					break;
+				case JUMP:
+					img = Player.SPRITE_JUMP[Player.frame];
+					break;
+				case SNEAK:
+					img = Player.SPRITE_SNEAK[Player.frame];
+					break;
+				case SPRINT:
+					img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame]
+							: Player.SPRITE_SPRINT_LEFT[Player.frame];
+					break;
+				case WALK:
+					img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame]
+							: Player.SPRITE_WALK_LEFT[Player.frame];
+					break;
+				default:
+					break;
+			}
 
-		g.setColor(Color.BLACK);
-		
-		Gui.renderGui(g);
-		if (Jomapat.game.getInventory().isVisible()) {
-			Gui.showInventory(g);
+			// Render Player
+			g.drawImage(img, Jomapat.game.getWidth() / 2, Jomapat.game.getHeight() / 2, null);
+
+			EnemyRenderer.renderEnemies(g);
+
+			if (Jomapat.game.getPlayer().actualBlockDigg != 0 && Jomapat.game.getPlayer().actualBlockDigg < 300
+					&& Jomapat.game.getPlayer().actualBlockDigg != -1) {
+				Gui.showDiggingBar(g, Jomapat.game.getPlayer().actualBlockRawX * 64, Jomapat.game.getPlayer().actualBlockRawY * 64,
+						(int) (Jomapat.game.getPlayer().actualBlockDigg / 4.2857));
+			}
+
+			for (Particle p : ParticleManager.getParticles()) {
+				g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
+			}
+
+			g.setColor(Color.BLACK);
+
+			Gui.renderGui(g);
+			if (Jomapat.game.getInventory().isVisible()) {
+				Gui.showInventory(g);
+			}
+			if (Recipe.shown) {
+				Gui.showRecipes(g);
+			}
+
+			Gui.showBlockSelection(g);
 		}
-		if (Recipe.shown) {
-			Gui.showRecipes(g);
-		}
-		
-		Gui.showBlockSelection(g);
 	}
 }
