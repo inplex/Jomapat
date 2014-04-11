@@ -75,7 +75,8 @@ public class WorldGenerator {
 				EnemyRenderer.enemies.add(new Enemy(x*64, (startY-5)*64));
 			}
 
-		}
+		}		
+		CaveBuilder.buildCave();
 		world.finish();
 		return world;
 	}

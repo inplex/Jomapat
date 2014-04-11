@@ -25,6 +25,7 @@ import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
 import me.inplex.jomapat.player.Inventory;
 import me.inplex.jomapat.player.Player;
+import me.inplex.jomapat.world.CaveBuilder;
 import me.inplex.jomapat.world.World;
 import me.inplex.jomapat.world.WorldGenerator;
 
@@ -104,7 +105,6 @@ public class Jomapat extends Canvas implements Runnable {
 		input = new InputHandler();
 		inventory = new Inventory();
 		ticks = 0;
-		inMenu = true;
 	}
 
 	public void resized() {
