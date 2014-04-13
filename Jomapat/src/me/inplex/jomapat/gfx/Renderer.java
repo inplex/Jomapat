@@ -37,7 +37,7 @@ public class Renderer {
 
 		g.setColor(Color.RED);
 		g.drawString("Player (" + Jomapat.game.getPlayer().getX() + "|" + Jomapat.game.getPlayer().getY() + ")", 10, 20);
-		
+
 		playerX = Jomapat.game.getPlayer().getX() - Jomapat.game.getWidth() / 2;
 		playerY = Jomapat.game.getPlayer().getY() - Jomapat.game.getHeight() / 2;
 		// Render Blocks
@@ -48,7 +48,7 @@ public class Renderer {
 				if (Jomapat.game.getWorld().getBlockAt(x, y) == null) {
 					// there's not block, but render light!
 					byte light = Jomapat.game.getWorld().getLightAt(x, y);
-					if (light != -1) {
+					if (light != -1 && !Jomapat.game.isMinimal()) {
 						g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
 						g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
 								SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
@@ -61,7 +61,7 @@ public class Renderer {
 						g.drawImage(b.getSprite(0), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
 								null);
 						byte light = Jomapat.game.getWorld().getLightAt(x, y);
-						if (light != -1) {
+						if (light != -1 && !Jomapat.game.isMinimal()) {
 							g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
 							g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
 									SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
@@ -107,7 +107,7 @@ public class Renderer {
 							g.drawImage(b.getSprite(sprite), (x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE)
 									- playerY, null);
 							byte light = Jomapat.game.getWorld().getLightAt(x, y);
-							if (light != -1) {
+							if (light != -1 && !Jomapat.game.isMinimal()) {
 								g.setColor(new Color(0x0, 0x0, 0x00, light*(0xFF/0xF)));
 								g.fillRect((x * SpriteManager.SPRITE_BLOCK_SIZE) - playerX, (y * SpriteManager.SPRITE_BLOCK_SIZE) - playerY,
 										SpriteManager.SPRITE_BLOCK_SIZE, SpriteManager.SPRITE_BLOCK_SIZE);
@@ -123,25 +123,25 @@ public class Renderer {
 
 			BufferedImage img = null;
 			switch (Jomapat.game.getPlayer().getState()) {
-				case IDLE:
-					img = Player.SPRITE_IDLE[Player.frame];
-					break;
-				case JUMP:
-					img = Player.SPRITE_JUMP[Player.frame];
-					break;
-				case SNEAK:
-					img = Player.SPRITE_SNEAK[Player.frame];
-					break;
-				case SPRINT:
-					img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame]
-							: Player.SPRITE_SPRINT_LEFT[Player.frame];
-					break;
-				case WALK:
-					img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame]
-							: Player.SPRITE_WALK_LEFT[Player.frame];
-					break;
-				default:
-					break;
+			case IDLE:
+				img = Player.SPRITE_IDLE[Player.frame];
+				break;
+			case JUMP:
+				img = Player.SPRITE_JUMP[Player.frame];
+				break;
+			case SNEAK:
+				img = Player.SPRITE_SNEAK[Player.frame];
+				break;
+			case SPRINT:
+				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_SPRINT_RIGHT[Player.frame]
+						: Player.SPRITE_SPRINT_LEFT[Player.frame];
+				break;
+			case WALK:
+				img = (Jomapat.game.getPlayer().getDirection() == Direction2.RIGHT) ? Player.SPRITE_WALK_RIGHT[Player.frame]
+						: Player.SPRITE_WALK_LEFT[Player.frame];
+				break;
+			default:
+				break;
 			}
 
 			// Render Player
@@ -154,9 +154,13 @@ public class Renderer {
 				Gui.showDiggingBar(g, Jomapat.game.getPlayer().actualBlockRawX * 64, Jomapat.game.getPlayer().actualBlockRawY * 64,
 						(int) (Jomapat.game.getPlayer().actualBlockDigg / 4.2857));
 			}
+			
+			//render Particles
 
-			for (Particle p : ParticleManager.getParticles()) {
-				g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
+			if (!Jomapat.game.isMinimal()){
+				for (Particle p : ParticleManager.getParticles()) {
+					g.drawImage(p.getImage(), p.getX() - getXOffset(), p.getY() - getYOffset(), null);
+				}
 			}
 
 			g.setColor(Color.BLACK);

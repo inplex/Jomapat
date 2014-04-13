@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import me.inplex.jomapat.enemy.Enemy;
 import me.inplex.jomapat.enemy.EnemyRenderer;
 import me.inplex.jomapat.extra.InputHandler;
+import me.inplex.jomapat.extra.Performance;
 import me.inplex.jomapat.extra.Util;
 import me.inplex.jomapat.gfx.Menu;
 import me.inplex.jomapat.gfx.ParticleManager;
@@ -45,6 +46,10 @@ public class Jomapat extends Canvas implements Runnable {
 	private World world;
 	private Player player;
 	private Inventory inventory;
+	
+	//true for slow devices
+    //false for fast devices
+	public boolean minimalMode = false;
 
 	public float skyR = 0.2f;
 	public float skyG = 0.6f;
@@ -130,6 +135,7 @@ public class Jomapat extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		Performance.handlePerformance();
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
@@ -259,6 +265,10 @@ public class Jomapat extends Canvas implements Runnable {
 
 	public void setInMenu(boolean inMenu) {
 		this.inMenu = inMenu;
+	}
+	
+	public boolean isMinimal(){
+		return minimalMode;
 	}
 
 }
