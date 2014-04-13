@@ -69,7 +69,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 						e.printStackTrace();
 					}
 				} else if (arg0.getKeyCode() == KeyEvent.VK_M) {
-					Jomapat.game.minimalMode = !Jomapat.game.minimalMode;
+					Jomapat.minimalMode = !Jomapat.minimalMode;
 				} else if (arg0.getKeyCode() == KeyEvent.VK_E) {
 					if (Jomapat.game.getInventory().isVisible()) {
 						Jomapat.game.getInventory().show(false);
