@@ -8,10 +8,10 @@ public class Performance {
 
 	public static void handlePerformance() {
 
-		boolean showPrc = true;
+		boolean showPrc = false;
 		showPrc |= Runtime.getRuntime().maxMemory() < 300000000;
 		showPrc |= Runtime.getRuntime().availableProcessors() < 3;
-
+		System.out.println((Runtime.getRuntime().maxMemory() < 300000000) + " " + (Runtime.getRuntime().availableProcessors() < 3));
 		if (showPrc) {
 			int result = JOptionPane.showConfirmDialog(null, "Your computer seems to run slowly. Activate low performance mode?",
 					"low performance mode", JOptionPane.YES_NO_OPTION);
