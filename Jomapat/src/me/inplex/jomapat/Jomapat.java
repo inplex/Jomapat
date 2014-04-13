@@ -26,7 +26,6 @@ import me.inplex.jomapat.gfx.Renderer;
 import me.inplex.jomapat.gfx.SpriteManager;
 import me.inplex.jomapat.player.Inventory;
 import me.inplex.jomapat.player.Player;
-import me.inplex.jomapat.world.CaveBuilder;
 import me.inplex.jomapat.world.World;
 import me.inplex.jomapat.world.WorldGenerator;
 
@@ -49,7 +48,7 @@ public class Jomapat extends Canvas implements Runnable {
 	
 	//true for slow devices
     //false for fast devices
-	public boolean minimalMode = false;
+	public static boolean minimalMode = false;
 
 	public float skyR = 0.2f;
 	public float skyG = 0.6f;
@@ -63,6 +62,7 @@ public class Jomapat extends Canvas implements Runnable {
 	public static void main(String[] args) {
 		System.out.println("Starting with " + Runtime.getRuntime().freeMemory() / 1048576 + "MB");
 		System.out.println("Data Path is " + Util.getDataPath());
+		Performance.handlePerformance();
 		game = new Jomapat();
 		game.frame.setTitle(game.title + " | Starting ..");
 		game.frame.setFocusable(true);
@@ -97,8 +97,8 @@ public class Jomapat extends Canvas implements Runnable {
 					ImageIO.read(new File("res//Assets//Sprites//enemy.png")),		// Enemy
 					ImageIO.read(new File("res//Assets//Sprites//digg.png")),		// Digg
 					ImageIO.read(new File("res//Assets//Sprites//inventory.png")),	// Inventory
-			        ImageIO.read(new File("res//Assets//Sprites//blockbar.png")),
-			        ImageIO.read(new File("res//Assets//Sprites//craft.png")));	// Block selection bar
+			        ImageIO.read(new File("res//Assets//Sprites//blockbar.png")),	// Block bar
+			        ImageIO.read(new File("res//Assets//Sprites//craft.png")));	// Crafting background
 			Enemy.loadSprites();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -135,7 +135,6 @@ public class Jomapat extends Canvas implements Runnable {
 	}
 
 	public void run() {
-		Performance.handlePerformance();
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
@@ -152,7 +151,6 @@ public class Jomapat extends Canvas implements Runnable {
 				updates++;
 				delta--;
 			}
-
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
