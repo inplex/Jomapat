@@ -35,6 +35,8 @@ public enum BlockType {
 	private boolean damage;
 	private boolean placeable;
 	
+	private BufferedImage scaled32;
+	
 	private BlockType(int[] xTextures, int[] yTextures, float hardness, boolean collide, boolean damage, boolean placeable) {
 		this.sprites = new BufferedImage[xTextures.length];
 		this.particles = new BufferedImage[xTextures.length];
@@ -48,6 +50,7 @@ public enum BlockType {
 		this.collide = collide;
 		this.damage = damage;
 		this.placeable = placeable;
+		this.scaled32 = Util.getScaledImage(sprites[0], 32, 32);
 	}
 	
 	public float getHardness() {
@@ -80,6 +83,10 @@ public enum BlockType {
 
 	public boolean isPlaceable() {
 		return placeable;
+	}
+	
+	public BufferedImage getSprite32(){
+		return this.scaled32;
 	}
 
 }

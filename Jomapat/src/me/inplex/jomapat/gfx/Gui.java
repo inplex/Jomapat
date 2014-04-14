@@ -133,7 +133,7 @@ public class Gui {
 		g.drawImage(SpriteManager.inventorySheet, xStart, yStart, null);
 		
 		for (int i=0;i<BlockType.values().length;i++){
-			g.drawImage(Util.getScaledImage(BlockType.values()[i].getSprite(0),32,32),xStart+imageX,yStart+imageY,null);
+			g.drawImage(BlockType.values()[i].getSprite32(),xStart+imageX,yStart+imageY,null);
 			g.setColor(new Color(0xFFFFFF));
 			g.setFont(new Font("arial", Font.BOLD, 12));
 			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(BlockType.values()[i]), xStart+imageX,yStart+imageY+10);
@@ -153,7 +153,7 @@ public class Gui {
 		
 		//Move dragged block
 		if (pick!=null){
-			g.drawImage(Util.getScaledImage(pick.getSprite(0), 32, 32), mouseX,mouseY,null);
+			g.drawImage(pick.getSprite32(), mouseX,mouseY,null);
 		}
 		//Remove dragged item
 		if (Jomapat.game.getInput().isMouseRightDown()){
@@ -177,13 +177,13 @@ public class Gui {
 		
 		//Redraw Slots
 		if (slot1!=null){
-			g.drawImage(Util.getScaledImage(slot1.getSprite(0),32,32), 12+xStart,435+yStart,null);
+			g.drawImage(slot1.getSprite32(), 12+xStart,435+yStart,null);
 		}
 		if (slot2!=null){
-			g.drawImage(Util.getScaledImage(slot2.getSprite(0),32,32), 65+xStart,435+yStart,null);
+			g.drawImage(slot2.getSprite32(), 65+xStart,435+yStart,null);
 		}
 		if (slot3!=null){
-			g.drawImage(Util.getScaledImage(slot3.getSprite(0),32,32), 125+xStart,435+yStart,null);
+			g.drawImage(slot3.getSprite32(), 125+xStart,435+yStart,null);
 		}
 
 		
@@ -201,7 +201,7 @@ public class Gui {
 		
 		
 		if (slot1!=null){
-			g.drawImage(Util.getScaledImage(slot1.getSprite(0),32,32), xStart+10, yStart+5, null);
+			g.drawImage(slot1.getSprite32(), xStart+10, yStart+5, null);
 			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot1), xStart+10, yStart+15);
 			if (selectedBlock==1){
 				g.drawRect(xStart+10, yStart+5, 32, 32);
@@ -211,7 +211,7 @@ public class Gui {
 		
 		
 		if (slot2!=null){
-			g.drawImage(Util.getScaledImage(slot2.getSprite(0),32,32), xStart+52, yStart+5, null);
+			g.drawImage(slot2.getSprite32(), xStart+52, yStart+5, null);
 			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot2), xStart+52, yStart+15);
 			if (selectedBlock==2){
 				g.drawRect(xStart+52, yStart+5, 32, 32);
@@ -220,7 +220,7 @@ public class Gui {
 		}
 		
 		if (slot3!=null){
-			g.drawImage(Util.getScaledImage(slot3.getSprite(0),32,32), xStart+94, yStart+5, null);
+			g.drawImage(slot3.getSprite32(), xStart+94, yStart+5, null);
 			g.drawString(""+Jomapat.game.getInventory().getBlockAmount(slot3), xStart+94, yStart+15);
 			if (selectedBlock==3){
 				g.drawRect(xStart+94, yStart+5, 32, 32);
@@ -244,7 +244,7 @@ public class Gui {
 		//List craftable Recipes
 		
 		for (int i=0;i<Recipe.values().length;i++){
-			g.drawImage(Util.getScaledImage(Recipe.values()[i].getOutput().getBlock().getSprites()[0],32,32),xStart+15+i*40,yStart+45,null);
+			g.drawImage(Recipe.values()[i].getOutput().getBlock().getSprite32(),xStart+15+i*40,yStart+45,null);
 			
 			g.setColor(new Color(0));
 			g.fillRect(xStart+15+i*40,yStart+45,15,15);
@@ -269,7 +269,7 @@ public class Gui {
 		if (selectedRecipe!=null){
 		
 		for (int i=0;i<selectedRecipe.getIngredients().length;i++){
-			g.drawImage(Util.getScaledImage(selectedRecipe.getIngredients()[i].getBlock().getSprite(0),32,32),xStart+imageX,yStart+imageY,null);
+			g.drawImage(selectedRecipe.getIngredients()[i].getBlock().getSprite32(),xStart+imageX,yStart+imageY,null);
 			g.setColor(new Color(0xFFFFFF));
 			g.setFont(new Font("arial", Font.BOLD, 12));
 			g.drawString(""+selectedRecipe.getIngredients()[i].getAmount(), xStart+imageX,yStart+imageY+10);
